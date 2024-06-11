@@ -27,10 +27,35 @@ class AppPages {
   static const INITIAL = Routes.DASHBOARD;
 
   static final routes = [
+    // Dashboard
+    GetPage(
+      name: _Paths.DASHBOARD,
+      page: () => const DashboardView(),
+      binding: DashboardBinding(),
+    ),
+    // Home
     GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+    ),
+    // Admin Login
+    GetPage(
+      name: _Paths.ADMIN_LOGIN,
+      page: () => const AdminloginView(),
+      binding: AdminloginBinding(),
+    ),
+    // Pegawai Login
+    GetPage(
+      name: _Paths.PEGAWAI_LOGIN,
+      page: () => const PegawailoginView(),
+      binding: PegawailoginBinding(),
+    ),
+    // Pemilik Login
+    GetPage(
+      name: _Paths.PEMILIK_LOGIN,
+      page: () => const PemilikloginView(),
+      binding: PemilikloginBinding(),
     ),
     GetPage(
       name: _Paths.HEWAN,
@@ -38,7 +63,7 @@ class AppPages {
       binding: HewanBinding(),
     ),
     GetPage(
-      name: _Paths.TAMBAH_HEWAN,
+      name: _Paths.HEWAN,
       page: () => TambahHewanView(),
       binding: TambahHewanBinding(),
     ),
@@ -47,33 +72,10 @@ class AppPages {
       page: () => const RekamMedisView(),
       binding: RekamMedisBinding(),
     ),
-    // Route for admin login
-    GetPage(
-      name: _Paths.ADMIN_LOGIN,
-      page: () => const AdminloginView(),
-      binding: AdminloginBinding(),
-    ),
-    // Route for pegawai login
-    GetPage(
-      name: _Paths.PEGAWAI_LOGIN,
-      page: () => const PegawailoginView(),
-      binding: PegawailoginBinding(),
-    ),
-    // Route for pemilik login
-    GetPage(
-      name: _Paths.PEMILIK_LOGIN,
-      page: () => const PemilikloginView(),
-      binding: PemilikloginBinding(),
-    ),
     GetPage(
       name: _Paths.PEMBAYARAN,
       page: () => const PembayaranView(),
       binding: PembayaranBinding(),
-    ),
-    GetPage(
-      name: _Paths.DASHBOARD,
-      page: () => const DashboardView(),
-      binding: DashboardBinding(),
     ),
   ];
 }
