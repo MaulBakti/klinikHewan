@@ -1,12 +1,10 @@
 import 'package:get/get.dart';
 import '../model/pembayaran.dart';
 
-class PembayaranController extends GetxController {
+class PemilikpembayaranController extends GetxController {
   //TODO: Implement PembayaranController
 
-
   var data = <Pembayaran>[].obs;
-
 
   void addPemilik(Pembayaran pembayaran) {
     data.add(pembayaran);

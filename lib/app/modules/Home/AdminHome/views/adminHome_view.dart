@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/pemilikHome_controller.dart';
+import '../controllers/adminHome_controller.dart';
 
-class PemilikhomeView extends GetView<PemilikhomeController> {
-  const PemilikhomeView({Key? key}) : super(key: key);
+class AdminhomeView extends GetView<AdminhomeController> {
+  const AdminhomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Home',
+          'Admin Home',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -22,6 +22,12 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
             icon: const Icon(Icons.notifications),
             onPressed: () {
               // Aksi ketika ikon lonceng ditekan
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              _showLogoutDialog(context);
             },
           ),
         ],
@@ -39,10 +45,38 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
               },
             ),
             _buildListTile(
+              title: 'Data Pegawai',
+              icon: Icons.arrow_forward,
+              onTap: () {
+                Get.toNamed('/pegawai');
+              },
+            ),
+            _buildListTile(
+              title: 'Data Doctor',
+              icon: Icons.arrow_forward,
+              onTap: () {
+                Get.toNamed('/doctor');
+              },
+            ),
+            _buildListTile(
               title: 'Data Hewan',
               icon: Icons.arrow_forward,
               onTap: () {
                 Get.toNamed('/hewan');
+              },
+            ),
+            _buildListTile(
+              title: 'Data Resep',
+              icon: Icons.arrow_forward,
+              onTap: () {
+                Get.toNamed('/resep');
+              },
+            ),
+            _buildListTile(
+              title: 'Data Obat',
+              icon: Icons.arrow_forward,
+              onTap: () {
+                Get.toNamed('/obat');
               },
             ),
             _buildListTile(
@@ -91,5 +125,39 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
         onTap: onTap,
       ),
     );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("Logout"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _logout();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _logout() {
+    // Implementasi logout
+    // Contoh: Menghapus token, mengosongkan data user, dll.
+    // Setelah logout, arahkan ke halaman login
+    Get.offAllNamed('/dashboard');
   }
 }

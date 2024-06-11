@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/adminHome_controller.dart';
+import '../controllers/pegawaiHome_controller.dart';
 
-class AdminhomeView extends GetView<AdminhomeController> {
-  const AdminhomeView({Key? key}) : super(key: key);
+class PegawaihomeView extends GetView<PegawaihomeController> {
+  const PegawaihomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Home',
+          'Pegawai Home',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -22,6 +22,12 @@ class AdminhomeView extends GetView<AdminhomeController> {
             icon: const Icon(Icons.notifications),
             onPressed: () {
               // Aksi ketika ikon lonceng ditekan
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              _showLogoutDialog(context);
             },
           ),
         ],
@@ -45,13 +51,13 @@ class AdminhomeView extends GetView<AdminhomeController> {
                 Get.toNamed('/hewan');
               },
             ),
-            _buildListTile(
-              title: 'Data Pegawai',
-              icon: Icons.arrow_forward,
-              onTap: () {
-                Get.toNamed('/pegawai');
-              },
-            ),
+            // _buildListTile(
+            //   title: 'Data Pegawai',
+            //   icon: Icons.arrow_forward,
+            //   onTap: () {
+            //     Get.toNamed('/pegawai');
+            //   },
+            // ),
             _buildListTile(
               title: 'Data Rekam Medis',
               icon: Icons.arrow_forward,
@@ -98,5 +104,39 @@ class AdminhomeView extends GetView<AdminhomeController> {
         onTap: onTap,
       ),
     );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("Logout"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _logout();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _logout() {
+    // Implementasi logout
+    // Contoh: Menghapus token, mengosongkan data user, dll.
+    // Setelah logout, arahkan ke halaman login
+    Get.offAllNamed('/dashboard');
   }
 }

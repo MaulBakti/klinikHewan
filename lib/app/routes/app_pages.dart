@@ -2,13 +2,17 @@ import 'package:get/get.dart';
 // Dashboard
 import 'package:klinik_hewan/app/modules/Dashboard/bindings/dashboard_binding.dart';
 import 'package:klinik_hewan/app/modules/Dashboard/views/dashboard_view.dart';
-import 'package:klinik_hewan/app/modules/PegawaiHome/bindings/pegawaiHome_binding.dart';
-import 'package:klinik_hewan/app/modules/PegawaiHome/views/pegawaiHome_view.dart';
-import 'package:klinik_hewan/app/modules/PemilikHome/bindings/pemilikHome_binding.dart';
-import 'package:klinik_hewan/app/modules/PemilikHome/views/pemilikHome_view.dart';
+import 'package:klinik_hewan/app/modules/Home/PegawaiHome/bindings/pegawaiHome_binding.dart';
+import 'package:klinik_hewan/app/modules/Home/PegawaiHome/views/pegawaiHome_view.dart';
+import 'package:klinik_hewan/app/modules/Home/PemilikHome/bindings/pemilikHome_binding.dart';
+import 'package:klinik_hewan/app/modules/Home/PemilikHome/views/pemilikHome_view.dart';
+import 'package:klinik_hewan/app/modules/Pembayaran/PegawaiPembayaran/bindings/pegawaiPembayaran_binding.dart';
+import 'package:klinik_hewan/app/modules/Pembayaran/PegawaiPembayaran/views/pegawaiPembayaran_view.dart';
+import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/bindings/pemilikPembayaran_binding.dart';
+import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/views/pemilikPembayaran_view.dart';
 // Home
-import '../modules/AdminHome/bindings/adminHome_binding.dart';
-import '../modules/AdminHome/views/adminHome_view.dart';
+import '../modules/Home/AdminHome/bindings/adminHome_binding.dart';
+import '../modules/Home/AdminHome/views/adminHome_view.dart';
 // Login Admin
 import '../modules/Login/AdminLogin/bindings/adminLogin_binding.dart';
 import '../modules/Login/AdminLogin/views/adminLogin_view.dart';
@@ -27,8 +31,8 @@ import '../modules/Hewan/views/tambahHewan_view.dart';
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
 // Pembayaran
-import '../modules/Pembayaran/bindings/pembayaran_binding.dart';
-import '../modules/Pembayaran/views/pembayaran_view.dart';
+import '../modules/Pembayaran/AdminPembayaran/bindings/adminPembayaran_binding.dart';
+import '../modules/Pembayaran/AdminPembayaran/views/adminPembayaran_view.dart';
 
 part 'app_routes.dart';
 
@@ -44,6 +48,8 @@ class AppPages {
       page: () => const DashboardView(),
       binding: DashboardBinding(),
     ),
+
+    /* HOME */
     // Home Admin
     GetPage(
       name: _Paths.ADMIN_HOME,
@@ -62,6 +68,8 @@ class AppPages {
       page: () => const PemilikhomeView(),
       binding: PemilikhomeBinding(),
     ),
+
+    /* LOGIN */
     // Admin Login
     GetPage(
       name: _Paths.ADMIN_LOGIN,
@@ -80,6 +88,8 @@ class AppPages {
       page: () => const PemilikloginView(),
       binding: PemilikloginBinding(),
     ),
+
+    /* HEWAN */
     GetPage(
       name: _Paths.HEWAN,
       page: () => HewanView(),
@@ -95,10 +105,25 @@ class AppPages {
       page: () => const RekamMedisView(),
       binding: RekamMedisBinding(),
     ),
+
+    /* PEMBAYARAN */
+    // Pembayaran Admin
     GetPage(
-      name: _Paths.PEMBAYARAN,
-      page: () => const PembayaranView(),
-      binding: PembayaranBinding(),
+      name: _Paths.ADMIN_PEMBAYARAN,
+      page: () => const AdminpembayaranView(),
+      binding: AdminpembayaranBinding(),
+    ),
+    // Pegawai Admin
+    GetPage(
+      name: _Paths.PEGAWAI_PEMBAYARAN,
+      page: () => const PegawaipembayaranView(),
+      binding: PegawaipembayaranBinding(),
+    ),
+    // Pemilik
+    GetPage(
+      name: _Paths.PEMILIK_PEMBAYARAN,
+      page: () => const PemilikpembayaranView(),
+      binding: PemilikpembayaranBinding(),
     ),
   ];
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/Pembayaran/views/detailPembayaran_view.dart';
-import 'package:klinik_hewan/app/modules/Pembayaran/views/tambahPembayaran_view.dart';
+import 'package:klinik_hewan/app/modules/Pembayaran/AdminPembayaran/views/adminDetailPembayaran_view.dart';
+import 'package:klinik_hewan/app/modules/Pembayaran/AdminPembayaran/views/adminTambahPembayaran_view.dart';
 
-import '../controllers/pembayaran_controller.dart';
+import '../controllers/adminPembayaran_controller.dart';
 
-class PembayaranView extends GetView<PembayaranController> {
-  const PembayaranView({Key? key}) : super(key: key);
+class AdminpembayaranView extends GetView<AdminpembayaranController> {
+  const AdminpembayaranView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -29,6 +29,11 @@ abstract class Routes {
   static const PEGAWAI_DOCTOR = _Paths.PEGAWAI_DOCTOR;
   static const PEMILIK_DOCTOR = _Paths.PEMILIK_DOCTOR;
 
+  // Pembayaran
+  static const ADMIN_PEMBAYARAN = _Paths.ADMIN_PEMBAYARAN;
+  static const PEGAWAI_PEMBAYARAN = _Paths.PEGAWAI_PEMBAYARAN;
+  static const PEMILIK_PEMBAYARAN = _Paths.PEMILIK_PEMBAYARAN;
+
   static const PEMILIK = _Paths.PEMILIK;
   static const PEGAWAI = _Paths.PEGAWAI;
   static const REKAM_MEDIS = _Paths.REKAM_MEDIS;
@@ -69,6 +74,11 @@ abstract class _Paths {
   static const ADMIN_DOCTOR = '/admin/doctor';
   static const PEGAWAI_DOCTOR = '/pegawai/doctor';
   static const PEMILIK_DOCTOR = '/pemilik/doctor';
+
+  // Pembayaran
+  static const ADMIN_PEMBAYARAN = '/admin/pembayaran';
+  static const PEGAWAI_PEMBAYARAN = '/pegawai/pembayaran';
+  static const PEMILIK_PEMBAYARAN = '/pemilik/pembayaran';
 
   static const PEMILIK = '/pemilik';
   static const PEGAWAI = '/pegawai';

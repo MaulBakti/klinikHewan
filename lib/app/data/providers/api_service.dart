@@ -6,7 +6,8 @@ class ApiService {
       'http://localhost:3000'; // Sesuaikan dengan URL backend Anda
 
   // Method untuk login admin
-  static Future<http.Response> adminLogin(String email, String password) async {
+  static Future<http.Response> adminLogin(
+      String username, String password) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/admin/login'),
@@ -14,7 +15,7 @@ class ApiService {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'email': email,
+          'username': username,
           'password': password,
         }),
       );

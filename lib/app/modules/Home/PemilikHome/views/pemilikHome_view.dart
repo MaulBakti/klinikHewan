@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/pegawaiHome_controller.dart';
+import '../controllers/pemilikHome_controller.dart';
 
-class PegawaihomeView extends GetView<PegawaihomeController> {
-  const PegawaihomeView({Key? key}) : super(key: key);
+class PemilikhomeView extends GetView<PemilikhomeController> {
+  const PemilikhomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Home',
+          'Pemilik Home',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -22,6 +22,12 @@ class PegawaihomeView extends GetView<PegawaihomeController> {
             icon: const Icon(Icons.notifications),
             onPressed: () {
               // Aksi ketika ikon lonceng ditekan
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              _showLogoutDialog(context);
             },
           ),
         ],
@@ -91,5 +97,39 @@ class PegawaihomeView extends GetView<PegawaihomeController> {
         onTap: onTap,
       ),
     );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text("Logout"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _logout();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _logout() {
+    // Implementasi logout
+    // Contoh: Menghapus token, mengosongkan data user, dll.
+    // Setelah logout, arahkan ke halaman login
+    Get.offAllNamed('/dashboard');
   }
 }
