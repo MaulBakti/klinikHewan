@@ -9,7 +9,7 @@ class PegawailoginView extends GetView<PegawailoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LoginView'),
+        title: const Text('Login View Pegawai'),
         centerTitle: true,
       ),
       body: Padding(
@@ -18,7 +18,7 @@ class PegawailoginView extends GetView<PegawailoginController> {
           children: <Widget>[
             TextField(
               onChanged: (value) => controller.nama_pegawai.value = value,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: 'Nama Pegawai'),
             ),
             TextField(
               onChanged: (value) => controller.password.value = value,

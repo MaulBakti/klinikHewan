@@ -24,7 +24,7 @@ class AdminloginController extends GetxController {
           // Contoh: final token = data['token'];
 
           Get.snackbar('Login', 'Login successful');
-          Get.offAllNamed('/home'); // Navigasi ke halaman home
+          Get.offAllNamed('/adminhome'); // Navigasi ke halaman home
         } else {
           Get.snackbar('Error', 'Login failed: ${response.body}');
         }

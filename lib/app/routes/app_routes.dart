@@ -3,7 +3,11 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const DASHBOARD = _Paths.DASHBOARD;
-  static const HOME = _Paths.HOME;
+
+  // Home User
+  static const ADMIN_HOME = _Paths.ADMIN_HOME;
+  static const PEGAWAI_HOME = _Paths.PEGAWAI_HOME;
+  static const PEMILIK_HOME = _Paths.PEMILIK_HOME;
 
   // Login User
   static const ADMIN_LOGIN = _Paths.ADMIN_LOGIN;
@@ -34,7 +38,13 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const DASHBOARD = '/dashboard';
-  static const HOME = '/home';
+
+  // Home Admin
+  static const ADMIN_HOME = '/adminhome';
+  // Pegawai Admin
+  static const PEGAWAI_HOME = '/pegawaihome';
+  // Pemilik Admin
+  static const PEMILIK_HOME = '/pemilikhome';
 
   // Login Admin
   static const ADMIN_LOGIN = '/admin/login';

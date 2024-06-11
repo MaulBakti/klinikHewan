@@ -9,7 +9,7 @@ class AdminloginView extends GetView<AdminloginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LoginView'),
+        title: const Text('Login View Admin'),
         centerTitle: true,
       ),
       body: Padding(
@@ -18,7 +18,7 @@ class AdminloginView extends GetView<AdminloginController> {
           children: <Widget>[
             TextField(
               onChanged: (value) => controller.username.value = value,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: 'Username'),
             ),
             TextField(
               onChanged: (value) => controller.password.value = value,

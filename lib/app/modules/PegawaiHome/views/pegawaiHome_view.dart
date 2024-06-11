@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/home_controller.dart';
+import '../controllers/pegawaiHome_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class PegawaihomeView extends GetView<PegawaihomeController> {
+  const PegawaihomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +43,6 @@ class HomeView extends GetView<HomeController> {
               icon: Icons.arrow_forward,
               onTap: () {
                 Get.toNamed('/hewan');
-              },
-            ),
-            _buildListTile(
-              title: 'Data Pegawai',
-              icon: Icons.arrow_forward,
-              onTap: () {
-                Get.toNamed('/pegawai');
               },
             ),
             _buildListTile(
