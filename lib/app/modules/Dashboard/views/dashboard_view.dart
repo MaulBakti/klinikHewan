@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/home_controller.dart';
+import '../controllers/dashboard_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class DashboardView extends GetView<DashboardController> {
+  const DashboardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Home',
+          'Dashboard',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -32,38 +32,24 @@ class HomeView extends GetView<HomeController> {
         child: ListView(
           children: [
             _buildListTile(
-              title: 'Data Pemilik',
+              title: 'Login Admin',
               icon: Icons.arrow_forward,
               onTap: () {
-                Get.toNamed('/pemilik');
+                Get.toNamed('/admin/login');
               },
             ),
             _buildListTile(
-              title: 'Data Hewan',
+              title: 'Login Pegawai',
               icon: Icons.arrow_forward,
               onTap: () {
-                Get.toNamed('/hewan');
+                Get.toNamed('/pegawai/login');
               },
             ),
             _buildListTile(
-              title: 'Data Pegawai',
+              title: 'Login Pemilik',
               icon: Icons.arrow_forward,
               onTap: () {
-                Get.toNamed('/pegawai');
-              },
-            ),
-            _buildListTile(
-              title: 'Data Rekam Medis',
-              icon: Icons.arrow_forward,
-              onTap: () {
-                Get.toNamed('/rekam-medis');
-              },
-            ),
-            _buildListTile(
-              title: 'Data Pembayaran',
-              icon: Icons.arrow_forward,
-              onTap: () {
-                Get.toNamed('/pembayaran');
+                Get.toNamed('/pemilik/login');
               },
             ),
           ],

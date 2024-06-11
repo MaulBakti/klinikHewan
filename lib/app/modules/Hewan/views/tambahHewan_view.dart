@@ -1,81 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
+import 'package:get/get.dart';
 
-class tambahHewan extends StatefulWidget {
-  const tambahHewan({super.key});
+import '../controllers/tambahHewan_controller.dart';
 
-  @override
-  State<tambahHewan> createState() => _tambahHewanState();
-}
+class TambahHewanView extends GetView<TambahHewanController> {
+  const TambahHewanView({Key? key}) : super(key: key);
 
-class _tambahHewanState extends State<tambahHewan> {
-  final _formKey = GlobalKey<FormState>();
-  final _namaHewanCtrl = TextEditingController();
-  final _jenisHewanCtrl = TextEditingController();
-  final _umurCtrl = TextEditingController();
-  final _beratCtrl = TextEditingController();
-  final _jenisKelaminCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tambah Hewan',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-
-            },
-          ),
-        ],
+        title: Text('Tambah Hewan'),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child:
-            Column(
-              children: [
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Nama Hewan",_namaHewanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Jenis Hewan",_jenisHewanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Umur",_umurCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Berat",_beratCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Jenis Kelamin",_jenisKelaminCtrl,TextInputType.text),
-                SizedBox(height: 20,),
-                _tombolSimpan(),
-              ],
-            )
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              onChanged: (value) => controller.nama.value = value,
+              decoration: InputDecoration(labelText: 'Nama Hewan'),
+            ),
+            TextField(
+              onChanged: (value) => controller.jenis.value = value,
+              decoration: InputDecoration(labelText: 'Jenis Hewan'),
+            ),
+            TextField(
+              onChanged: (value) => controller.usia.value = value,
+              decoration: InputDecoration(labelText: 'Usia Hewan'),
+            ),
+            SizedBox(height: 20),
+            Obx(() => ElevatedButton(
+                  onPressed: controller.createHewan,
+                  child: controller.isLoading.value
+                      ? CircularProgressIndicator()
+                      : Text('Simpan'),
+                )),
+          ],
         ),
       ),
     );
   }
 }
-
-_fieldNamaHewan(String label, Ctrl, keyboardtext){
-  return TextField(
-    keyboardType: keyboardtext,
-    decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
-    controller: Ctrl,
-  );
-}
-
-_tombolSimpan(){
-  return ElevatedButton(
-      onPressed: ()  {
-        //blm diisi
-      },
-      child: const Text("Simpan"));
-}
-
-

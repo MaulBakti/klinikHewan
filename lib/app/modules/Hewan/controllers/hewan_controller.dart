@@ -1,38 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:klinik_hewan/app/data/providers/api_service.dart';
+import 'dart:convert';
 
 class HewanController extends GetxController {
-  //TODO: Implement HewanController
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
 
-  final count = 0.obs;
-  var listData = [].obs;
-
-  // void getData() {
-  //   listData.clear();
-  //   DataKlinikProvider().getAll().then((Response response) {
-  //     final Map jsonResponse = response.body;
-  //     jsonResponse.forEach((key, value) {
-  //       listData.add(value);
-  //       //isi data yang ditampilkan
-  //     });
-  //   });
-  // }
-
-  @override
-  void onInit() {
-    // getData();
-    super.onInit();
+  Future<void> createHewan(Map<String, dynamic> hewanData, String token) async {
+    isLoading.value = true;
+    errorMessage.value = '';
+    try {
+      final response = await ApiService.createHewan(hewanData, token);
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Hewan berhasil ditambahkan');
+      } else {
+        errorMessage.value = response.body.toString();
+      }
+    } catch (e) {
+      errorMessage.value = 'Error: $e';
+    } finally {
+      isLoading.value = false;
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
