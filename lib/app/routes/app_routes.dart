@@ -2,17 +2,23 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
+
+  // Dashboard
   static const DASHBOARD = _Paths.DASHBOARD;
+
+  // Login User
+  static const LOGIN = _Paths.LOGIN;
 
   // Home User
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
   static const PEGAWAI_HOME = _Paths.PEGAWAI_HOME;
   static const PEMILIK_HOME = _Paths.PEMILIK_HOME;
 
-  // Login User
-  static const ADMIN_LOGIN = _Paths.ADMIN_LOGIN;
-  static const PEGAWAI_LOGIN = _Paths.PEGAWAI_LOGIN;
-  static const PEMILIK_LOGIN = _Paths.PEMILIK_LOGIN;
+  // Pegawai
+  static const PEGAWAI = _Paths.PEGAWAI;
+
+  // Pemilik
+  static const PEMILIK = _Paths.PEMILIK;
 
   // Hewan
   static const ADMIN_HEWAN = _Paths.ADMIN_HEWAN;
@@ -34,8 +40,6 @@ abstract class Routes {
   static const PEGAWAI_PEMBAYARAN = _Paths.PEGAWAI_PEMBAYARAN;
   static const PEMILIK_PEMBAYARAN = _Paths.PEMILIK_PEMBAYARAN;
 
-  static const PEMILIK = _Paths.PEMILIK;
-  static const PEGAWAI = _Paths.PEGAWAI;
   static const REKAM_MEDIS = _Paths.REKAM_MEDIS;
   static const PEMBAYARAN = _Paths.PEMBAYARAN;
 }
@@ -51,12 +55,14 @@ abstract class _Paths {
   // Pemilik Admin
   static const PEMILIK_HOME = '/pemilikhome';
 
-  // Login Admin
-  static const ADMIN_LOGIN = '/admin/login';
-  // Login Pegawai
-  static const PEGAWAI_LOGIN = '/pegawai/login';
-  // Login Pemilik
-  static const PEMILIK_LOGIN = '/pemilik/login';
+  // Login
+  static const LOGIN = '/login';
+
+  // Pegawai
+  static const PEGAWAI = '/pegawai';
+
+  // Pemilik
+  static const PEMILIK = '/pemilik';
 
   // Hewan
   static const ADMIN_HEWAN = '/admin/hewan';
@@ -80,8 +86,6 @@ abstract class _Paths {
   static const PEGAWAI_PEMBAYARAN = '/pegawai/pembayaran';
   static const PEMILIK_PEMBAYARAN = '/pemilik/pembayaran';
 
-  static const PEMILIK = '/pemilik';
-  static const PEGAWAI = '/pegawai';
   static const HEWAN = '/hewan';
   static const REKAM_MEDIS = '/rekam-medis';
   static const PEMBAYARAN = '/pembayaran';

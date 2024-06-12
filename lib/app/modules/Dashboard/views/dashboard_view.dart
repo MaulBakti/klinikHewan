@@ -32,24 +32,10 @@ class DashboardView extends GetView<DashboardController> {
         child: ListView(
           children: [
             _buildListTile(
-              title: 'Login Admin',
+              title: 'Login',
               icon: Icons.arrow_forward,
               onTap: () {
-                Get.toNamed('/admin/login');
-              },
-            ),
-            _buildListTile(
-              title: 'Login Pegawai',
-              icon: Icons.arrow_forward,
-              onTap: () {
-                Get.toNamed('/pegawai/login');
-              },
-            ),
-            _buildListTile(
-              title: 'Login Pemilik',
-              icon: Icons.arrow_forward,
-              onTap: () {
-                Get.toNamed('/pemilik/login');
+                Get.toNamed('/login');
               },
             ),
           ],

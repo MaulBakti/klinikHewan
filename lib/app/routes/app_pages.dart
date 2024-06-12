@@ -6,6 +6,8 @@ import 'package:klinik_hewan/app/modules/Home/PegawaiHome/bindings/pegawaiHome_b
 import 'package:klinik_hewan/app/modules/Home/PegawaiHome/views/pegawaiHome_view.dart';
 import 'package:klinik_hewan/app/modules/Home/PemilikHome/bindings/pemilikHome_binding.dart';
 import 'package:klinik_hewan/app/modules/Home/PemilikHome/views/pemilikHome_view.dart';
+import 'package:klinik_hewan/app/modules/Pegawai/bindings/pegawai_binding.dart';
+import 'package:klinik_hewan/app/modules/Pegawai/view/pegawai_view.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PegawaiPembayaran/bindings/pegawaiPembayaran_binding.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PegawaiPembayaran/views/pegawaiPembayaran_view.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/bindings/pemilikPembayaran_binding.dart';
@@ -13,15 +15,9 @@ import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/views/pemi
 // Home
 import '../modules/Home/AdminHome/bindings/adminHome_binding.dart';
 import '../modules/Home/AdminHome/views/adminHome_view.dart';
-// Login Admin
-import '../modules/Login/AdminLogin/bindings/adminLogin_binding.dart';
-import '../modules/Login/AdminLogin/views/adminLogin_view.dart';
-// Login Pegawai
-import '../modules/Login/PegawaiLogin/bindings/pegawaiLogin_binding.dart';
-import '../modules/Login/PegawaiLogin/views/pegawaiLogin_view.dart';
-// Login Pemilik
-import '../modules/Login/PemilikLogin/bindings/pemilikLogin_binding.dart';
-import '../modules/Login/PemilikLogin/views/pemilikLogin_view.dart';
+// Login
+import '../modules/Login/bindings/login_binding.dart';
+import '../modules/Login/views/login_view.dart';
 // Hewan
 import '../modules/Hewan/bindings/hewan_binding.dart';
 import '../modules/Hewan/views/hewan_view.dart';
@@ -49,6 +45,12 @@ class AppPages {
       binding: DashboardBinding(),
     ),
 
+    /* LOGIN */
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => LoginView(),
+    ),
+
     /* HOME */
     // Home Admin
     GetPage(
@@ -69,24 +71,18 @@ class AppPages {
       binding: PemilikhomeBinding(),
     ),
 
-    /* LOGIN */
-    // Admin Login
+    // PEGAWAI
     GetPage(
-      name: _Paths.ADMIN_LOGIN,
-      page: () => const AdminloginView(),
-      binding: AdminloginBinding(),
+      name: _Paths.PEGAWAI,
+      page: () => const PegawaiView(),
+      binding: PegawaiBinding(),
     ),
-    // Pegawai Login
+
+    // PEMILIK
     GetPage(
-      name: _Paths.PEGAWAI_LOGIN,
-      page: () => const PegawailoginView(),
-      binding: PegawailoginBinding(),
-    ),
-    // Pemilik Login
-    GetPage(
-      name: _Paths.PEMILIK_LOGIN,
-      page: () => const PemilikloginView(),
-      binding: PemilikloginBinding(),
+      name: _Paths.PEMILIK,
+      page: () => const PemilikhomeView(),
+      binding: PemilikhomeBinding(),
     ),
 
     /* HEWAN */
