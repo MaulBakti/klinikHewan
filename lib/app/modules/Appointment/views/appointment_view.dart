@@ -32,14 +32,14 @@ class AppointmentView extends GetView<AppointmentController> {
                     final appoitment = controller.appointmentList[index];
                     return ListTile(
                       title: Text('Hewan'),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Dokter'),
-                          Text('Tanggal'),
-                          Text('Catatan'),
-                        ],
-                      ),
+                      // subtitle: Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Text('Dokter'),
+                      //     Text('Tanggal'),
+                      //     Text('Catatan'),
+                      //   ],
+                      // ),
                     );
                   },
                 );

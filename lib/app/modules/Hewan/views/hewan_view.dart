@@ -31,17 +31,17 @@ class HewanView extends GetView<HewanController> {
                     final hewan = controller.hewanList[index];
                     return ListTile(
                       title: Text(hewan.nama_hewan ?? ''),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Jenis Hewan: ${hewan.jenis_hewan ?? ''}'),
-                          Text(
-                              'Umur: ${hewan.umur != null ? hewan.umur.toString() : ''}'),
-                          Text(
-                              'Berat: ${hewan.berat != null ? hewan.berat.toString() + ' kg' : ''}'),
-                          Text('Jenis Kelamin: ${hewan.jenis_kelamin ?? ''}'),
-                        ],
-                      ),
+                      // subtitle: Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Text('Jenis Hewan: ${hewan.jenis_hewan ?? ''}'),
+                      //     Text(
+                      //         'Umur: ${hewan.umur != null ? hewan.umur.toString() : ''}'),
+                      //     Text(
+                      //         'Berat: ${hewan.berat != null ? hewan.berat.toString() + ' kg' : ''}'),
+                      //     Text('Jenis Kelamin: ${hewan.jenis_kelamin ?? ''}'),
+                      //   ],
+                      // ),
                     );
                   },
                 );

@@ -1,94 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Obat/controllers/obat_controller.dart';
+import 'package:get/get.dart';
+import '../controllers/detailObat_controller.dart';
 
-class detailObat extends StatefulWidget {
-  const detailObat({super.key});
-
-  @override
-  State<detailObat> createState() => _detailObatState();
-}
-
-class _detailObatState extends State<detailObat> {
-  final _formKey = GlobalKey<FormState>();
-  final _namaObatCtrl = TextEditingController();
-  final _keteranganCtrl = TextEditingController();
+class DetailobatView extends GetView<DetailobatController> {
+  const DetailobatView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Detail Obat',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
+        title: const Text('Obat View'),
+        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaObat("Nama Obat", _namaObatCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaObat(
-                    "Keterangan", _keteranganCtrl, TextInputType.text),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolUbah(),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolHapus()
-              ],
-            )),
+      body: Column(
+        children: [
+          Obx(
+            () {
+              if (controller.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (controller.obatList.isEmpty) {
+                return const Center(
+                  child: Text('No data available'),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: controller.obatList.length,
+                  itemBuilder: (context, index) {
+                    final obat = controller.obatList[index];
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text('Nama Obat'),
+                        ),
+                        ListTile(
+                          title: Text('Keterangan: '),
+                        )
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Ubah Data'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Simpan Data'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
-}
-
-_fieldNamaObat(String label, Ctrl, keyboardtext) {
-  return TextField(
-    keyboardType: keyboardtext,
-    decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
-    controller: Ctrl,
-  );
-}
-
-_tombolUbah() {
-  return ElevatedButton(
-    onPressed: () {},
-    child: Text("Ubah Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
-}
-
-_tombolHapus() {
-  return ElevatedButton(
-    onPressed: () {},
-    child: Text("hapus Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
 }

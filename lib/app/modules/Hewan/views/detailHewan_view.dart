@@ -1,116 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
+import 'package:get/get.dart';
+import '../controllers/detailHewan_controller.dart';
 
-class detailHewan extends StatefulWidget {
-  const detailHewan({super.key});
+class DetailhewanView extends GetView<DetailhewanController> {
+  const DetailhewanView({Key? key}) : super(key: key);
 
-  @override
-  State<detailHewan> createState() => _detailHewanState();
-}
-
-class _detailHewanState extends State<detailHewan> {
-  final _formKey = GlobalKey<FormState>();
-  final _namaHewanCtrl = TextEditingController();
-  final _jenisHewanCtrl = TextEditingController();
-  final _umurCtrl = TextEditingController();
-  final _beratCtrl = TextEditingController();
-  final _jenisKelaminCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Detail Hewan',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        title: const Text('Detail Hewan View'),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Obx(
+            () {
+              if (controller.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (controller.hewanList.isEmpty) {
+                return const Center(
+                  child: Text('No data available'),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: controller.hewanList.length,
+                  itemBuilder: (context, index) {
+                    final hewan = controller.hewanList[index];
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(hewan.nama_hewan ?? ''),
+                        ),
+                        ListTile(
+                          title:
+                              Text('Jenis hewan: ${hewan.jenis_hewan ?? ''}'),
+                        ),
+                        ListTile(
+                          title: Text(
+                              'Umur: ${hewan.umur != null ? hewan.umur.toString() : ''}'),
+                        ),
+                        ListTile(
+                          title: Text(
+                              'Berat: ${hewan.berat != null ? hewan.berat.toString() + ' kg' : ''}'),
+                        ),
+                        ListTile(
+                          title: Text(
+                              'Jenis Kelamin: ${hewan.jenis_kelamin ?? ''}'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
           ),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
             onPressed: () {},
+            child: Text('Ubah Data'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Hapus Data'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+              ),
+            ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan(
-                    "Nama Hewan", _namaHewanCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan(
-                    "Jenis Hewan", _jenisHewanCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan("Umur", _umurCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan("Berat", _beratCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan(
-                    "Jenis Kelamin", _jenisKelaminCtrl, TextInputType.text),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolUbah(),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolHapus()
-              ],
-            )),
-      ),
     );
   }
-}
-
-_fieldNamaHewan(String label, Ctrl, keyboardtext) {
-  return TextField(
-    keyboardType: keyboardtext,
-    decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
-    controller: Ctrl,
-  );
-}
-
-_tombolUbah() {
-  return ElevatedButton(
-    onPressed: () {},
-    child: Text("Ubah Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
-}
-
-_tombolHapus() {
-  return ElevatedButton(
-    onPressed: () {},
-    child: Text("hapus Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
 }

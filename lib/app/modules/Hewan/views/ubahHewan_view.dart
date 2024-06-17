@@ -1,99 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
+import 'package:get/get.dart';
 
-class ubahHewan extends StatefulWidget {
-  const ubahHewan({super.key});
+import '../controllers/ubahHewan_controller.dart';
 
-  @override
-  State<ubahHewan> createState() => _ubahHewanState();
-}
+class UbahHewanView extends GetView<UbahhewanController> {
+  const UbahHewanView({Key? key}) : super(key: key);
 
-class _ubahHewanState extends State<ubahHewan> {
-  final _formKey = GlobalKey<FormState>();
-  final _namaHewanCtrl = TextEditingController();
-  final _jenisHewanCtrl = TextEditingController();
-  final _umurCtrl = TextEditingController();
-  final _beratCtrl = TextEditingController();
-  final _jenisKelaminCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Ubah Hewan',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {},
-          ),
-        ],
+        title: Text('Ubah Hewan'),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan(
-                    "Nama Hewan", _namaHewanCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan(
-                    "Jenis Hewan", _jenisHewanCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan("Umur", _umurCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan("Berat", _beratCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaHewan(
-                    "Jenis Kelamin", _jenisKelaminCtrl, TextInputType.text),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolSimpan(),
-              ],
-            )),
-      ),
-    );
-  }
-
-  _fieldNamaHewan(String label, Ctrl, keyboardtext) {
-    return TextField(
-      keyboardType: keyboardtext,
-      decoration:
-          InputDecoration(labelText: label, border: OutlineInputBorder()),
-      controller: Ctrl,
-    );
-  }
-
-  _tombolSimpan() {
-    return ElevatedButton(
-      onPressed: () {
-        //blm diisi
-      },
-      child: const Text("Simpan"),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        minimumSize: Size(200, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              decoration: InputDecoration(labelText: 'Nama Hewan'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Jenis Hewan'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Usia Hewan'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Berat'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'jenis Kelamin'),
+            ),
+            SizedBox(height: 20),
+            Obx(() => ElevatedButton(
+                  onPressed: controller.updateHewan,
+                  child: controller.isLoading.value
+                      ? CircularProgressIndicator()
+                      : Text('Simpan'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(200, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Ubah nilai sesuai keinginan
+                    ),
+                  ),
+                )),
+          ],
         ),
       ),
     );
