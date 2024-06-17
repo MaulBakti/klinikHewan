@@ -20,7 +20,7 @@ class _tambahRekamMedisState extends State<tambahRekamMedis> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'tambabh Data',
+          'Tambabh Rekam Medis',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -30,40 +30,53 @@ class _tambahRekamMedisState extends State<tambahRekamMedis> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications),
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
         ],
       ),
       body: SingleChildScrollView(
         child: Form(
             key: _formKey,
-            child:
-            Column(
+            child: Column(
               children: [
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Nama Hewan",_hewanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Nama Pegawai",_pegawaiCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Obat",_obatCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Keluhan",_keluhanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Diagnosa",_diagnosaCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Tgl Periksa",_tglPeriksaCtrl,TextInputType.text),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldRekamMedis("Nama Hewan", _hewanCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldRekamMedis(
+                    "Nama Pegawai", _pegawaiCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldRekamMedis("Obat", _obatCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldRekamMedis("Keluhan", _keluhanCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldRekamMedis("Diagnosa", _diagnosaCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldRekamMedis(
+                    "Tgl Periksa", _tglPeriksaCtrl, TextInputType.text),
+                SizedBox(
+                  height: 20,
+                ),
                 _tombolSimpan()
               ],
-            )
-        ),
+            )),
       ),
     );
   }
 }
-_fieldRekamMedis(String label, Ctrl, keyboardtext){
+
+_fieldRekamMedis(String label, Ctrl, keyboardtext) {
   return TextField(
     keyboardType: keyboardtext,
     decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
@@ -71,11 +84,9 @@ _fieldRekamMedis(String label, Ctrl, keyboardtext){
   );
 }
 
-_tombolSimpan(){
+_tombolSimpan() {
   return ElevatedButton(
-    onPressed: () {
-
-    },
+    onPressed: () {},
     child: Text("Simpan Data"),
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.black,
@@ -87,4 +98,3 @@ _tombolSimpan(){
     ),
   );
 }
-

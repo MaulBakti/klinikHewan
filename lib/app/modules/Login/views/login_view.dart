@@ -65,7 +65,13 @@ class LoginView extends StatelessWidget {
               },
               child: Text('Login'),
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50),
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                minimumSize: Size(200, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+                ),
               ),
             ),
           ],

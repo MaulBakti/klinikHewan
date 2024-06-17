@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class DetailresepController extends GetxController {
+class UbahpegawaiController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
 }

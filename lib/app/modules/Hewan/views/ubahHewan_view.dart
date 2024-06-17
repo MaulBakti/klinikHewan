@@ -30,52 +30,72 @@ class _ubahHewanState extends State<ubahHewan> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications),
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
         ],
       ),
       body: SingleChildScrollView(
         child: Form(
             key: _formKey,
-            child:
-            Column(
+            child: Column(
               children: [
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Nama Hewan",_namaHewanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Jenis Hewan",_jenisHewanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Umur",_umurCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Berat",_beratCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldNamaHewan("Jenis Kelamin",_jenisKelaminCtrl,TextInputType.text),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldNamaHewan(
+                    "Nama Hewan", _namaHewanCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldNamaHewan(
+                    "Jenis Hewan", _jenisHewanCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldNamaHewan("Umur", _umurCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldNamaHewan("Berat", _beratCtrl, TextInputType.text),
+                SizedBox(
+                  height: 15,
+                ),
+                _fieldNamaHewan(
+                    "Jenis Kelamin", _jenisKelaminCtrl, TextInputType.text),
+                SizedBox(
+                  height: 20,
+                ),
                 _tombolSimpan(),
               ],
-            )
+            )),
+      ),
+    );
+  }
+
+  _fieldNamaHewan(String label, Ctrl, keyboardtext) {
+    return TextField(
+      keyboardType: keyboardtext,
+      decoration:
+          InputDecoration(labelText: label, border: OutlineInputBorder()),
+      controller: Ctrl,
+    );
+  }
+
+  _tombolSimpan() {
+    return ElevatedButton(
+      onPressed: () {
+        //blm diisi
+      },
+      child: const Text("Simpan"),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        minimumSize: Size(200, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
         ),
       ),
     );
   }
 }
-
-_fieldNamaHewan(String label, Ctrl, keyboardtext){
-  return TextField(
-    keyboardType: keyboardtext,
-    decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
-    controller: Ctrl,
-  );
-}
-
-_tombolSimpan(){
-  return ElevatedButton(
-      onPressed: ()  {
-        //blm diisi
-      },
-      child: const Text("Simpan"));
-}
-
-

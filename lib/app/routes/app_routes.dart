@@ -21,9 +21,21 @@ abstract class Routes {
   static const PEMILIK = _Paths.PEMILIK;
 
   // Hewan
+  //admin
   static const ADMIN_HEWAN = _Paths.ADMIN_HEWAN;
+  // static const ADMIN_TAMBAHHEWAN = _Paths.ADMIN_TAMBAHHEWAN;
+  // static const ADMIN_UBAHHEWAN = _Paths.ADMIN_UBAHHEWAN;
+  // static const ADMIN_DETAILHEWAN = _Paths.ADMIN_DETAILHEWAN;
+  //pegawai
   static const PEGAWAI_HEWAN = _Paths.PEGAWAI_HEWAN;
+  // static const PEGAWAI_TAMBAHHEWAN = _Paths.PEGAWAI_TAMBAHHEWAN;
+  // static const PEGAWAI_UBAHHEWAN = _Paths.PEGAWAI_UBAHHEWAN;
+  // static const PEGAWAI_DETAILHEWAN = _Paths.PEGAWAI_DETAILHEWAN;
+  //pemilik
   static const PEMILIK_HEWAN = _Paths.PEMILIK_HEWAN;
+  // static const PEMILIK_TAMBAHHEWAN = _Paths.PEMILIK_TAMBAHHEWAN;
+  // static const PEMILIK_UBAHHEWAN = _Paths.PEMILIK_UBAHHEWAN;
+  // static const PEMILIK_DETAILHEWAN = _Paths.PEMILIK_DETAILHEWAN;
 
   // Obat
   static const ADMIN_OBAT = _Paths.ADMIN_OBAT;
@@ -66,10 +78,19 @@ abstract class _Paths {
 
   // Hewan
   static const ADMIN_HEWAN = '/admin/hewan';
+  // static const ADMIN_TAMBAHHEWAN = '/admin/tambahHewan';
+  // static const ADMIN_UBAHHEWAN = '/admin/ubahHewan';
+  // static const ADMIN_DETAILHEWAN = '/admin/detailHewan';
   // Pegawai Hewan
   static const PEGAWAI_HEWAN = '/pegawai/hewan';
+  // static const PEGAWAI_TAMBAHHEWAN = '/pegawai/tambahHewan';
+  // static const PEGAWAI_UBAHHEWAN = '/pegawai/ubahHewan';
+  // static const PEGAWAI_DETAILHEWAN = '/pegawai/detailHewan';
   // Pemilik Hewan
   static const PEMILIK_HEWAN = '/pemilik/hewan';
+  // static const PEMILIK_TAMBAHHEWAN = '/pemilik/tambahHewan';
+  // static const PEMILIK_UBAHHEWAN = '/pemilik/ubahHewan';
+  // static const PEMILIK_DETAILHEWAN = '/pemilik/detailHewan';
 
   // Obat
   static const ADMIN_OBAT = '/admin/obat';

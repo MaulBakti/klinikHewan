@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/tambahDoctor_controller.dart';
+import '../controllers/tambahPegawai_controller.dart';
 
-class TambahdoctorView extends GetView<TambahdoctorController> {
-  const TambahdoctorView({Key? key}) : super(key: key);
+class TambahpegawaiView extends GetView<TambahpegawaiController> {
+  const TambahpegawaiView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambah Doctor'),
+        title: Text('Tambah Pegawai'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -18,16 +18,28 @@ class TambahdoctorView extends GetView<TambahdoctorController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onChanged: (value) => controller.namaDoctor.value = value,
-              decoration: InputDecoration(labelText: 'Nama Doctor'),
+              onChanged: (value) => controller.username.value = value,
+              decoration: InputDecoration(labelText: 'Username'),
             ),
             TextField(
-              onChanged: (value) => controller.spesialis.value = value,
-              decoration: InputDecoration(labelText: 'Spesialis'),
+              onChanged: (value) => controller.password.value = value,
+              decoration: InputDecoration(labelText: 'Password'),
+            ),
+            TextField(
+              onChanged: (value) => controller.jabatan.value = value,
+              decoration: InputDecoration(labelText: 'Jabatan'),
+            ),
+            TextField(
+              onChanged: (value) => controller.alamat.value = value,
+              decoration: InputDecoration(labelText: 'Alamat'),
+            ),
+            TextField(
+              onChanged: (value) => controller.noTelp.value = value,
+              decoration: InputDecoration(labelText: 'No Telp'),
             ),
             SizedBox(height: 20),
             Obx(() => ElevatedButton(
-                  onPressed: controller.createDoctor,
+                  onPressed: controller.createPegawai,
                   child: controller.isLoading.value
                       ? CircularProgressIndicator()
                       : Text('Simpan'),

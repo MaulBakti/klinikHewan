@@ -35,6 +35,15 @@ class TambahHewanView extends GetView<TambahHewanController> {
                   child: controller.isLoading.value
                       ? CircularProgressIndicator()
                       : Text('Simpan'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(200, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Ubah nilai sesuai keinginan
+                    ),
+                  ),
                 )),
           ],
         ),

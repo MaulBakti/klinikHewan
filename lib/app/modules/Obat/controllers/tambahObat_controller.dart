@@ -1,22 +1,21 @@
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import 'package:klinik_hewan/app/data/providers/api_service.dart';
 
-class TambahdoctorController extends GetxController {
+class TambahobatController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
-  var doktorList = <Dokter>[].obs;
-  var namaDoctor = ''.obs;
-  var spesialis = ''.obs;
+  var nama = ''.obs;
+  var keterangan = ''.obs;
   var token = ''.obs;
 
-  void createDoctor() async {
-    if (namaDoctor.value.isNotEmpty && spesialis.value.isNotEmpty) {
+  void createObat() async {
+    if (nama.value.isNotEmpty && keterangan.value.isNotEmpty) {
       isLoading.value = true;
 
       // Data yang akan dikirim ke API
-      Map<String, dynamic> doctorData = {
-        'nama_obat': namaDoctor.value,
-        'keterangan': spesialis.value,
+      Map<String, dynamic> obatData = {
+        'nama_obat': nama.value,
+        'keterangan': keterangan.value,
       };
 
       // Panggil layanan API untuk menambahkan obat baru

@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
 
-class detailHewan extends StatefulWidget {
-  const detailHewan({super.key});
+class ubahPegawai extends StatefulWidget {
+  const ubahPegawai({super.key});
 
   @override
-  State<detailHewan> createState() => _detailHewanState();
+  State<ubahPegawai> createState() => _ubahPegawaiState();
 }
 
-class _detailHewanState extends State<detailHewan> {
+class _ubahPegawaiState extends State<ubahPegawai> {
   final _formKey = GlobalKey<FormState>();
-  final _namaHewanCtrl = TextEditingController();
-  final _jenisHewanCtrl = TextEditingController();
-  final _umurCtrl = TextEditingController();
-  final _beratCtrl = TextEditingController();
-  final _jenisKelaminCtrl = TextEditingController();
+  final _usernameCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
+  final _jabatanCtrl = TextEditingController();
+  final _alamatCtrl = TextEditingController();
+  final _noTelpCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Detail Hewan',
+          'Ubah Pegawai',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -42,34 +42,29 @@ class _detailHewanState extends State<detailHewan> {
                 SizedBox(
                   height: 15,
                 ),
-                _fieldNamaHewan(
-                    "Nama Hewan", _namaHewanCtrl, TextInputType.text),
+                _fieldNamaPegawai(
+                    "Username", _usernameCtrl, TextInputType.text),
                 SizedBox(
                   height: 15,
                 ),
-                _fieldNamaHewan(
-                    "Jenis Hewan", _jenisHewanCtrl, TextInputType.text),
+                _fieldNamaPegawai(
+                    "password", _passwordCtrl, TextInputType.text),
                 SizedBox(
                   height: 15,
                 ),
-                _fieldNamaHewan("Umur", _umurCtrl, TextInputType.text),
+                _fieldNamaPegawai("Jabatan", _jabatanCtrl, TextInputType.text),
                 SizedBox(
                   height: 15,
                 ),
-                _fieldNamaHewan("Berat", _beratCtrl, TextInputType.text),
+                _fieldNamaPegawai("Alamat", _alamatCtrl, TextInputType.text),
                 SizedBox(
                   height: 15,
                 ),
-                _fieldNamaHewan(
-                    "Jenis Kelamin", _jenisKelaminCtrl, TextInputType.text),
+                _fieldNamaPegawai("No Telp", _noTelpCtrl, TextInputType.text),
                 SizedBox(
                   height: 20,
                 ),
-                _tombolUbah(),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolHapus()
+                _tombolsimpan(),
               ],
             )),
       ),
@@ -77,7 +72,7 @@ class _detailHewanState extends State<detailHewan> {
   }
 }
 
-_fieldNamaHewan(String label, Ctrl, keyboardtext) {
+_fieldNamaPegawai(String label, Ctrl, keyboardtext) {
   return TextField(
     keyboardType: keyboardtext,
     decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
@@ -85,25 +80,10 @@ _fieldNamaHewan(String label, Ctrl, keyboardtext) {
   );
 }
 
-_tombolUbah() {
+_tombolsimpan() {
   return ElevatedButton(
     onPressed: () {},
     child: Text("Ubah Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
-}
-
-_tombolHapus() {
-  return ElevatedButton(
-    onPressed: () {},
-    child: Text("hapus Data"),
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.black,
       foregroundColor: Colors.white,

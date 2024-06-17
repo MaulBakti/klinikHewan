@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Resep/controllers/ubahResep_controller.dart';
+import 'package:klinik_hewan/app/modules/Resep/controllers/detailResep_controller.dart';
 
-class resepObat extends StatefulWidget {
-  const resepObat({super.key});
+class detailResepObat extends StatefulWidget {
+  const detailResepObat({super.key});
 
   @override
-  State<resepObat> createState() => _resepObatState();
+  State<detailResepObat> createState() => _detailResepObatState();
 }
 
-class _resepObatState extends State<resepObat> {
+class _detailResepObatState extends State<detailResepObat> {
   final _formKey = GlobalKey<FormState>();
   final _rekamMedisCtrl = TextEditingController();
   final _obatCtrl = TextEditingController();
@@ -19,7 +19,7 @@ class _resepObatState extends State<resepObat> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Resep Obat',
+          'Detail Resep Obat',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -53,7 +53,11 @@ class _resepObatState extends State<resepObat> {
                 SizedBox(
                   height: 20,
                 ),
-                _tombolSimpan(),
+                _tombolUbah(),
+                SizedBox(
+                  height: 20,
+                ),
+                _tombolHapus(),
               ],
             )),
       ),
@@ -69,7 +73,25 @@ class _resepObatState extends State<resepObat> {
     );
   }
 
-  _tombolSimpan() {
+  _tombolHapus() {
+    return ElevatedButton(
+      onPressed: () {
+        //blm diisi
+      },
+      child: const Text("Simpan"),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        minimumSize: Size(200, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+        ),
+      ),
+    );
+  }
+
+  _tombolUbah() {
     return ElevatedButton(
       onPressed: () {
         //blm diisi
