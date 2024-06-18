@@ -1,94 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Obat/controllers/obat_controller.dart';
+import 'package:get/get.dart';
 
-class ubahAppoitment extends StatefulWidget {
-  const ubahAppoitment({super.key});
+import '../controllers/ubahAppointment_controller.dart';
 
-  @override
-  State<ubahAppoitment> createState() => _ubahAppoitmentState();
-}
-
-class _ubahAppoitmentState extends State<ubahAppoitment> {
-  final _formKey = GlobalKey<FormState>();
-  final _hewanCtrl = TextEditingController();
-  final _dokterCtrl = TextEditingController();
-  final _tglAppoitmentCtrl = TextEditingController();
-  final _catatanCtrl = TextEditingController();
+class UbahappointmentView extends GetView<UbabhappointmentController> {
+  const UbahappointmentView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Ubah Appoitment',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {},
-          ),
-        ],
+        title: Text('Ubah Appointment'),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaAppoitment("hewan", _hewanCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaAppoitment("Dokter", _dokterCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaAppoitment("tanggal Appoitment", _tglAppoitmentCtrl,
-                    TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldNamaAppoitment(
-                    "Catatan", _catatanCtrl, TextInputType.text),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolSimpan(),
-              ],
-            )),
-      ),
-    );
-  }
-
-  _fieldNamaAppoitment(String label, Ctrl, keyboardtext) {
-    return TextField(
-      keyboardType: keyboardtext,
-      decoration:
-          InputDecoration(labelText: label, border: OutlineInputBorder()),
-      controller: Ctrl,
-    );
-  }
-
-  _tombolSimpan() {
-    return ElevatedButton(
-      onPressed: () {
-        //blm diisi
-      },
-      child: const Text("Simpan"),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        minimumSize: Size(200, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              onChanged: (value) => controller.hewan.value = value,
+              decoration: InputDecoration(labelText: 'hewan'),
+            ),
+            TextField(
+              onChanged: (value) => controller.doctor.value = value,
+              decoration: InputDecoration(labelText: 'Nama Doctor'),
+            ),
+            TextField(
+              onChanged: (value) => controller.tanggal.value = value,
+              decoration: InputDecoration(labelText: 'Tanggal Appointment'),
+            ),
+            TextField(
+              onChanged: (value) => controller.catatan.value = value,
+              decoration: InputDecoration(labelText: 'Catatan'),
+            ),
+            SizedBox(height: 20),
+            Obx(() => ElevatedButton(
+                  onPressed: controller.updateAppointment,
+                  child: controller.isLoading.value
+                      ? CircularProgressIndicator()
+                      : Text('Simpan'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(200, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Ubah nilai sesuai keinginan
+                    ),
+                  ),
+                )),
+          ],
         ),
       ),
     );

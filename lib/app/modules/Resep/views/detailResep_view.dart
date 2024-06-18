@@ -1,110 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:klinik_hewan/app/modules/Resep/controllers/detailResep_controller.dart';
+import 'package:get/get.dart';
+import '../controllers/detailResep_controller.dart';
 
-class detailResepObat extends StatefulWidget {
-  const detailResepObat({super.key});
-
-  @override
-  State<detailResepObat> createState() => _detailResepObatState();
-}
-
-class _detailResepObatState extends State<detailResepObat> {
-  final _formKey = GlobalKey<FormState>();
-  final _rekamMedisCtrl = TextEditingController();
-  final _obatCtrl = TextEditingController();
-  final _jumlahCtrl = TextEditingController();
+class DetailresepView extends GetView<DetailresepController> {
+  const DetailresepView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Detail Resep Obat',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        title: const Text('Detail Resep View'),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Obx(
+            () {
+              if (controller.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (controller.resepList.isEmpty) {
+                return const Center(
+                  child: Text('No data available'),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: controller.resepList.length,
+                  itemBuilder: (context, index) {
+                    final resep = controller.resepList[index];
+                    return ListTile(
+                      title: Text('Rekam Medis'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Obat: '),
+                          Text('Jumlah Obat: '),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
+            },
           ),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
             onPressed: () {},
+            child: Text('Ubah Data'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Hapus Data'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
+              ),
+            ),
           ),
         ],
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldResep("Rekam Medis", _rekamMedisCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldResep("Obat", _obatCtrl, TextInputType.text),
-                SizedBox(
-                  height: 15,
-                ),
-                _fieldResep("jumlah", _jumlahCtrl, TextInputType.text),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolUbah(),
-                SizedBox(
-                  height: 20,
-                ),
-                _tombolHapus(),
-              ],
-            )),
-      ),
-    );
-  }
-
-  _fieldResep(String label, Ctrl, keyboardtext) {
-    return TextField(
-      keyboardType: keyboardtext,
-      decoration:
-          InputDecoration(labelText: label, border: OutlineInputBorder()),
-      controller: Ctrl,
-    );
-  }
-
-  _tombolHapus() {
-    return ElevatedButton(
-      onPressed: () {
-        //blm diisi
-      },
-      child: const Text("Simpan"),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        minimumSize: Size(200, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
-        ),
-      ),
-    );
-  }
-
-  _tombolUbah() {
-    return ElevatedButton(
-      onPressed: () {
-        //blm diisi
-      },
-      child: const Text("Simpan"),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        minimumSize: Size(200, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
-        ),
       ),
     );
   }

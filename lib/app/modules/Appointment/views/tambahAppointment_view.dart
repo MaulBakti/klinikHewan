@@ -1,67 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/appointment_controller.dart';
 
-class AppoinmentView extends GetView<AppointmentController> {
-  const AppoinmentView({Key? key}) : super(key: key);
+import '../controllers/tambahAppointment_controller.dart';
+
+class TambahappointmentView extends GetView<TambahappointmentController> {
+  const TambahappointmentView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Appoinment View'),
-        centerTitle: true,
+        title: Text('Tambah Appointment'),
       ),
-      body: Column(
-        children: [
-          Obx(
-            () {
-              if (controller.isLoading.value) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (controller.appointmentList.isEmpty) {
-                return const Center(
-                  child: Text('No data available'),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: controller.appointmentList.length,
-                  itemBuilder: (context, index) {
-                    final Appoinment = controller.appointmentList[index];
-                    return ListTile(
-                      title: Text('Hewan'),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Dokter: '),
-                          Text('Tanggal: '),
-                          Text('Catatan: '),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              }
-            },
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text('Tambah Data'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              minimumSize: Size(200, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
-              ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              onChanged: (value) => controller.hewan.value = value,
+              decoration: InputDecoration(labelText: 'hewan'),
             ),
-          ),
-        ],
+            TextField(
+              onChanged: (value) => controller.doctor.value = value,
+              decoration: InputDecoration(labelText: 'Nama Doctor'),
+            ),
+            TextField(
+              onChanged: (value) => controller.tanggal.value = value,
+              decoration: InputDecoration(labelText: 'Tanggal Appointment'),
+            ),
+            TextField(
+              onChanged: (value) => controller.catatan.value = value,
+              decoration: InputDecoration(labelText: 'Catatan'),
+            ),
+            SizedBox(height: 20),
+            Obx(() => ElevatedButton(
+                  onPressed: controller.createAppointment,
+                  child: controller.isLoading.value
+                      ? CircularProgressIndicator()
+                      : Text('Simpan'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(200, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Ubah nilai sesuai keinginan
+                    ),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }

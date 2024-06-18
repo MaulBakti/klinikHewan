@@ -31,13 +31,13 @@ class ResepView extends GetView<ResepController> {
                     final resep = controller.resepList[index];
                     return ListTile(
                       title: Text('Rekam Medis'),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Obat: '),
-                          Text('Jumlah Obat: '),
-                        ],
-                      ),
+                      // subtitle: Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Text('Obat: '),
+                      //     Text('Jumlah Obat: '),
+                      //   ],
+                      // ),
                     );
                   },
                 );

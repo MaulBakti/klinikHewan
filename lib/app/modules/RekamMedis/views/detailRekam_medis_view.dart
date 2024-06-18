@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
+import 'tambahRekam_medis_view.dart';
+import 'package:get/get.dart';
+import 'package:klinik_hewan/app/modules/RekamMedis/model/rekamMedis.dart';
+import '../controllers/rekam_medis_controller.dart';
 
-class detailRekamMedis extends StatefulWidget {
-  const detailRekamMedis({super.key});
-
-  @override
-  State<detailRekamMedis> createState() => _detailRekamMedisState();
-}
-
-class _detailRekamMedisState extends State<detailRekamMedis> {
-  final _formKey = GlobalKey<FormState>();
-  final _hewanCtrl = TextEditingController();
-  final _pegawaiCtrl = TextEditingController();
-  final _obatCtrl = TextEditingController();
-  final _keluhanCtrl = TextEditingController();
-  final _diagnosaCtrl = TextEditingController();
-  final _tglPeriksaCtrl = TextEditingController();
+class RekamMedisView extends GetView<RekamMedisController> {
+  const RekamMedisView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Detail Rekam Medis',
+          'Rekam Medis',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -31,78 +22,54 @@ class _detailRekamMedisState extends State<detailRekamMedis> {
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
-
+              // ikon lonceng ditekan
             },
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Form(
-            key: _formKey,
-            child:
-            Column(
-              children: [
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Nama Hewan",_hewanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Nama Pegawai",_pegawaiCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Obat",_obatCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Keluhan",_keluhanCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Diagnosa",_diagnosaCtrl,TextInputType.text),
-                SizedBox(height: 15,),
-                _fieldRekamMedis("Tgl Periksa",_tglPeriksaCtrl,TextInputType.text),
-                SizedBox(height: 20,),
-                _tombolUbah(),
-                SizedBox(height: 20,),
-                _tombolHapus(),
-              ],
-            )
-        ),
+      body: Column(
+        children: [
+          Obx(() {
+            if (controller.data.isEmpty) {
+              return const Center(
+                child: Text("No data available"),
+              );
+            }
+            return ListView.builder(
+              itemCount: controller.data.length,
+              itemBuilder: (context, index) {
+                final pemilik = controller.data[index];
+                return Container(
+                  child: ListTile(
+                    title: Text("rekamMedis.id_rekam_medis"),
+                    onTap: () {
+                      // controller.pemilikDetail(pemilik.);
+                    },
+                  ),
+                );
+              },
+            );
+          }),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => tambahRekamMedis()));
+            },
+            child: Text("Tambah Data"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              minimumSize: Size(200, 30),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
-}
-_fieldRekamMedis(String label, Ctrl, keyboardtext){
-  return TextField(
-    keyboardType: keyboardtext,
-    decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
-    controller: Ctrl,
-  );
-}
-
-_tombolUbah(){
-  return ElevatedButton(
-    onPressed: () {
-
-    },
-    child: Text("Ubah Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
-}
-
-_tombolHapus(){
-  return ElevatedButton(
-    onPressed: () {
-
-    },
-    child: Text("hapus Data"),
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-      minimumSize: Size(200, 30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
-  );
 }

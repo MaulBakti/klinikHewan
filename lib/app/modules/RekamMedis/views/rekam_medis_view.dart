@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'tambahRekam_medis_view.dart';
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/RekamMedis/model/rekamMedis.dart';
-import 'detailRekam_medis_view.dart';
 import '../controllers/rekam_medis_controller.dart';
 
 class RekamMedisView extends GetView<RekamMedisController> {
@@ -45,11 +42,6 @@ class RekamMedisView extends GetView<RekamMedisController> {
                     title: Text("rekamMedis.id_rekam_medis"),
                     onTap: () {
                       // controller.pemilikDetail(pemilik.);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => detailRekamMedis()));
-                      // kedetail
                     },
                   ),
                 );
@@ -60,10 +52,7 @@ class RekamMedisView extends GetView<RekamMedisController> {
             height: 20,
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => tambahRekamMedis()));
-            },
+            onPressed: () {},
             child: Text("Tambah Data"),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,
