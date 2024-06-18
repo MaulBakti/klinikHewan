@@ -27,7 +27,7 @@ class ApiService {
 
   /* ADMIN */
   // Method Fetch
-  static Future<List<dynamic>> get(String token) async {
+  static Future<List<dynamic>> fetchHewan(String token) async {
     try {
       final Uri uri = Uri.parse('$baseUrl/admin/hewan');
 
