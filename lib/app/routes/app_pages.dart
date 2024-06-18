@@ -16,13 +16,19 @@ import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/views/pemi
 import '../modules/Home/AdminHome/bindings/adminHome_binding.dart';
 import '../modules/Home/AdminHome/views/adminHome_view.dart';
 // Login
-import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
 // Hewan
 import '../modules/Hewan/bindings/hewan_binding.dart';
 import '../modules/Hewan/views/hewan_view.dart';
+
+// Tambah Hewan
 import '../modules/Hewan/bindings/tambahHewan_binding.dart';
 import '../modules/Hewan/views/tambahHewan_view.dart';
+
+// Ubah Hewan
+import '../modules/Hewan/bindings/ubahHewan_binding.dart';
+import '../modules/Hewan/views/ubahHewan_view.dart';
+
 // Rekam Medis
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
@@ -91,10 +97,15 @@ class AppPages {
       page: () => HewanView(),
       binding: HewanBinding(),
     ),
+    // GetPage(
+    //   name: _Paths.TAMBAHHEWAN,
+    //   page: () => TambahHewanView(),
+    //   binding: TambahHewanBinding(),
+    // ),
     GetPage(
-      name: _Paths.HEWAN,
-      page: () => TambahHewanView(),
-      binding: TambahHewanBinding(),
+      name: _Paths.UBAHHEWAN,
+      page: () => ubahHewanView(),
+      binding: UbahhewanBinding(),
     ),
     GetPage(
       name: _Paths.REKAM_MEDIS,

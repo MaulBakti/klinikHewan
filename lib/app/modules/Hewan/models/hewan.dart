@@ -1,29 +1,47 @@
 class Hewan {
-  String? id_hewan;
-  String? id_pemilik;
-  String? nama_hewan;
-  String? jenis_hewan;
-  String? umur;
-  String? berat;
-  String? jenis_kelamin;
+  int idHewan;
+  int idPemilik;
+  String namaHewan;
+  String jenisHewan;
+  int umur;
+  double berat;
+  String jenisKelamin;
+  String namaPemilik;
 
-  Hewan(
-      {required this.id_hewan,
-      this.id_pemilik,
-      this.nama_hewan,
-      this.jenis_hewan,
-      this.umur,
-      this.berat,
-      this.jenis_kelamin});
+  Hewan({
+    required this.idHewan,
+    required this.idPemilik,
+    required this.namaHewan,
+    required this.jenisHewan,
+    required this.umur,
+    required this.berat,
+    required this.jenisKelamin,
+    required this.namaPemilik,
+  });
 
   factory Hewan.fromJson(Map<String, dynamic> json) {
     return Hewan(
-        id_hewan: json['id_hewan'],
-        id_pemilik: json['id_pemilik'],
-        nama_hewan: json['nama_hewan'],
-        jenis_hewan: json['jenis_hewan'],
-        umur: json['umur'],
-        berat: json['berat'],
-        jenis_kelamin: json['jenis_kelamin']);
+      idHewan: json['id_hewan'] ?? 0,
+      idPemilik: json['id_pemilik'] ?? 0,
+      namaHewan: json['nama_hewan'] ?? '',
+      jenisHewan: json['jenis_hewan'] ?? '',
+      umur: json['umur'] ?? 0,
+      berat: json['berat'] ?? 0.0,
+      jenisKelamin: json['jenis_kelamin'] ?? '',
+      namaPemilik: json['pemilik']['username'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id_hewan': idHewan,
+      'id_pemilik': idPemilik,
+      'nama_hewan': namaHewan,
+      'jenis_hewan': jenisHewan,
+      'umur': umur,
+      'berat': berat,
+      'jenis_kelamin': jenisKelamin,
+      'namaPemilik': namaPemilik,
+    };
   }
 }

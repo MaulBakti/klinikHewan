@@ -6,12 +6,11 @@ class ApiService {
       'http://localhost:3000'; // Sesuaikan dengan URL backend Anda
 
   // Method untuk login dengan role
-
   static Future<http.Response> login(
-      String role, String username, String password) async {
+      role, String username, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/$role/login'),
+        Uri.parse('$baseUrl/admin/login'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -20,7 +19,6 @@ class ApiService {
           'password': password,
         }),
       );
-
       return response;
     } catch (e) {
       throw Exception('Failed to login: $e');
@@ -29,29 +27,31 @@ class ApiService {
 
   /* ADMIN */
   // Method Fetch
-  static Future<List<dynamic>> fetchHewan() async {
+  static Future<List<dynamic>> get(String token) async {
     try {
+      final Uri uri = Uri.parse('$baseUrl/admin/hewan');
+
       final response = await http.post(
-        Uri.parse('$baseUrl/admin/hewan'),
+        uri,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // Menambahkan header authorization
         },
-        body: jsonEncode({
-          'action': 'read', // Add the action key with value "read"
+        body: json.encode({
+          'tableName': 'admin',
+          'action': 'read',
+          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
 
       if (response.statusCode == 200) {
-        // If the server returns a 200 OK response, parse the JSON
         final Map<String, dynamic> responseData = json.decode(response.body);
-        // Check if the response contains the 'data' field
-        if (responseData.containsKey('data')) {
-          return responseData['data'] as List<dynamic>;
+        if (responseData['success'] == true) {
+          return responseData['data'];
         } else {
-          throw Exception('Data field not found in API response');
+          throw Exception('Failed to fetch hewan: ${responseData['message']}');
         }
       } else {
-        // If the server returns an error response, throw an exception
         throw Exception('Failed to fetch hewan: ${response.statusCode}');
       }
     } catch (e) {
@@ -60,8 +60,8 @@ class ApiService {
   }
 
   // Method CREATE
-  static Future<http.Response> createHewan(
-      Map<String, dynamic> hewanData, String token) async {
+  static Future<http.Response> postHewan(
+      String token, String action, Map<String, dynamic> data) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/admin/hewan'),
@@ -69,7 +69,7 @@ class ApiService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(hewanData),
+        body: jsonEncode({'action': action, 'data': data}),
       );
       return response;
     } catch (e) {
@@ -77,19 +77,25 @@ class ApiService {
     }
   }
 
-  // Method GET
-  static Future<http.Response> detailHewan(
-      Map<String, dynamic> hewanData, String token) async {
+  /* Admin */
+  static Future<Map<String, dynamic>> fetchPemilik(int id, String token) async {
     try {
-      final response =
-          await http.get(Uri.parse('$baseUrl/admin/hewan'), headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token', // Menambahkan header authorization
-      });
+      final response = await http.get(
+        Uri.parse('$baseUrl/admin/pemilik/$id'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
 
-      return response;
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return responseData['data'];
+      } else {
+        throw Exception('Failed to fetch pemilik: ${response.statusCode}');
+      }
     } catch (e) {
-      throw Exception('Failed to create hewan: $e');
+      throw Exception('Error fetching pemilik: $e');
     }
   }
 }

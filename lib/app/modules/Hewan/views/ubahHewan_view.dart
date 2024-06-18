@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
 
-class ubahHewan extends StatefulWidget {
-  const ubahHewan({super.key});
+class ubahHewanView extends StatefulWidget {
+  const ubahHewanView({super.key});
 
   @override
-  State<ubahHewan> createState() => _ubahHewanState();
+  State<ubahHewanView> createState() => _ubahHewanState();
 }
 
-class _ubahHewanState extends State<ubahHewan> {
+class _ubahHewanState extends State<ubahHewanView> {
   final _formKey = GlobalKey<FormState>();
   final _namaHewanCtrl = TextEditingController();
   final _jenisHewanCtrl = TextEditingController();

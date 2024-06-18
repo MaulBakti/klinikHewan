@@ -1,71 +1,287 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/hewan_controller.dart';
+import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
+import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 
-class HewanView extends GetView<HewanController> {
-  const HewanView({Key? key}) : super(key: key);
+class HewanView extends StatelessWidget {
+  final HewanController controller = Get.put(HewanController());
 
   @override
   Widget build(BuildContext context) {
+    // Fetch data saat halaman pertama kali di-load
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.fetchDataHewan('admin');
+    });
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hewan View'),
+        title: Text('Daftar Hewan'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Obx(
-            () {
-              if (controller.isLoading.value) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+      body: Obx(
+        () {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text('Error: ${controller.errorMessage.value}'),
+            );
+          } else if (controller.hewanList.isEmpty) {
+            return Center(
+              child: Text('Tidak ada data hewan'),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: controller.hewanList.length,
+              itemBuilder: (context, index) {
+                final hewan = controller.hewanList[index];
+                return Card(
+                  margin: EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(hewan.namaHewan ?? ''),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Nama Pemilik: ${hewan.namaPemilik ?? ''}'),
+                        Text('Jenis: ${hewan.jenisHewan ?? ''}'),
+                        Text('Umur: ${hewan.umur ?? ''} tahun'),
+                        Text('Berat: ${hewan.berat ?? ''} kg'),
+                        Text('Jenis Kelamin: ${hewan.jenisKelamin ?? ''}'),
+                      ],
+                    ),
+                    trailing: Wrap(
+                      spacing: 8.0,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            _editHewan(context, hewan);
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            _confirmDelete(context, hewan.idHewan ?? 0);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 );
-              } else if (controller.hewanList.isEmpty) {
-                return const Center(
-                  child: Text('No data available'),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: controller.hewanList.length,
-                  itemBuilder: (context, index) {
-                    final hewan = controller.hewanList[index];
-                    return ListTile(
-                      title: Text(hewan.nama_hewan ?? ''),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Jenis Hewan: ${hewan.jenis_hewan ?? ''}'),
-                          Text(
-                              'Umur: ${hewan.umur != null ? hewan.umur.toString() : ''}'),
-                          Text(
-                              'Berat: ${hewan.berat != null ? hewan.berat.toString() + ' kg' : ''}'),
-                          Text('Jenis Kelamin: ${hewan.jenis_kelamin ?? ''}'),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              }
-            },
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text('Tambah Data'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              minimumSize: Size(200, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
-              ),
+              },
+            );
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _addHewan(context);
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _addHewan(BuildContext context) {
+    final TextEditingController namaController = TextEditingController();
+    final TextEditingController jenisController = TextEditingController();
+    final TextEditingController umurController = TextEditingController();
+    final TextEditingController beratController = TextEditingController();
+    final TextEditingController jenisKelaminController =
+        TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Tambah Hewan'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: namaController,
+                  decoration: InputDecoration(labelText: 'Nama Hewan'),
+                ),
+                TextField(
+                  controller: jenisController,
+                  decoration: InputDecoration(labelText: 'Jenis Hewan'),
+                ),
+                TextField(
+                  controller: umurController,
+                  decoration: InputDecoration(labelText: 'Umur'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: beratController,
+                  decoration: InputDecoration(labelText: 'Berat (kg)'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: jenisKelaminController,
+                  decoration: InputDecoration(labelText: 'Jenis Kelamin'),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Validasi input
+                if (namaController.text.isNotEmpty &&
+                    jenisController.text.isNotEmpty &&
+                    umurController.text.isNotEmpty &&
+                    beratController.text.isNotEmpty &&
+                    jenisKelaminController.text.isNotEmpty) {
+                  final newHewan = Hewan(
+                    idHewan: 0,
+                    idPemilik: 0,
+                    namaHewan: namaController.text,
+                    jenisHewan: jenisController.text,
+                    umur: int.tryParse(umurController.text) ?? 0,
+                    berat: double.tryParse(beratController.text) ?? 0.0,
+                    jenisKelamin: jenisKelaminController.text,
+                    namaPemilik: '',
+                  );
+                  controller.createHewan('admin', newHewan);
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Semua field harus diisi'),
+                    ),
+                  );
+                }
+              },
+              child: Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _editHewan(BuildContext context, Hewan hewan) {
+    final TextEditingController namaController =
+        TextEditingController(text: hewan.namaHewan);
+    final TextEditingController jenisController =
+        TextEditingController(text: hewan.jenisHewan);
+    final TextEditingController umurController =
+        TextEditingController(text: hewan.umur.toString());
+    final TextEditingController beratController =
+        TextEditingController(text: hewan.berat.toString());
+    final TextEditingController jenisKelaminController =
+        TextEditingController(text: hewan.jenisKelamin);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Hewan'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: namaController,
+                  decoration: InputDecoration(labelText: 'Nama Hewan'),
+                ),
+                TextField(
+                  controller: jenisController,
+                  decoration: InputDecoration(labelText: 'Jenis Hewan'),
+                ),
+                TextField(
+                  controller: umurController,
+                  decoration: InputDecoration(labelText: 'Umur'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: beratController,
+                  decoration: InputDecoration(labelText: 'Berat (kg)'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: jenisKelaminController,
+                  decoration: InputDecoration(labelText: 'Jenis Kelamin'),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Validasi input
+                if (namaController.text.isNotEmpty &&
+                    jenisController.text.isNotEmpty &&
+                    umurController.text.isNotEmpty &&
+                    beratController.text.isNotEmpty &&
+                    jenisKelaminController.text.isNotEmpty) {
+                  final updatedHewan = Hewan(
+                    idHewan: hewan.idHewan,
+                    idPemilik: hewan.idPemilik,
+                    namaHewan: namaController.text,
+                    jenisHewan: jenisController.text,
+                    umur: int.tryParse(umurController.text) ?? 0,
+                    berat: double.tryParse(beratController.text) ?? 0.0,
+                    jenisKelamin: jenisKelaminController.text,
+                    namaPemilik: hewan.namaPemilik,
+                  );
+                  controller.updateHewan('admin', updatedHewan);
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Semua field harus diisi'),
+                    ),
+                  );
+                }
+              },
+              child: Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _confirmDelete(BuildContext context, int idHewan) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi Hapus'),
+          content: Text('Apakah Anda yakin ingin menghapus hewan ini?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                controller.deleteHewan('admin', idHewan);
+                Navigator.of(context).pop();
+              },
+              child: Text('Hapus'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

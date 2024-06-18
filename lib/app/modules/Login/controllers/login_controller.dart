@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart'; // For local storage
 
 class LoginController extends GetxController {
   var username = ''.obs;
@@ -20,6 +21,9 @@ class LoginController extends GetxController {
 
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
+          // Simpan token atau data user lainnya jika diperlukan
+          final token = data['data']['token'];
+          GetStorage().write('token', token); // Save token to local storage
 
           Get.snackbar('Login', 'Login successful');
 

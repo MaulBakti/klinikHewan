@@ -108,6 +108,9 @@ abstract class _Paths {
   static const PEMILIK_PEMBAYARAN = '/pemilik/pembayaran';
 
   static const HEWAN = '/hewan';
+  static const TAMBAHHEWAN = '/tambahhewan';
+  static const UBAHHEWAN = '/ubahhewan/:id';
+
   static const REKAM_MEDIS = '/rekam-medis';
   static const PEMBAYARAN = '/pembayaran';
 }
