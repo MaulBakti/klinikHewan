@@ -6,7 +6,7 @@ class Hewan {
   int umur;
   double berat;
   String jenisKelamin;
-  String namaPemilik;
+  final String namaPemilik;
 
   Hewan({
     required this.idHewan,

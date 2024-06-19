@@ -5,13 +5,16 @@ import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 import 'package:klinik_hewan/services/local_storage_service.dart';
 
 class HewanView extends StatelessWidget {
+  final String role;
   final HewanController controller = Get.put(HewanController());
+
+  HewanView({required this.role});
 
   @override
   Widget build(BuildContext context) {
     // Fetch data saat halaman pertama kali di-load
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      controller.fetchDataHewan();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getDataHewan(role);
     });
 
     return Scaffold(
@@ -35,12 +38,13 @@ class HewanView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Tidak ada data hewan'),
-                  ElevatedButton(
-                    onPressed: () {
-                      _addHewan(context);
-                    },
-                    child: Text('Tambah Hewan'),
-                  ),
+                  if (role == 'admin' || role == 'pegawai')
+                    ElevatedButton(
+                      onPressed: () {
+                        _addHewan(context);
+                      },
+                      child: Text('Tambah Hewan'),
+                    ),
                 ],
               ),
             );
@@ -66,18 +70,20 @@ class HewanView extends StatelessWidget {
                     trailing: Wrap(
                       spacing: 8.0,
                       children: [
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            _editHewan(context, hewan);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _confirmDelete(context, hewan.idHewan ?? 0);
-                          },
-                        ),
+                        if (role == 'admin' || role == 'pegawai')
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _editHewan(context, hewan);
+                            },
+                          ),
+                        if (role == 'admin')
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _confirmDelete(context, hewan.idHewan ?? 0);
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -87,12 +93,14 @@ class HewanView extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addHewan(context);
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: role == 'admin' || role == 'pegawai'
+          ? FloatingActionButton(
+              onPressed: () {
+                _addHewan(context);
+              },
+              child: Icon(Icons.add),
+            )
+          : null,
     );
   }
 
@@ -164,7 +172,7 @@ class HewanView extends StatelessWidget {
                     jenisKelamin: jenisKelaminController.text,
                     namaPemilik: '', // Dilakukan oleh FutureBuilder
                   );
-                  controller.createHewan('admin', newHewan);
+                  controller.postDataHewan(role, newHewan, controller.token);
                   Navigator.of(context).pop();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -252,9 +260,10 @@ class HewanView extends StatelessWidget {
                     umur: int.tryParse(umurController.text) ?? 0,
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
-                    namaPemilik: '', // Dilakukan oleh FutureBuilder
+                    namaPemilik:
+                        hewan.namaPemilik, // Dilakukan oleh FutureBuilder
                   );
-                  controller.updateHewan('admin', updatedHewan);
+                  controller.updateHewan(role, updatedHewan, controller.token);
                   Navigator.of(context).pop();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -288,7 +297,7 @@ class HewanView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                controller.deleteHewan('admin', idHewan);
+                controller.deleteHewan(role, idHewan, controller.token);
                 Navigator.of(context).pop();
               },
               child: Text('Hapus'),

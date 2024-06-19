@@ -29,7 +29,7 @@ class AppointmentView extends GetView<AppointmentController> {
                 return ListView.builder(
                   itemCount: controller.appointmentList.length,
                   itemBuilder: (context, index) {
-                    final appoitment = controller.appointmentList[index];
+                    final Appointment = controller.appointmentList[index];
                     return ListTile(
                       title: Text('Hewan'),
                       // subtitle: Column(

@@ -85,7 +85,11 @@ class AppPages {
     /* HEWAN */
     GetPage(
       name: _Paths.HEWAN,
-      page: () => HewanView(),
+      page: () {
+        final role = Get.parameters['role'] ?? 'admin'; // default role
+        final token = Get.parameters['token'] ?? ''; // default token
+        return HewanView(role: role);
+      },
       binding: HewanBinding(),
     ),
     GetPage(
