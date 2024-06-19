@@ -9,15 +9,14 @@ class HewanController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
   var hewanList = <Hewan>[].obs;
+  final LocalStorageService storageService = LocalStorageService();
 
-  Future<void> fetchDataHewan(String role) async {
-    isLoading.value = true;
-    errorMessage.value = '';
-    final LocalStorageService storageService = LocalStorageService();
+  late String token;
 
+  Future<void> fetchDataHewan() async {
     try {
-      final String? token = storageService.getToken();
-      if (token == null) {
+      token = storageService.getToken() ?? '';
+      if (token.isEmpty) {
         throw Exception('Token not found');
       }
 
@@ -100,6 +99,17 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to delete hewan: $e');
+    }
+  }
+
+  // Fungsi untuk fetch nama_pemilik berdasarkan id_pemilik
+  Future<String> getNamaPemilik(int idPemilik, String token) async {
+    try {
+      var pemilik = await ApiService.fetchPemilik(idPemilik, token);
+      return pemilik['username'] ?? '';
+    } catch (e) {
+      print('Error fetching pemilik: $e');
+      return '';
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
+import 'package:klinik_hewan/services/local_storage_service.dart';
 
 class HewanView extends StatelessWidget {
   final HewanController controller = Get.put(HewanController());
@@ -10,7 +11,7 @@ class HewanView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Fetch data saat halaman pertama kali di-load
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      controller.fetchDataHewan('admin');
+      controller.fetchDataHewan();
     });
 
     return Scaffold(
@@ -30,7 +31,18 @@ class HewanView extends StatelessWidget {
             );
           } else if (controller.hewanList.isEmpty) {
             return Center(
-              child: Text('Tidak ada data hewan'),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Tidak ada data hewan'),
+                  ElevatedButton(
+                    onPressed: () {
+                      _addHewan(context);
+                    },
+                    child: Text('Tambah Hewan'),
+                  ),
+                ],
+              ),
             );
           } else {
             return ListView.builder(
@@ -70,7 +82,6 @@ class HewanView extends StatelessWidget {
                     ),
                   ),
                 );
-<<<<<<< HEAD
               },
             );
           }
@@ -81,53 +92,6 @@ class HewanView extends StatelessWidget {
           _addHewan(context);
         },
         child: Icon(Icons.add),
-=======
-              } else if (controller.hewanList.isEmpty) {
-                return const Center(
-                  child: Text('No data available'),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: controller.hewanList.length,
-                  itemBuilder: (context, index) {
-                    final hewan = controller.hewanList[index];
-                    return ListTile(
-                      title: Text(hewan.nama_hewan ?? ''),
-                      // subtitle: Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text('Jenis Hewan: ${hewan.jenis_hewan ?? ''}'),
-                      //     Text(
-                      //         'Umur: ${hewan.umur != null ? hewan.umur.toString() : ''}'),
-                      //     Text(
-                      //         'Berat: ${hewan.berat != null ? hewan.berat.toString() + ' kg' : ''}'),
-                      //     Text('Jenis Kelamin: ${hewan.jenis_kelamin ?? ''}'),
-                      //   ],
-                      // ),
-                    );
-                  },
-                );
-              }
-            },
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text('Tambah Data'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              minimumSize: Size(200, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(8.0), // Ubah nilai sesuai keinginan
-              ),
-            ),
-          ),
-        ],
->>>>>>> 7660690e6ea3a02fbd7daabd0cb69a064b01455e
       ),
     );
   }
@@ -191,13 +155,14 @@ class HewanView extends StatelessWidget {
                     jenisKelaminController.text.isNotEmpty) {
                   final newHewan = Hewan(
                     idHewan: 0,
-                    idPemilik: 0,
+                    idPemilik:
+                        0, // Dilakukan oleh backend, tidak diperlukan di frontend
                     namaHewan: namaController.text,
                     jenisHewan: jenisController.text,
                     umur: int.tryParse(umurController.text) ?? 0,
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
-                    namaPemilik: '',
+                    namaPemilik: '', // Dilakukan oleh FutureBuilder
                   );
                   controller.createHewan('admin', newHewan);
                   Navigator.of(context).pop();
@@ -280,13 +245,14 @@ class HewanView extends StatelessWidget {
                     jenisKelaminController.text.isNotEmpty) {
                   final updatedHewan = Hewan(
                     idHewan: hewan.idHewan,
-                    idPemilik: hewan.idPemilik,
+                    idPemilik: hewan
+                        .idPemilik, // Dilakukan oleh backend, tidak diperlukan di frontend
                     namaHewan: namaController.text,
                     jenisHewan: jenisController.text,
                     umur: int.tryParse(umurController.text) ?? 0,
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
-                    namaPemilik: hewan.namaPemilik,
+                    namaPemilik: '', // Dilakukan oleh FutureBuilder
                   );
                   controller.updateHewan('admin', updatedHewan);
                   Navigator.of(context).pop();

@@ -11,6 +11,7 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Page'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,6 +34,27 @@ class LoginView extends StatelessWidget {
               ),
               obscureText: true,
             ),
+            // TextField(
+            //   onChanged: (value) => loginController.password.value = value,
+            //   obscureText: !loginController.isPasswordVisible.value,
+            //   decoration: InputDecoration(
+            //     labelText: 'Password',
+            //     border: OutlineInputBorder(),
+            //     suffixIcon: Obx(
+            //       () => IconButton(
+            //         icon: Icon(
+            //           loginController.isPasswordVisible.value
+            //               ? Icons.visibility
+            //               : Icons.visibility_off,
+            //         ),
+            //         onPressed: () {
+            //           loginController.isPasswordVisible.value =
+            //               !loginController.isPasswordVisible.value;
+            //         },
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 20),
             Obx(() {
               return DropdownButton<String>(
