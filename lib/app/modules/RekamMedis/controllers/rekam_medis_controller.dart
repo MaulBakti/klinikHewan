@@ -6,7 +6,6 @@ class RekamMedisController extends GetxController {
 
   var data = <rekamMedis>[].obs;
 
-
   void addrekamMedis(rekamMedis rekamMedis) {
     data.add(rekamMedis);
   }

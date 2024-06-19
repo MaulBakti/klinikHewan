@@ -1,34 +1,63 @@
-import 'package:flutter/material.dart';
-
 class rekamMedis {
-  String? id_rekam_medis;
-  String? id_hewan;
-  String? id_pemilik;
-  String? id_pegawai;
-  String? id_obat;
-  String? keluhan;
-  String? diagnosa;
-  String? tgl_periksa;
+  int idRekamMedis;
+  int idHewan;
+  int idPemilik;
+  int idPegawai;
+  int idObat;
+  String keluhan;
+  String diagnosa;
+  String tglPeriksa;
+  String namaHewan;
+  String namaPemilik;
+  String namaPegawai;
+  String namaObat;
 
-  rekamMedis(
-      {this.id_rekam_medis,
-      this.id_hewan,
-      this.id_pemilik,
-      this.id_pegawai,
-      this.id_obat,
-      this.keluhan,
-      this.diagnosa,
-      this.tgl_periksa});
+  rekamMedis({
+    required this.idRekamMedis,
+    required this.idHewan,
+    required this.idPemilik,
+    required this.idPegawai,
+    required this.idObat,
+    required this.keluhan,
+    required this.diagnosa,
+    required this.tglPeriksa,
+    required this.namaHewan,
+    required this.namaPemilik,
+    required this.namaPegawai,
+    required this.namaObat,
+  });
 
   factory rekamMedis.fromJson(Map<String, dynamic> json) {
     return rekamMedis(
-        id_rekam_medis: json['id_rekam_medis'],
-        id_hewan: json['id_hewan'],
-        id_pemilik: json['id_pemilik'],
-        id_pegawai: json['id_pegawai'],
-        id_obat: json['id_obat'],
-        keluhan: json['keluhan'],
-        diagnosa: json['diagnosa'],
-        tgl_periksa: json['tgl_periksa']);
+      idRekamMedis: json['id_rekam_medis'] ?? 0,
+      idHewan: json['id_hewan'] ?? 0,
+      idPemilik: json['id_pemilik'] ?? 0,
+      idPegawai: json['id_pegawai'] ?? 0,
+      idObat: json['id_obat'] ?? 0,
+      keluhan: json['keluhan'] ?? '',
+      diagnosa: json['diagnosa'] ?? '',
+      tglPeriksa: json['tgl_periksa'] ?? '',
+      namaHewan: json['hewan']['nama_hewan'] ?? '',
+      namaPemilik: json['pemilik']['nama_pemilik'] ?? '',
+      namaPegawai: json['pegawai']['nama_pegawai'] ?? '',
+      namaObat: json['obat']['nama_obat'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id_rekam_medis': idRekamMedis,
+      'id_hewan': idHewan,
+      'id_pemilik': idPemilik,
+      'id_pegawai': idPegawai,
+      'id_obat': idObat,
+      'keluhan': keluhan,
+      'diagnosa': diagnosa,
+      'tgl_periksa': tglPeriksa,
+      'hewan': {'nama_hewan': namaHewan},
+      'pemilik': {'nama_pemilik': namaPemilik},
+      'pegawai': {'nama_pegawai': namaPegawai},
+      'obat': {'nama_obat': namaObat},
+    };
   }
 }

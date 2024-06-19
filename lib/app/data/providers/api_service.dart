@@ -26,8 +26,8 @@ class ApiService {
   }
 
   /* ADMIN */
-  // Method Fetch
-  static Future<List<dynamic>> fetchHewan(String token) async {
+  // Method Get
+  static Future<List<dynamic>> getHewan(String token) async {
     try {
       final Uri uri = Uri.parse('$baseUrl/admin/hewan');
 
@@ -43,7 +43,6 @@ class ApiService {
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['success'] == true) {
@@ -59,7 +58,7 @@ class ApiService {
     }
   }
 
-  // Method CREATE
+  // Method POST
   static Future<http.Response> postHewan(
       String token, String action, Map<String, dynamic> data) async {
     try {

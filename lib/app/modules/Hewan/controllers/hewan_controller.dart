@@ -20,7 +20,7 @@ class HewanController extends GetxController {
         throw Exception('Token not found');
       }
 
-      final responseData = await ApiService.fetchHewan(token);
+      final responseData = await ApiService.getHewan(token);
       final List<Hewan> hewans =
           responseData.map((data) => Hewan.fromJson(data)).toList();
       hewanList.assignAll(hewans);

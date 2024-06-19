@@ -1,22 +1,39 @@
-import 'package:flutter/foundation.dart';
-
 class Resep {
-  String? id_resep;
-  String? id_rekam_medis;
-  String? id_obat;
-  String? jumlah_obat;
+  int idResep;
+  int idRekamMedis;
+  int idObat;
+  int jumlahObat;
+  String diagnosa;
+  String namaObat;
 
-  Resep(
-      {required this.id_resep,
-      this.id_rekam_medis,
-      this.id_obat,
-      this.jumlah_obat});
+  Resep({
+    required this.idResep,
+    required this.idRekamMedis,
+    required this.idObat,
+    required this.jumlahObat,
+    required this.diagnosa,
+    required this.namaObat,
+  });
 
   factory Resep.fromJson(Map<String, dynamic> json) {
     return Resep(
-        id_resep: json['id_resep'],
-        id_rekam_medis: json['id_rekam_medis'],
-        id_obat: json['id_obat'],
-        jumlah_obat: json['jumlah_obat']);
+      idResep: json['id_resep'] ?? 0,
+      idRekamMedis: json['id_rekam_medis'] ?? 0,
+      idObat: json['id_obat'] ?? 0,
+      jumlahObat: json['jumlah_obat'] ?? 0,
+      diagnosa: json['rekammedis']['diagnosa'] ?? '',
+      namaObat: json['obat']['nama_obat'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id_resep': idResep,
+      'id_rekam_medis': idRekamMedis,
+      'id_obat': idObat,
+      'jumlah_obat': jumlahObat,
+      'diagnosa': diagnosa,
+      'nama_obat': namaObat,
+    };
   }
 }

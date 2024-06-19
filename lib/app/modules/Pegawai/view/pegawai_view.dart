@@ -29,7 +29,7 @@ class PegawaiView extends GetView<PegawaiController> {
                 itemBuilder: (context, index) {
                   final pegawai = controller.pegawaiList[index];
                   return ListTile(
-                    title: Text(pegawai.username ?? ''),
+                    title: Text(pegawai.namaPegawai ?? ''),
                     subtitle: Text(pegawai.jabatan ?? ''),
                     // Tambahkan logic untuk menampilkan detail pegawai atau action lainnya
                     // saat tile ditekan
