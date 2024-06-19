@@ -6,7 +6,6 @@ class Hewan {
   int umur;
   double berat;
   String jenisKelamin;
-  final String namaPemilik;
 
   Hewan({
     required this.idHewan,
@@ -16,7 +15,6 @@ class Hewan {
     required this.umur,
     required this.berat,
     required this.jenisKelamin,
-    required this.namaPemilik,
   });
 
   factory Hewan.fromJson(Map<String, dynamic> json) {
@@ -28,7 +26,6 @@ class Hewan {
       umur: json['umur'] ?? 0,
       berat: json['berat'] ?? 0.0,
       jenisKelamin: json['jenis_kelamin'] ?? '',
-      namaPemilik: json['pemilik']['username'] ?? '',
     );
   }
 
@@ -41,7 +38,6 @@ class Hewan {
       'umur': umur,
       'berat': berat,
       'jenis_kelamin': jenisKelamin,
-      'namaPemilik': namaPemilik,
     };
   }
 }

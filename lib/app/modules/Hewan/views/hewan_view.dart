@@ -60,7 +60,6 @@ class HewanView extends StatelessWidget {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Nama Pemilik: ${hewan.namaPemilik ?? ''}'),
                         Text('Jenis: ${hewan.jenisHewan ?? ''}'),
                         Text('Umur: ${hewan.umur ?? ''} tahun'),
                         Text('Berat: ${hewan.berat ?? ''} kg'),
@@ -170,7 +169,6 @@ class HewanView extends StatelessWidget {
                     umur: int.tryParse(umurController.text) ?? 0,
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
-                    namaPemilik: '', // Dilakukan oleh FutureBuilder
                   );
                   controller.postDataHewan(role, newHewan, controller.token);
                   Navigator.of(context).pop();
@@ -260,8 +258,6 @@ class HewanView extends StatelessWidget {
                     umur: int.tryParse(umurController.text) ?? 0,
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
-                    namaPemilik:
-                        hewan.namaPemilik, // Dilakukan oleh FutureBuilder
                   );
                   controller.updateHewan(role, updatedHewan, controller.token);
                   Navigator.of(context).pop();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:klinik_hewan/app/modules/Pemilik/model/pemilik.dart';
+import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 
 class ApiService {
   static const baseUrl =
@@ -103,6 +104,41 @@ class ApiService {
     }
   }
 
+  // Method PUT
+  static Future<http.Response> updateHewanAdmin(
+      String token, String action, Map<String, dynamic> data) async {
+    final Uri uri = Uri.parse('$baseUrl/admin/hewan/${data['id_hewan']}');
+
+    try {
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'action': action,
+          'data': data,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          return response; // Return the HTTP response directly
+        } else {
+          throw Exception(
+              'Failed to update data hewan from Admin: ${responseData['message']}');
+        }
+      } else {
+        throw Exception(
+            'Failed to update hewan from Admin: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error updating hewan: $e');
+    }
+  }
+
   // Method Delete
   static Future<http.Response> deleteHewanAdmin(int id, String token) async {
     try {
@@ -200,6 +236,39 @@ class ApiService {
       }
     } catch (e) {
       throw Exception('Error get data hewan from Pegawai by ID: $e');
+    }
+  }
+
+  // Method PUT
+  // Method PUT
+  static Future<http.Response> updateHewanPegawai(
+      String token, String action, Map<String, dynamic> data) async {
+    try {
+      final Uri uri = Uri.parse('$baseUrl/pegawai/hewan/${data['id_hewan']}');
+
+      final http.Response response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({'action': action, 'data': data}),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          return responseData['data'];
+        } else {
+          throw Exception(
+              'Failed to update data hewan from Pegawai: ${responseData['message']}');
+        }
+      } else {
+        throw Exception(
+            'Failed to update hewan from Admin: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error get data hewan from Pegawai: $e');
     }
   }
 

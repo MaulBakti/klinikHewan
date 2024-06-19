@@ -99,13 +99,15 @@ class HewanController extends GetxController {
 
       if (role == 'admin') {
         response =
-            await ApiService.postHewanAdmin(token, 'update', hewan.toJson());
+            await ApiService.updateHewanAdmin(token, 'update', hewan.toJson());
+        // Panggil ApiService untuk update hewan admin
       } else if (role == 'pegawai') {
-        response =
-            await ApiService.postHewanPegawai(token, 'update', hewan.toJson());
+        response = await ApiService.updateHewanPegawai(
+            token, 'update', hewan.toJson());
       } else {
         throw Exception('Invalid role: $role');
       }
+
       // final response =
       //     await ApiService.postHewan(token, 'update', hewan.toJson());
       if (response.statusCode == 200) {
