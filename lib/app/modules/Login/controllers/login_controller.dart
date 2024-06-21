@@ -27,6 +27,8 @@ class LoginController extends GetxController {
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           final token = data['data']['token'];
+
+          // Menyimpan token ke storage
           GetStorage().write('token', token);
 
           Get.snackbar('Login', 'Login successful');

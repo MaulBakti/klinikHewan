@@ -9,10 +9,10 @@ class ApiService {
 
   // Method untuk login dengan role
   static Future<http.Response> login(
-      role, String username, String password) async {
+      String role, String username, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/admin/login'),
+        Uri.parse('$baseUrl/$role/login/'),
         headers: {
           'Content-Type': 'application/json',
         },
