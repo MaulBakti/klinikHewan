@@ -34,11 +34,11 @@ class LoginController extends GetxController {
           Get.snackbar('Login', 'Login successful');
 
           if (role == 'admin') {
-            Get.offAllNamed('/adminhome');
+            Get.offAllNamed('/home');
           } else if (role == 'pegawai') {
-            Get.offAllNamed('/pegawaihome');
+            Get.offAllNamed('/home');
           } else if (role == 'pemilik') {
-            Get.offAllNamed('/pemilikhome');
+            Get.offAllNamed('/home');
           }
         } else {
           Get.snackbar(

@@ -2,19 +2,13 @@ import 'package:get/get.dart';
 // Dashboard
 import 'package:klinik_hewan/app/modules/Dashboard/bindings/dashboard_binding.dart';
 import 'package:klinik_hewan/app/modules/Dashboard/views/dashboard_view.dart';
-import 'package:klinik_hewan/app/modules/Home/PegawaiHome/bindings/pegawaiHome_binding.dart';
-import 'package:klinik_hewan/app/modules/Home/PegawaiHome/views/pegawaiHome_view.dart';
-import 'package:klinik_hewan/app/modules/Home/PemilikHome/bindings/pemilikHome_binding.dart';
-import 'package:klinik_hewan/app/modules/Home/PemilikHome/views/pemilikHome_view.dart';
-import 'package:klinik_hewan/app/modules/Pegawai/bindings/pegawai_binding.dart';
-import 'package:klinik_hewan/app/modules/Pegawai/view/pegawai_view.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PegawaiPembayaran/bindings/pegawaiPembayaran_binding.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PegawaiPembayaran/views/pegawaiPembayaran_view.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/bindings/pemilikPembayaran_binding.dart';
 import 'package:klinik_hewan/app/modules/Pembayaran/PemilikPembayaran/views/pemilikPembayaran_view.dart';
 // Home
-import '../modules/Home/AdminHome/bindings/adminHome_binding.dart';
-import '../modules/Home/AdminHome/views/adminHome_view.dart';
+import '../modules/Home/bindings/Home_binding.dart';
+import '../modules/Home/views/Home_view.dart';
 // Login
 import '../modules/Login/views/login_view.dart';
 // Hewan
@@ -49,37 +43,10 @@ class AppPages {
     ),
 
     /* HOME */
-    // Home Admin
     GetPage(
-      name: _Paths.ADMIN_HOME,
-      page: () => const AdminhomeView(),
-      binding: AdminhomeBinding(),
-    ),
-    // Home Pegawai
-    GetPage(
-      name: _Paths.PEGAWAI_HOME,
-      page: () => const PegawaihomeView(),
-      binding: PegawaihomeBinding(),
-    ),
-    // Home Pemilik
-    GetPage(
-      name: _Paths.PEMILIK_HOME,
-      page: () => const PemilikhomeView(),
-      binding: PemilikhomeBinding(),
-    ),
-
-    // PEGAWAI
-    GetPage(
-      name: _Paths.PEGAWAI,
-      page: () => const PegawaiView(),
-      binding: PegawaiBinding(),
-    ),
-
-    // PEMILIK
-    GetPage(
-      name: _Paths.PEMILIK,
-      page: () => const PemilikhomeView(),
-      binding: PemilikhomeBinding(),
+      name: _Paths.HOME,
+      page: () => homeView(),
+      binding: homeBinding(),
     ),
 
     /* HEWAN */

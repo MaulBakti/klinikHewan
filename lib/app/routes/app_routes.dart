@@ -13,6 +13,7 @@ abstract class Routes {
   static const ADMIN_HOME = _Paths.ADMIN_HOME;
   static const PEGAWAI_HOME = _Paths.PEGAWAI_HOME;
   static const PEMILIK_HOME = _Paths.PEMILIK_HOME;
+  static const HOME = _Paths.HOME;
 
   // Pegawai
   static const PEGAWAI = _Paths.PEGAWAI;
@@ -66,6 +67,8 @@ abstract class _Paths {
   static const PEGAWAI_HOME = '/pegawaihome';
   // Pemilik Admin
   static const PEMILIK_HOME = '/pemilikhome';
+  // Pemilik Admin
+  static const HOME = '/home';
 
   // Login
   static const LOGIN = '/login';
