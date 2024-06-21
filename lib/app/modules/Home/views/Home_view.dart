@@ -12,6 +12,21 @@ class homeView extends StatelessWidget {
         title: Text('Home'),
         actions: [
           IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              // Implementasi fungsi pencarian
+              // Misalnya Get.toNamed('/search');
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // Implementasi fungsi notifikasi
+              // Misalnya Get.toNamed('/notifications');
+            },
+          ),
+          // _buildProfileAvatar(context),
+          IconButton(
             icon: Icon(Icons.logout),
             onPressed: () => _showLogoutDialog(context),
           ),
@@ -102,13 +117,13 @@ class homeView extends StatelessWidget {
   Widget _buildPegawaiListView() {
     return ListView(
       children: [
-        _buildListTile(
-          title: 'Data Pegawai',
-          icon: Icons.people,
-          onTap: () {
-            Get.toNamed('/pegawai');
-          },
-        ),
+        // _buildListTile(
+        //   title: 'Data Pegawai',
+        //   icon: Icons.people,
+        //   onTap: () {
+        //     Get.toNamed('/pegawai');
+        //   },
+        // ),
         _buildListTile(
           title: 'Data Hewan',
           icon: Icons.pets,
@@ -144,6 +159,34 @@ class homeView extends StatelessWidget {
             Get.toNamed('/pemilik');
           },
         ),
+        _buildListTile(
+          title: 'Data Hewan',
+          icon: Icons.business,
+          onTap: () {
+            Get.toNamed('/hewan');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Obat',
+          icon: Icons.local_pharmacy,
+          onTap: () {
+            Get.toNamed('/obat');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Rekam Medis',
+          icon: Icons.assignment,
+          onTap: () {
+            Get.toNamed('/rekam-medis');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Pembayaran',
+          icon: Icons.payment,
+          onTap: () {
+            Get.toNamed('/pembayaran');
+          },
+        ),
       ],
     );
   }
@@ -164,6 +207,20 @@ class homeView extends StatelessWidget {
       ),
     );
   }
+
+  // Widget _buildProfileAvatar(BuildContext context) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       // Implementasi aksi ketika avatar profil diklik
+  //       // Misalnya Get.toNamed('/profile');
+  //     },
+  //     child: CircleAvatar(
+  //       backgroundImage: AssetImage(
+  //           'assets/images/avatar.png'), // Ganti dengan gambar profil yang sesuai
+  //       radius: 20,
+  //     ),
+  //   );
+  // }
 
   void _showLogoutDialog(BuildContext context) {
     showDialog(

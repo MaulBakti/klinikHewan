@@ -14,21 +14,29 @@ class DashboardView extends GetView<DashboardController> {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
+            color: Colors.black87,
           ),
         ),
         backgroundColor: Colors.white,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications, color: Colors.black),
             onPressed: () {
-              // Aksi ketika ikon lonceng ditekan
+              // Implementasi aksi ketika ikon notifikasi ditekan
             },
           ),
         ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/dashboard_background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
       body: Padding(
-        padding:
-            const EdgeInsets.only(top: 16.0), // Jarak antara AppBar dan body
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
             _buildListTile(
@@ -38,18 +46,35 @@ class DashboardView extends GetView<DashboardController> {
                 Get.toNamed('/login');
               },
             ),
+            _buildListTile(
+              title: 'Profile',
+              icon: Icons.person,
+              onTap: () {
+                // Ganti dengan navigasi ke halaman profil
+              },
+            ),
+            _buildListTile(
+              title: 'Settings',
+              icon: Icons.settings,
+              onTap: () {
+                // Ganti dengan navigasi ke halaman pengaturan
+              },
+            ),
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const [
-      //     BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Cari'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorit'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.add), label: '+'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Pesan'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-      //   ],
-      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+      ),
     );
   }
 
@@ -58,15 +83,16 @@ class DashboardView extends GetView<DashboardController> {
     required IconData icon,
     required VoidCallback onTap,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         title: Text(title),
-        trailing: Icon(icon),
+        leading: Icon(icon),
+        trailing: Icon(Icons.arrow_forward),
         onTap: onTap,
       ),
     );

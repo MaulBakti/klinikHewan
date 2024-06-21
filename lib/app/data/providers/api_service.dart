@@ -40,7 +40,7 @@ class ApiService {
           'Authorization': 'Bearer $token', // Menambahkan header authorization
         },
         body: json.encode({
-          'tableName': 'admin',
+          'role': 'admin',
           'action': 'read',
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
@@ -168,32 +168,28 @@ class ApiService {
     try {
       final Uri uri = Uri.parse('$baseUrl/pegawai/hewan');
 
-      final response = await http.post(
+      final response = await http.get(
         uri,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token', // Menambahkan header authorization
+          'Authorization': 'Bearer $token', // Pastikan token pegawai yang benar
         },
-        body: json.encode({
-          'tableName': 'pegawai',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
       );
+
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['success'] == true) {
           return responseData['data'];
         } else {
           throw Exception(
-              'Failed to get data hewan from Pegawai: ${responseData['message']}');
+              'Failed to fetch hewan from Pegawai: ${responseData['message']}');
         }
       } else {
         throw Exception(
-            'Failed to get data hewan from Pegawai: ${response.statusCode}');
+            'Failed to fetch hewan from Pegawai: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error get data hewan from Pegawai: $e');
+      throw Exception('Error fetching hewan from Pegawai: $e');
     }
   }
 
@@ -308,7 +304,7 @@ class ApiService {
           'Authorization': 'Bearer $token', // Menambahkan header authorization
         },
         body: json.encode({
-          'tableName': 'pemilik',
+          'role': 'pemilik',
           'action': 'read',
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
