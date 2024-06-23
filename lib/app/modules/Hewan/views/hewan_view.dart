@@ -13,7 +13,7 @@ class HewanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Fetch data saat halaman pertama kali di-load
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       controller.getDataHewan(role);
     });
 
@@ -28,7 +28,7 @@ class HewanView extends StatelessWidget {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (controller.errorMessage.isNotEmpty) {
+          } else if (controller.errorMessage.value.isNotEmpty) {
             return Center(
               child: Text('Error: ${controller.errorMessage.value}'),
             );
@@ -170,7 +170,7 @@ class HewanView extends StatelessWidget {
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
                   );
-                  controller.postDataHewan(role, newHewan, controller.token);
+                  controller.postDataHewan(role, newHewan);
                   Navigator.of(context).pop();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -259,7 +259,7 @@ class HewanView extends StatelessWidget {
                     berat: double.tryParse(beratController.text) ?? 0.0,
                     jenisKelamin: jenisKelaminController.text,
                   );
-                  controller.updateHewan(role, updatedHewan, controller.token);
+                  controller.updateHewan(role, updatedHewan);
                   Navigator.of(context).pop();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -293,7 +293,7 @@ class HewanView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                controller.deleteHewan(role, idHewan, controller.token);
+                controller.deleteHewan(role, idHewan);
                 Navigator.of(context).pop();
               },
               child: Text('Hapus'),
