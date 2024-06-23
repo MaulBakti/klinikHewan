@@ -1,18 +1,14 @@
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
-import 'package:get_storage/get_storage.dart'; // For local storage
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
   var username = ''.obs;
   var password = ''.obs;
-  // var isPasswordVisible = false.obs; // Definisikan isPasswordVisible
   var selectedRole = 'admin'.obs;
   var isLoading = false.obs;
-
-  // void togglePasswordVisibility() {
-  //   isPasswordVisible.value = !isPasswordVisible.value;
-  // }
+  final box = GetStorage();
 
   void login(String role) async {
     if (username.value.isNotEmpty && password.value.isNotEmpty) {
@@ -41,8 +37,7 @@ class LoginController extends GetxController {
             Get.offAllNamed('/home');
           }
         } else {
-          Get.snackbar(
-              'Error', 'Please enter username, password, and select a role');
+          Get.snackbar('Error', 'Failed to login');
         }
       } catch (e) {
         isLoading.value = false;
@@ -51,6 +46,11 @@ class LoginController extends GetxController {
     } else {
       Get.snackbar('Error', 'Please enter username and password');
     }
+  }
+
+  void logout() {
+    GetStorage().remove('token');
+    // Lainnya seperti membersihkan username, password, dan role jika diperlukan
   }
 
   @override

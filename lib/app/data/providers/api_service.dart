@@ -29,6 +29,7 @@ class ApiService {
   static Future<List<dynamic>> getHewanAdmin(String token) async {
     try {
       final Uri uri = Uri.parse('$baseUrl/admin/hewan');
+      print('Using token: $token');
 
       final response = await http.post(
         uri,
@@ -42,8 +43,9 @@ class ApiService {
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('GET Hewan Admin - Response status: ${response.statusCode}');
+      print('GET Hewan Admin - Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['success'] == true) {
@@ -73,8 +75,8 @@ class ApiService {
         },
         body: json.encode({
           'role': 'admin',
-          'action': 'create',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+          'action': 'action',
+          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
       return response;
@@ -121,8 +123,8 @@ class ApiService {
         },
         body: json.encode({
           'role': 'admin',
-          'action': 'update',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+          'action': 'action',
+          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
 

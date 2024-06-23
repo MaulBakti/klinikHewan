@@ -1,20 +1,20 @@
-import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-  final GetStorage _storage = GetStorage();
+  static const String _tokenKey = 'token';
 
-  // Simpan token
-  void saveToken(String token) {
-    _storage.write('token', token);
+  Future<void> saveToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_tokenKey, token);
   }
 
-  // Mengambil token dari penyimpanan lokal
-  String? getToken() {
-    return _storage.read('token') as String?;
+  Future<String?> getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_tokenKey);
   }
 
-  // Menghapus token dari penyimpanan lokal
-  void removeToken() {
-    _storage.remove('token');
+  Future<void> clearToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_tokenKey);
   }
 }

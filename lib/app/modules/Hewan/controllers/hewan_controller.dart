@@ -1,8 +1,7 @@
-// hewan_controller.dart
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
-import 'package:klinik_hewan/services/local_storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -10,24 +9,38 @@ class HewanController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
   var hewanList = <Hewan>[].obs;
-  final LocalStorageService storageService = LocalStorageService();
-  // late String token;
 
   @override
   void onInit() {
     super.onInit();
   }
 
+  void setToken(String token) {
+    GetStorage().write('token', token);
+    print('Token saved: $token');
+  }
+
+  Future<String?> getToken() async {
+    final token = GetStorage().read('token');
+    print('Token retrieved: $token');
+    return token;
+  }
+
+  void clearToken() {
+    GetStorage().remove('token');
+    print('Token removed');
+  }
+
   Future<void> getDataHewan(String role) async {
     try {
       isLoading.value = true;
-      String? token = storageService.getToken();
-      if (token == null) {
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false;
         return;
       }
-      // print('Token: $token');
+      print('Token: $token'); // Tambahkan ini untuk memeriksa token
+
       List<dynamic> responseData;
 
       if (role == 'admin') {
@@ -53,12 +66,12 @@ class HewanController extends GetxController {
   Future<void> postDataHewan(String role, Hewan hewan) async {
     try {
       isLoading.value = true;
-      String? token = storageService.getToken();
-      if (token == null) {
+      final String? token = GetStorage().read('token');
+      if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false;
         return;
       }
+      print('Token: $token');
 
       http.Response response;
 
@@ -90,12 +103,12 @@ class HewanController extends GetxController {
   Future<void> updateHewan(String role, Hewan hewan) async {
     try {
       isLoading.value = true;
-      String? token = storageService.getToken();
-      if (token == null) {
+      final String? token = GetStorage().read('token');
+      if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false;
         return;
       }
+      print('Token: $token');
 
       http.Response response;
 
@@ -131,12 +144,12 @@ class HewanController extends GetxController {
   Future<void> deleteHewan(String role, int idHewan) async {
     try {
       isLoading.value = true;
-      String? token = storageService.getToken();
-      if (token == null) {
+      final String? token = GetStorage().read('token');
+      if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false;
         return;
       }
+      print('Token: $token');
 
       http.Response response;
 

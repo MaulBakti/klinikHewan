@@ -6,13 +6,10 @@ abstract class Routes {
   // Dashboard
   static const DASHBOARD = _Paths.DASHBOARD;
 
-  // Login User
+  // Login
   static const LOGIN = _Paths.LOGIN;
 
-  // Home User
-  static const ADMIN_HOME = _Paths.ADMIN_HOME;
-  static const PEGAWAI_HOME = _Paths.PEGAWAI_HOME;
-  static const PEMILIK_HOME = _Paths.PEMILIK_HOME;
+  // Home
   static const HOME = _Paths.HOME;
 
   // Pegawai
@@ -22,6 +19,8 @@ abstract class Routes {
   static const PEMILIK = _Paths.PEMILIK;
 
   // Hewan
+  static const HEWAN = _Paths.HEWAN;
+
   //admin
   static const ADMIN_HEWAN = _Paths.ADMIN_HEWAN;
   // static const ADMIN_TAMBAHHEWAN = _Paths.ADMIN_TAMBAHHEWAN;
@@ -61,13 +60,7 @@ abstract class _Paths {
   _Paths._();
   static const DASHBOARD = '/dashboard';
 
-  // Home Admin
-  static const ADMIN_HOME = '/adminhome';
-  // Pegawai Admin
-  static const PEGAWAI_HOME = '/pegawaihome';
-  // Pemilik Admin
-  static const PEMILIK_HOME = '/pemilikhome';
-  // Pemilik Admin
+  // Home
   static const HOME = '/home';
 
   // Login
@@ -111,8 +104,6 @@ abstract class _Paths {
   static const PEMILIK_PEMBAYARAN = '/pemilik/pembayaran';
 
   static const HEWAN = '/hewan';
-  static const TAMBAHHEWAN = '/tambahhewan';
-  static const UBAHHEWAN = '/ubahhewan/:id';
 
   static const REKAM_MEDIS = '/rekam-medis';
   static const PEMBAYARAN = '/pembayaran';

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:klinik_hewan/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
   var role = 'admin'.obs; // Observable untuk role pengguna
@@ -9,21 +11,16 @@ class HomeController extends GetxController {
     // Anda dapat menambahkan logika lain yang diperlukan di sini
   }
 
-  // Method untuk navigasi ke halaman berdasarkan role
-  void navigateToHomePage() {
-    switch (role.value) {
-      case 'admin':
-        Get.offAllNamed('/adminhome');
-        break;
-      case 'pegawai':
-        Get.offAllNamed('/pegawaihome');
-        break;
-      case 'pemilik':
-        Get.offAllNamed('/pemilikhome');
-        break;
-      default:
-        Get.snackbar('Error', 'Invalid role');
-        break;
+  // Method untuk navigasi ke halaman HEWAN berdasarkan role
+  void navigateToHewanView(String role) {
+    final String? token = GetStorage().read('token');
+    if (token != null) {
+      Get.toNamed(Routes.HEWAN, parameters: {'role': role, 'token': token});
+    } else {
+      // Handle case where token is null, perhaps show an error or redirect to login
+      Get.snackbar('Error', 'Token not found');
+      // Example of redirecting to login page if token is not found
+      // Get.offAllNamed(Routes.LOGIN);
     }
   }
 

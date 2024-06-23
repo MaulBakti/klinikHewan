@@ -45,7 +45,7 @@ class AppPages {
     /* HOME */
     GetPage(
       name: _Paths.HOME,
-      page: () => homeView(),
+      page: () => HomeView(),
       binding: homeBinding(),
     ),
 
@@ -55,7 +55,8 @@ class AppPages {
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
         final token = Get.parameters['token'] ?? ''; // default token
-        return HewanView(role: role);
+        return HewanView(
+            role: role, token: token); // Pass token to HewanView constructor
       },
       binding: HewanBinding(),
     ),
