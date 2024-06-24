@@ -8,10 +8,10 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.6
   get: ^4.6.6
+  get_storage: ^2.0.3
   http: ^0.13.3
   flutter:
     sdk: flutter
-  get_storage: ^2.0.3
   shared_preferences: ^2.2.3
 
 dev_dependencies:

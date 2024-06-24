@@ -27,6 +27,7 @@ class ApiService {
   /* ADMIN */
   // Method GET
   static Future<List<dynamic>> getHewanAdmin(String token) async {
+    print('Token available: $token');
     try {
       final Uri uri = Uri.parse('$baseUrl/admin/hewan');
       print('Using token: $token');

@@ -9,38 +9,43 @@ class HewanController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
   var hewanList = <Hewan>[].obs;
+  final box = GetStorage();
 
   @override
   void onInit() {
     super.onInit();
+    print('Initializing HewanController');
   }
 
   void setToken(String token) {
-    GetStorage().write('token', token);
+    box.write('token', token);
     print('Token saved: $token');
   }
 
   Future<String?> getToken() async {
-    final token = GetStorage().read('token');
+    final token = box.read('token');
     print('Token retrieved: $token');
     return token;
   }
 
   void clearToken() {
-    GetStorage().remove('token');
+    box.remove('token');
     print('Token removed');
   }
 
   Future<void> getDataHewan(String role) async {
+    print('Fetching data hewan for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
+        isLoading.value = false; // Reset loading state
+        print('Error: Token not found');
         return;
       }
-      print('Token: $token'); // Tambahkan ini untuk memeriksa token
 
+      print('Using token: $token');
       List<dynamic> responseData;
 
       if (role == 'admin') {
@@ -52,23 +57,28 @@ class HewanController extends GetxController {
       } else {
         throw Exception('Invalid role: $role');
       }
+      print('List hewan: $hewanList');
 
       final List<Hewan> hewans =
           responseData.map((data) => Hewan.fromJson(data)).toList();
       hewanList.assignAll(hewans);
+      print('List hewan: $hewanList');
     } catch (e) {
       errorMessage.value = 'Error fetching data hewan: $e';
+      print('Error fetching data hewan: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
   Future<void> postDataHewan(String role, Hewan hewan) async {
+    print('Posting data hewan for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
+        isLoading.value = false; // Added to reset loading state
         return;
       }
       print('Token: $token');
@@ -84,6 +94,9 @@ class HewanController extends GetxController {
       } else {
         throw Exception('Invalid role: $role');
       }
+
+      print('Create Hewan - Response status: ${response.statusCode}');
+      print('Create Hewan - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
