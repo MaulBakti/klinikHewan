@@ -2,24 +2,26 @@ import 'package:get/get.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
+import 'package:klinik_hewan/app/modules/home/controllers/home_controller.dart'; // Import HomeController
 
 class LoginController extends GetxController {
   var username = ''.obs;
   var password = ''.obs;
-  var selectedRole = 'admin'.obs;
+  var selectedRole = ''.obs;
   var isLoading = false.obs;
   final box = GetStorage();
 
   void login(String role) async {
-    String role = selectedRole.value;
-    print('Attempting to login with role: $role, username: $username');
+    // String role = selectedRole.value;
+    print(
+        'Attempting to login with role: ${selectedRole.value}, username: ${username.value}');
     if (username.value.isNotEmpty && password.value.isNotEmpty) {
       isLoading.value = true;
       print(
           'Attempting to login with role: $role, username: ${username.value}, password: ${password.value}');
       try {
-        final response =
-            await ApiService.login(role, username.value, password.value);
+        final response = await ApiService.login(
+            selectedRole.value, username.value, password.value);
 
         print('Login response status: ${response.statusCode}');
         print('Login response body: ${response.body}');
@@ -37,13 +39,18 @@ class LoginController extends GetxController {
             Get.snackbar('Login', 'Login successful');
             print('Using token: $token');
 
-            if (role == 'admin') {
-              Get.offAllNamed('/home');
-            } else if (role == 'pegawai') {
-              Get.offAllNamed('/home');
-            } else if (role == 'pemilik') {
-              Get.offAllNamed('/home');
-            }
+            // if (role == 'admin') {
+            //   Get.offAllNamed('/home');
+            // } else if (role == 'pegawai') {
+            //   Get.offAllNamed('/home');
+            // } else if (role == 'pemilik') {
+            //   Get.offAllNamed('/home');
+            // }
+            // Update role in HomeController
+            Get.find<HomeController>().changeRole(selectedRole.value);
+
+            // Navigate to home page
+            Get.offAllNamed('/home');
           } else {
             Get.snackbar('Error', 'Failed to login');
           }

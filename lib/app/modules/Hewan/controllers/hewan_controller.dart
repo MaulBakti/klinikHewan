@@ -17,10 +17,10 @@ class HewanController extends GetxController {
     print('Initializing HewanController');
   }
 
-  void setToken(String token) {
-    box.write('token', token);
-    print('Token saved: $token');
-  }
+  // void setToken(String token) {
+  //   box.write('token', token);
+  //   print('Token saved: $token');
+  // }
 
   Future<String?> getToken() async {
     final token = box.read('token');
@@ -28,10 +28,10 @@ class HewanController extends GetxController {
     return token;
   }
 
-  void clearToken() {
-    box.remove('token');
-    print('Token removed');
-  }
+  // void clearToken() {
+  //   box.remove('token');
+  //   print('Token removed');
+  // }
 
   Future<void> getDataHewan(String role) async {
     print('Fetching data hewan for role: $role');
@@ -75,16 +75,17 @@ class HewanController extends GetxController {
     print('Posting data hewan for role: $role');
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
+      final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
         isLoading.value = false; // Added to reset loading state
+        print('Error: Token not found');
         return;
       }
       print('Token: $token');
 
       http.Response response;
-
+      // Ensure role is handled correctly and log for debugging
       if (role == 'admin') {
         response =
             await ApiService.postHewanAdmin(token, 'create', hewan.toJson());
@@ -104,10 +105,13 @@ class HewanController extends GetxController {
         hewanList.add(createdHewan);
         Get.snackbar('Success', 'Hewan created successfully');
       } else {
-        throw Exception('Failed to create hewan: ${response.statusCode}');
+        final responseData = jsonDecode(response.body);
+        throw Exception('Failed to create hewan: ${responseData['message']}');
       }
     } catch (e) {
+      errorMessage.value = 'Failed to create hewan: $e';
       Get.snackbar('Error', 'Failed to create hewan: $e');
+      print('Failed to create hewan: $e');
     } finally {
       isLoading.value = false;
     }

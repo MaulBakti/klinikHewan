@@ -9,7 +9,7 @@ class HewanView extends StatelessWidget {
   final HewanController controller = Get.put(HewanController());
 
   HewanView({required this.role, required this.token}) {
-    controller.setToken(token);
+    // controller.setToken(token);
     controller.getDataHewan(role);
   }
 
