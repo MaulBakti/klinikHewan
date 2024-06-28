@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static const baseUrl = 'http://localhost:3000';
 
-  // Method untuk login dengan role
+  // Method for login with role
   static Future<http.Response> login(
       String role, String username, String password) async {
     try {
@@ -27,37 +27,24 @@ class ApiService {
   /* ADMIN */
   // Method GET
   static Future<List<dynamic>> getHewanAdmin(String token) async {
-    print('Token available: $token');
     try {
       final Uri uri = Uri.parse('$baseUrl/admin/hewan');
-      print('Using token: $token');
-
-      final response = await http.post(
+      final response = await http.get(
         uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
-          'role': 'admin',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
       );
-      print('GET Hewan Admin - Response status: ${response.statusCode}');
-      print('GET Hewan Admin - Response body: ${response.body}');
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to get data hewan from Admin: ${responseData['message']}');
-        }
+      _checkResponse(response);
+
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success'] == true) {
+        return responseData['data'];
       } else {
         throw Exception(
-            'Failed to get hewan from Admin: ${response.statusCode}');
+            'Failed to get data hewan from Admin: ${responseData['message']}');
       }
     } catch (e) {
       throw Exception('Error get data hewan from Admin: $e');
@@ -74,39 +61,17 @@ class ApiService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
+        body: jsonEncode({
           'role': 'admin',
-          'action': 'action',
-          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+          'action': action,
+          'data': data,
         }),
       );
+
+      _checkResponse(response);
       return response;
     } catch (e) {
       throw Exception('Failed to create hewan from Admin: $e');
-    }
-  }
-
-  // Method GET BY ID
-  static Future<Map<String, dynamic>> getHewanAdminById(
-      int id, String token) async {
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/admin/hewan/$id'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
-      } else {
-        throw Exception(
-            'Failed to get data hewan from Admin by ID: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error get data hewan from Admin by ID: $e');
     }
   }
 
@@ -122,27 +87,17 @@ class ApiService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
+        body: jsonEncode({
           'role': 'admin',
-          'action': 'action',
-          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+          'action': action,
+          'data': data,
         }),
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return response;
-        } else {
-          throw Exception(
-              'Failed to update data hewan from Admin: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to update hewan from Admin: ${response.statusCode}');
-      }
+      _checkResponse(response);
+      return response;
     } catch (e) {
-      throw Exception('Error updating hewan: $e');
+      throw Exception('Error updating hewan from Admin: $e');
     }
   }
 
@@ -157,13 +112,8 @@ class ApiService {
         },
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
-      } else {
-        throw Exception(
-            'Failed to delete data hewan from Admin: ${response.statusCode}');
-      }
+      _checkResponse(response);
+      return response;
     } catch (e) {
       throw Exception('Error delete data hewan from Admin: $e');
     }
@@ -175,30 +125,22 @@ class ApiService {
     try {
       final Uri uri = Uri.parse('$baseUrl/pegawai/hewan');
 
-      final response = await http.post(
+      final response = await http.get(
         uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
-          'role': 'pegawai',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to fetch hewan from Pegawai: ${responseData['message']}');
-        }
+      _checkResponse(response);
+
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success'] == true) {
+        return responseData['data'];
       } else {
         throw Exception(
-            'Failed to fetch hewan from Pegawai: ${response.statusCode}');
+            'Failed to fetch hewan from Pegawai: ${responseData['message']}');
       }
     } catch (e) {
       throw Exception('Error fetching hewan from Pegawai: $e');
@@ -215,39 +157,17 @@ class ApiService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
+        body: jsonEncode({
           'role': 'pegawai',
-          'action': 'create',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+          'action': action,
+          'data': data,
         }),
       );
+
+      _checkResponse(response);
       return response;
     } catch (e) {
-      throw Exception('Failed to create data hewan from Pegawai:  $e');
-    }
-  }
-
-  // Method GET BY ID
-  static Future<Map<String, dynamic>> getHewanPegawaiById(
-      int id, String token) async {
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/pegawai/hewan/$id'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
-      } else {
-        throw Exception(
-            'Failed to get data hewan from Pegawai by ID: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error get data hewan from Pegawai by ID: $e');
+      throw Exception('Failed to create data hewan from Pegawai: $e');
     }
   }
 
@@ -263,25 +183,15 @@ class ApiService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
+        body: jsonEncode({
           'role': 'pegawai',
-          'action': 'update',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+          'action': action,
+          'data': data,
         }),
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return response;
-        } else {
-          throw Exception(
-              'Failed to update data hewan from Pegawai: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to update hewan from Pegawai: ${response.statusCode}');
-      }
+      _checkResponse(response);
+      return response;
     } catch (e) {
       throw Exception('Error updating hewan from Pegawai: $e');
     }
@@ -298,13 +208,8 @@ class ApiService {
         },
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
-      } else {
-        throw Exception(
-            'Failed to delete data hewan from Pegawai: ${response.statusCode}');
-      }
+      _checkResponse(response);
+      return response;
     } catch (e) {
       throw Exception('Error delete data hewan from Pegawai: $e');
     }
@@ -316,33 +221,32 @@ class ApiService {
     try {
       final Uri uri = Uri.parse('$baseUrl/pemilik/hewan');
 
-      final response = await http.post(
+      final response = await http.get(
         uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode({
-          'role': 'pemilik',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to fetch hewan from Pemilik: ${responseData['message']}');
-        }
+      _checkResponse(response);
+
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      if (responseData['success'] == true) {
+        return responseData['data'];
       } else {
         throw Exception(
-            'Failed to fetch hewan from Pemilik: ${response.statusCode}');
+            'Failed to fetch hewan from Pemilik: ${responseData['message']}');
       }
     } catch (e) {
       throw Exception('Error fetching hewan from Pemilik: $e');
+    }
+  }
+
+  // Helper function to check HTTP response status and throw exceptions if not successful
+  static void _checkResponse(http.Response response) {
+    if (response.statusCode != 200) {
+      throw Exception('Request failed with status: ${response.statusCode}');
     }
   }
 

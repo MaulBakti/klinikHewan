@@ -10,8 +10,7 @@ class HewanView extends StatelessWidget {
 
   HewanView({required this.role, required this.token}) {
     controller.getToken();
-    // controller.setToken(token);
-    controller.getDataHewan(role);
+    controller.getDataHewan();
     controller.getRole();
   }
 
@@ -40,8 +39,7 @@ class HewanView extends StatelessWidget {
       floatingActionButton: role == 'admin' || role == 'pegawai'
           ? FloatingActionButton(
               onPressed: () {
-                print('Sebagai: $role');
-                _addHewan(context, token);
+                _addHewan(context);
               },
               child: Icon(Icons.add),
             )
@@ -58,7 +56,7 @@ class HewanView extends StatelessWidget {
           if (role == 'admin' || role == 'pegawai')
             ElevatedButton(
               onPressed: () {
-                _addHewan(context, token);
+                _addHewan(context);
               },
               child: Text('Tambah Hewan'),
             ),
@@ -110,7 +108,7 @@ class HewanView extends StatelessWidget {
     );
   }
 
-  void _addHewan(BuildContext context, String token) {
+  void _addHewan(BuildContext context) {
     final TextEditingController namaController = TextEditingController();
     final TextEditingController jenisController = TextEditingController();
     final TextEditingController umurController = TextEditingController();
@@ -131,27 +129,18 @@ class HewanView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                     labelText: 'Nama Hewan',
-                    errorText: namaController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
                   ),
                 ),
                 TextField(
                   controller: jenisController,
                   decoration: InputDecoration(
                     labelText: 'Jenis Hewan',
-                    errorText: namaController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
                   ),
                 ),
                 TextField(
                   controller: umurController,
                   decoration: InputDecoration(
                     labelText: 'Umur',
-                    errorText: namaController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -159,9 +148,6 @@ class HewanView extends StatelessWidget {
                   controller: beratController,
                   decoration: InputDecoration(
                     labelText: 'Berat (kg)',
-                    errorText: namaController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -169,9 +155,6 @@ class HewanView extends StatelessWidget {
                   controller: jenisKelaminController,
                   decoration: InputDecoration(
                     labelText: 'Jenis Kelamin',
-                    errorText: namaController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
                   ),
                 ),
               ],
@@ -187,13 +170,13 @@ class HewanView extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _validateAndSaveHewan(
-                    context,
-                    token,
-                    namaController,
-                    jenisController,
-                    umurController,
-                    beratController,
-                    jenisKelaminController);
+                  context,
+                  namaController,
+                  jenisController,
+                  umurController,
+                  beratController,
+                  jenisKelaminController,
+                );
               },
               child: Text('Simpan'),
             ),
@@ -204,28 +187,28 @@ class HewanView extends StatelessWidget {
   }
 
   void _validateAndSaveHewan(
-      BuildContext context,
-      String token,
-      TextEditingController namaController,
-      TextEditingController jenisController,
-      TextEditingController umurController,
-      TextEditingController beratController,
-      TextEditingController jenisKelaminController) {
+    BuildContext context,
+    TextEditingController namaController,
+    TextEditingController jenisController,
+    TextEditingController umurController,
+    TextEditingController beratController,
+    TextEditingController jenisKelaminController,
+  ) {
     if (namaController.text.isNotEmpty &&
         jenisController.text.isNotEmpty &&
         umurController.text.isNotEmpty &&
         beratController.text.isNotEmpty &&
         jenisKelaminController.text.isNotEmpty) {
       final newHewan = Hewan(
-        idHewan: 0,
-        idPemilik: 0, // To be handled by backend, not needed in frontend
+        idHewan: 0, // or any default value if it's a new entry
+        idPemilik: 'some_id', // Provide the correct idPemilik
         namaHewan: namaController.text,
         jenisHewan: jenisController.text,
         umur: int.tryParse(umurController.text) ?? 0,
         berat: double.tryParse(beratController.text) ?? 0.0,
         jenisKelamin: jenisKelaminController.text,
       );
-      controller.postDataHewan(token, newHewan).then((_) {
+      Get.find<HewanController>().postDataHewan(newHewan).then((_) {
         // Reset form fields after successful submission
         namaController.clear();
         jenisController.clear();
@@ -247,86 +230,15 @@ class HewanView extends StatelessWidget {
     }
   }
 
-  void _editHewan(BuildContext context, Hewan hewan) {
-    final TextEditingController namaController =
-        TextEditingController(text: hewan.namaHewan);
-    final TextEditingController jenisController =
-        TextEditingController(text: hewan.jenisHewan);
-    final TextEditingController umurController =
-        TextEditingController(text: hewan.umur.toString());
-    final TextEditingController beratController =
-        TextEditingController(text: hewan.berat.toString());
-    final TextEditingController jenisKelaminController =
-        TextEditingController(text: hewan.jenisKelamin);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit Hewan'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: namaController,
-                  decoration: InputDecoration(labelText: 'Nama Hewan'),
-                ),
-                TextField(
-                  controller: jenisController,
-                  decoration: InputDecoration(labelText: 'Jenis Hewan'),
-                ),
-                TextField(
-                  controller: umurController,
-                  decoration: InputDecoration(labelText: 'Umur'),
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: beratController,
-                  decoration: InputDecoration(labelText: 'Berat (kg)'),
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: jenisKelaminController,
-                  decoration: InputDecoration(labelText: 'Jenis Kelamin'),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Batal'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _validateAndEditHewan(
-                    context,
-                    hewan,
-                    namaController,
-                    jenisController,
-                    umurController,
-                    beratController,
-                    jenisKelaminController);
-              },
-              child: Text('Simpan'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _validateAndEditHewan(
-      BuildContext context,
-      Hewan hewan,
-      TextEditingController namaController,
-      TextEditingController jenisController,
-      TextEditingController umurController,
-      TextEditingController beratController,
-      TextEditingController jenisKelaminController) {
+    BuildContext context,
+    Hewan hewan,
+    TextEditingController namaController,
+    TextEditingController jenisController,
+    TextEditingController umurController,
+    TextEditingController beratController,
+    TextEditingController jenisKelaminController,
+  ) {
     if (namaController.text.isNotEmpty &&
         jenisController.text.isNotEmpty &&
         umurController.text.isNotEmpty &&
@@ -334,16 +246,19 @@ class HewanView extends StatelessWidget {
         jenisKelaminController.text.isNotEmpty) {
       final updatedHewan = Hewan(
         idHewan: hewan.idHewan,
-        idPemilik: hewan
-            .idPemilik, // Akan ditangani oleh backend, tidak diperlukan di frontend
+        idPemilik: hewan.idPemilik, // ensure this is provided as well
         namaHewan: namaController.text,
         jenisHewan: jenisController.text,
         umur: int.tryParse(umurController.text) ?? 0,
         berat: double.tryParse(beratController.text) ?? 0.0,
         jenisKelamin: jenisKelaminController.text,
       );
-      Get.find<HewanController>().updateHewan(role, updatedHewan);
-      Navigator.of(context).pop();
+      Get.find<HewanController>().updateHewan(updatedHewan).then((_) {
+        Navigator.of(context).pop();
+      }).catchError((error) {
+        // Handle specific errors or show generic error message
+        Get.snackbar('Error', 'Failed to update hewan: $error');
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -369,10 +284,12 @@ class HewanView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // Call deleteHewan method from your controller
-                // Example assuming deleteHewan exists in your HewanController
-                Get.find<HewanController>().deleteHewan(role, idHewan);
-                Navigator.of(context).pop();
+                Get.find<HewanController>().deleteHewan(idHewan).then((_) {
+                  Navigator.of(context).pop();
+                }).catchError((error) {
+                  // Handle specific errors or show generic error message
+                  Get.snackbar('Error', 'Failed to delete hewan: $error');
+                });
               },
               child: Text('Hapus'),
             ),

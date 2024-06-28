@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
@@ -17,11 +18,6 @@ class HewanController extends GetxController {
     print('Initializing HewanController');
   }
 
-  // void setToken(String token) {
-  //   box.write('token', token);
-  //   print('Token saved: $token');
-  // }
-
   Future<String?> getToken() async {
     final token = box.read('token');
     print('Token retrieved: $token');
@@ -30,7 +26,7 @@ class HewanController extends GetxController {
 
   Future<String?> getRole() async {
     final role = box.read('role');
-    print('Token retrieved: $role');
+    print('Role retrieved: $role');
     return role;
   }
 
@@ -39,37 +35,38 @@ class HewanController extends GetxController {
     print('Token removed');
   }
 
-  Future<void> getDataHewan(String role) async {
-    role = box.read('role');
-    print('Fetching data hewan for role: $role');
+  Future<void> getDataHewan() async {
     try {
       isLoading.value = true;
       final String? token = await getToken();
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Token not found';
-        isLoading.value = false; // Reset loading state
-        print('Error: Token not found');
+      final String? role = await getRole();
+
+      if (token == null || token.isEmpty || role == null || role.isEmpty) {
+        errorMessage.value = 'Token or role not found';
+        isLoading.value = false;
+        print('Error: Token or role not found');
         return;
       }
 
-      print('Using token: $token');
       List<dynamic> responseData;
 
-      if (role == 'admin') {
-        responseData = await ApiService.getHewanAdmin(token);
-      } else if (role == 'pegawai') {
-        responseData = await ApiService.getHewanPegawai(token);
-      } else if (role == 'pemilik') {
-        responseData = await ApiService.getHewanPemilik(token);
-      } else {
-        throw Exception('Invalid role: $role');
+      switch (role) {
+        case 'admin':
+          responseData = await ApiService.getHewanAdmin(token);
+          break;
+        case 'pegawai':
+          responseData = await ApiService.getHewanPegawai(token);
+          break;
+        case 'pemilik':
+          responseData = await ApiService.getHewanPemilik(token);
+          break;
+        default:
+          throw Exception('Invalid role: $role');
       }
-      print('List hewan: $hewanList');
 
       final List<Hewan> hewans =
           responseData.map((data) => Hewan.fromJson(data)).toList();
       hewanList.assignAll(hewans);
-      print('List hewan: $hewanList');
     } catch (e) {
       errorMessage.value = 'Error fetching data hewan: $e';
       print('Error fetching data hewan: $e');
@@ -78,33 +75,33 @@ class HewanController extends GetxController {
     }
   }
 
-  Future<void> postDataHewan(String role, Hewan hewan) async {
-    role = box.read('role');
-    print('Posting data hewan for role: $role');
+  Future<void> postDataHewan(Hewan hewan) async {
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Token not found';
-        isLoading.value = false; // Added to reset loading state
+      final String? token = await getToken();
+      final String? role = await getRole();
+
+      if (token == null || token.isEmpty || role == null || role.isEmpty) {
+        errorMessage.value = 'Token or role not found';
+        isLoading.value = false;
+        print('Error: Token or role not found');
         return;
       }
-      print('Token: $token');
 
       http.Response response;
 
-      if (role == 'admin') {
-        response =
-            await ApiService.postHewanAdmin(token, 'create', hewan.toJson());
-      } else if (role == 'pegawai') {
-        response =
-            await ApiService.postHewanPegawai(token, 'create', hewan.toJson());
-      } else {
-        throw Exception('Invalid role: $role');
+      switch (role) {
+        case 'admin':
+          response =
+              await ApiService.postHewanAdmin(token, 'create', hewan.toJson());
+          break;
+        case 'pegawai':
+          response = await ApiService.postHewanPegawai(
+              token, 'create', hewan.toJson());
+          break;
+        default:
+          throw Exception('Invalid role: $role');
       }
-
-      print('Create Hewan - Response status: ${response.statusCode}');
-      print('Create Hewan - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -115,32 +112,40 @@ class HewanController extends GetxController {
         throw Exception('Failed to create hewan: ${response.statusCode}');
       }
     } catch (e) {
+      errorMessage.value = 'Failed to create hewan: $e';
       Get.snackbar('Error', 'Failed to create hewan: $e');
+      print('Failed to create hewan: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> updateHewan(String role, Hewan hewan) async {
+  Future<void> updateHewan(Hewan hewan) async {
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Token not found';
+      final String? token = await getToken();
+      final String? role = await getRole();
+
+      if (token == null || token.isEmpty || role == null || role.isEmpty) {
+        errorMessage.value = 'Token or role not found';
+        isLoading.value = false;
+        print('Error: Token or role not found');
         return;
       }
-      print('Token: $token');
 
       http.Response response;
 
-      if (role == 'admin') {
-        response =
-            await ApiService.updateHewanAdmin(token, 'update', hewan.toJson());
-      } else if (role == 'pegawai') {
-        response = await ApiService.updateHewanPegawai(
-            token, 'update', hewan.toJson());
-      } else {
-        throw Exception('Invalid role: $role');
+      switch (role) {
+        case 'admin':
+          response = await ApiService.updateHewanAdmin(
+              token, 'update', hewan.toJson());
+          break;
+        case 'pegawai':
+          response = await ApiService.updateHewanPegawai(
+              token, 'update', hewan.toJson());
+          break;
+        default:
+          throw Exception('Invalid role: $role');
       }
 
       if (response.statusCode == 200) {
@@ -156,30 +161,38 @@ class HewanController extends GetxController {
         throw Exception('Failed to update hewan: ${response.statusCode}');
       }
     } catch (e) {
+      errorMessage.value = 'Failed to update hewan: $e';
       Get.snackbar('Error', 'Failed to update hewan: $e');
+      print('Failed to update hewan: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> deleteHewan(String role, int idHewan) async {
+  Future<void> deleteHewan(int idHewan) async {
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Token not found';
+      final String? token = await getToken();
+      final String? role = await getRole();
+
+      if (token == null || token.isEmpty || role == null || role.isEmpty) {
+        errorMessage.value = 'Token or role not found';
+        isLoading.value = false;
+        print('Error: Token or role not found');
         return;
       }
-      print('Token: $token');
 
       http.Response response;
 
-      if (role == 'admin') {
-        response = await ApiService.deleteHewanAdmin(idHewan, token);
-      } else if (role == 'pegawai') {
-        response = await ApiService.deleteHewanPegawai(idHewan, token);
-      } else {
-        throw Exception('Invalid role: $role');
+      switch (role) {
+        case 'admin':
+          response = await ApiService.deleteHewanAdmin(idHewan, token);
+          break;
+        case 'pegawai':
+          response = await ApiService.deleteHewanPegawai(idHewan, token);
+          break;
+        default:
+          throw Exception('Invalid role: $role');
       }
 
       if (response.statusCode == 200) {
@@ -189,12 +202,14 @@ class HewanController extends GetxController {
         throw Exception('Failed to delete hewan: ${response.statusCode}');
       }
     } catch (e) {
+      errorMessage.value = 'Failed to delete hewan: $e';
       Get.snackbar('Error', 'Failed to delete hewan: $e');
+      print('Failed to delete hewan: $e');
     } finally {
       isLoading.value = false;
     }
   }
-
+}
   // Future<String> getNamaPemilik(int idPemilik) async {
   //   try {
   //     isLoading.value = true;
@@ -207,4 +222,3 @@ class HewanController extends GetxController {
   //     isLoading.value = false;
   //   }
   // }
-}

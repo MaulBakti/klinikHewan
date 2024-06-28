@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/Login/controllers/login_controller.dart';
-import '../controllers/Home_controller.dart';
-// import '../../Login/controllers/login_controller.dart';
+import 'package:klinik_hewan/app/modules/home/controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
   final HomeController homeController = Get.find<HomeController>();
-  // final role = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +14,15 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              // Implementasi fungsi pencarian
-              // Misalnya Get.toNamed('/search');
+              // Implement search functionality
+              // For example, Get.toNamed('/search');
             },
           ),
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
-              // Implementasi fungsi notifikasi
-              // Misalnya Get.toNamed('/notifications');
+              // Implement notification functionality
+              // For example, Get.toNamed('/notifications');
             },
           ),
           IconButton(
@@ -37,11 +34,11 @@ class HomeView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() {
-          if (homeController.role == 'admin') {
+          if (homeController.role.value == 'admin') {
             return _buildAdminListView();
-          } else if (homeController.role == 'pegawai') {
+          } else if (homeController.role.value == 'pegawai') {
             return _buildPegawaiListView();
-          } else if (homeController.role == 'pemilik') {
+          } else if (homeController.role.value == 'pemilik') {
             return _buildPemilikListView();
           } else {
             return Center(
@@ -71,7 +68,7 @@ class HomeView extends StatelessWidget {
           },
         ),
         _buildListTile(
-          title: 'Data Doctor',
+          title: 'Data Dokter',
           icon: Icons.medical_services,
           onTap: () {
             Get.toNamed('/doctor');
@@ -156,7 +153,7 @@ class HomeView extends StatelessWidget {
         ),
         _buildListTile(
           title: 'Data Hewan',
-          icon: Icons.business,
+          icon: Icons.pets,
           onTap: () {
             Get.toNamed('/hewan');
           },
@@ -231,7 +228,7 @@ class HomeView extends StatelessWidget {
   }
 
   void _logout() {
-    homeController.changeRole(); // Ganti dengan peran default setelah logout
-    Get.offAllNamed('/dashboard');
+    homeController.changeRole(); // Reset role on logout
+    Get.offAllNamed('/login');
   }
 }
