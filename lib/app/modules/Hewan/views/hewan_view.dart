@@ -9,10 +9,15 @@ class HewanView extends StatelessWidget {
   final HewanController controller = Get.put(HewanController());
 
   HewanView({required this.role, required this.token}) {
+<<<<<<< HEAD
     controller.getToken();
     // controller.setToken(token);
     controller.getDataHewan(role);
     controller.getRole();
+=======
+    // controller.setToken(token);
+    controller.getDataHewan(role);
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
   }
 
   @override
@@ -40,7 +45,10 @@ class HewanView extends StatelessWidget {
       floatingActionButton: role == 'admin' || role == 'pegawai'
           ? FloatingActionButton(
               onPressed: () {
+<<<<<<< HEAD
                 print('Sebagai: $role');
+=======
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
                 _addHewan(context, token);
               },
               child: Icon(Icons.add),
@@ -225,7 +233,11 @@ class HewanView extends StatelessWidget {
         berat: double.tryParse(beratController.text) ?? 0.0,
         jenisKelamin: jenisKelaminController.text,
       );
+<<<<<<< HEAD
       controller.postDataHewan(token, newHewan).then((_) {
+=======
+      Get.find<HewanController>().postDataHewan(token, newHewan).then((_) {
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
         // Reset form fields after successful submission
         namaController.clear();
         jenisController.clear();

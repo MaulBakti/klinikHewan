@@ -67,6 +67,10 @@ class ApiService {
   // Method POST
   static Future<http.Response> postHewanAdmin(
       String token, String action, Map<String, dynamic> data) async {
+<<<<<<< HEAD
+=======
+    print('Token available: $token');
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/admin/hewan'),
@@ -74,12 +78,23 @@ class ApiService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
+<<<<<<< HEAD
         body: json.encode({
           'role': 'admin',
           'action': 'action',
           'data': data, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
+=======
+        // body: json.encode({
+        //   'role': 'admin',
+        //   'action': 'action',
+        //   'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+        // }),
+        body: jsonEncode(data),
+      );
+      print('POST Hewan Admin - Response body: ${response.body}');
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
       return response;
     } catch (e) {
       throw Exception('Failed to create hewan from Admin: $e');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+<<<<<<< HEAD
 import 'package:klinik_hewan/app/modules/Login/controllers/login_controller.dart';
 import '../controllers/Home_controller.dart';
 // import '../../Login/controllers/login_controller.dart';
@@ -7,6 +8,12 @@ import '../controllers/Home_controller.dart';
 class HomeView extends StatelessWidget {
   final HomeController homeController = Get.find<HomeController>();
   // final role = Get.find<LoginController>();
+=======
+import 'package:klinik_hewan/app/modules/Home/controllers/Home_controller.dart';
+
+class HomeView extends StatelessWidget {
+  final HomeController homeController = Get.find<HomeController>();
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +44,19 @@ class HomeView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() {
+<<<<<<< HEAD
           if (homeController.role == 'admin') {
             return _buildAdminListView();
           } else if (homeController.role == 'pegawai') {
             return _buildPegawaiListView();
           } else if (homeController.role == 'pemilik') {
+=======
+          if (homeController.role.value == 'admin') {
+            return _buildAdminListView();
+          } else if (homeController.role.value == 'pegawai') {
+            return _buildPegawaiListView();
+          } else if (homeController.role.value == 'pemilik') {
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
             return _buildPemilikListView();
           } else {
             return Center(
@@ -231,7 +246,12 @@ class HomeView extends StatelessWidget {
   }
 
   void _logout() {
+<<<<<<< HEAD
     homeController.changeRole(); // Ganti dengan peran default setelah logout
     Get.offAllNamed('/dashboard');
+=======
+    homeController.changeRole('');
+    Get.offAllNamed('/login');
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
   }
 }

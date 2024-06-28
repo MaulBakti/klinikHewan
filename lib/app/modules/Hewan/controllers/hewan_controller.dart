@@ -28,6 +28,7 @@ class HewanController extends GetxController {
     return token;
   }
 
+<<<<<<< HEAD
   Future<String?> getRole() async {
     final role = box.read('role');
     print('Token retrieved: $role');
@@ -41,6 +42,14 @@ class HewanController extends GetxController {
 
   Future<void> getDataHewan(String role) async {
     role = box.read('role');
+=======
+  // void clearToken() {
+  //   box.remove('token');
+  //   print('Token removed');
+  // }
+
+  Future<void> getDataHewan(String role) async {
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
     print('Fetching data hewan for role: $role');
     try {
       isLoading.value = true;
@@ -79,6 +88,7 @@ class HewanController extends GetxController {
   }
 
   Future<void> postDataHewan(String role, Hewan hewan) async {
+<<<<<<< HEAD
     role = box.read('role');
     print('Posting data hewan for role: $role');
     try {
@@ -87,12 +97,26 @@ class HewanController extends GetxController {
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
         isLoading.value = false; // Added to reset loading state
+=======
+    print('Posting data hewan for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false; // Added to reset loading state
+        print('Error: Token not found');
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
         return;
       }
       print('Token: $token');
 
       http.Response response;
+<<<<<<< HEAD
 
+=======
+      // Ensure role is handled correctly and log for debugging
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
       if (role == 'admin') {
         response =
             await ApiService.postHewanAdmin(token, 'create', hewan.toJson());
@@ -112,10 +136,20 @@ class HewanController extends GetxController {
         hewanList.add(createdHewan);
         Get.snackbar('Success', 'Hewan created successfully');
       } else {
+<<<<<<< HEAD
         throw Exception('Failed to create hewan: ${response.statusCode}');
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to create hewan: $e');
+=======
+        final responseData = jsonDecode(response.body);
+        throw Exception('Failed to create hewan: ${responseData['message']}');
+      }
+    } catch (e) {
+      errorMessage.value = 'Failed to create hewan: $e';
+      Get.snackbar('Error', 'Failed to create hewan: $e');
+      print('Failed to create hewan: $e');
+>>>>>>> ab99608de9f73f44cbf13b38944e80b8591f7867
     } finally {
       isLoading.value = false;
     }
