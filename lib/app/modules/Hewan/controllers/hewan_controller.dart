@@ -163,39 +163,40 @@ class HewanController extends GetxController {
   }
 
   Future<void> deleteHewan(int idHewan) async {
-    final role = await getRole();
-    print('Deleting data hewan for role: $role');
-    try {
-      isLoading.value = true;
-      final String? token = GetStorage().read('token');
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Token not found';
-        return;
-      }
-      print('Token: $token');
-
-      http.Response response;
-
-      if (role == 'admin') {
-        response = await ApiService.deleteHewanAdmin(idHewan, token);
-      } else if (role == 'pegawai') {
-        response = await ApiService.deleteHewanPegawai(idHewan, token);
-      } else {
-        throw Exception('Invalid role: $role');
-      }
-
-      if (response.statusCode == 200) {
-        hewanList.removeWhere((element) => element.idHewan == idHewan);
-        Get.snackbar('Success', 'Hewan deleted successfully');
-      } else {
-        throw Exception('Failed to delete hewan: ${response.statusCode}');
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to delete hewan: $e');
-    } finally {
+  final role = await getRole();
+  print('Deleting data hewan for role: $role');
+  try {
+    isLoading.value = true;
+    final String? token = GetStorage().read('token');
+    if (token == null || token.isEmpty) {
+      errorMessage.value = 'Token not found';
       isLoading.value = false;
+      return;
     }
+    print('Token: $token');
+
+    http.Response response;
+
+    if (role == 'admin') {
+      response = await ApiService.deleteHewanAdmin(idHewan, token);
+    } else if (role == 'pegawai') {
+      response = await ApiService.deleteHewanPegawai(idHewan, token);
+    } else {
+      throw Exception('Invalid role: $role');
+    }
+
+    if (response.statusCode == 200) {
+      hewanList.removeWhere((element) => element.idHewan == idHewan);
+      Get.snackbar('Success', 'Hewan deleted successfully');
+    } else {
+      throw Exception('Failed to delete hewan: ${response.statusCode}');
+    }
+  } catch (e) {
+    Get.snackbar('Error', 'Failed to delete hewan: $e');
+  } finally {
+    isLoading.value = false;
   }
+}
 
   // Future<String> getNamaPemilik(int idPemilik) async {
   //   try {

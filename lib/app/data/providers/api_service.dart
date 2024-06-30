@@ -152,22 +152,25 @@ class ApiService {
   // Method Delete
   static Future<http.Response> deleteHewanAdmin(int id, String token) async {
     try {
-      final response =
-          await http.delete(Uri.parse('$baseUrl/admin/hewan/$id'), headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      }, body: {
-        "role": "admin",
-        "action": "delete",
-        "data": id,
-      });
+      final response = await http.post(
+        Uri.parse('$baseUrl/admin/hewan'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          "role": "admin",
+          "action": "delete",
+          "data": {"id_hewan": id},
+        }),
+      );
 
       print('Delete Hewan - Response status: ${response.statusCode}');
       print('Delete Hewan - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
+        return response;
       } else {
         throw Exception(
             'Failed to delete data hewan from Admin: ${response.statusCode}');
@@ -301,17 +304,25 @@ class ApiService {
   // Method Delete
   static Future<http.Response> deleteHewanPegawai(int id, String token) async {
     try {
-      final response = await http.delete(
-        Uri.parse('$baseUrl/pegawai/hewan/$id'),
+      final response = await http.post(
+        Uri.parse('$baseUrl/pegawai/hewan'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
+        body: json.encode({
+          "role": "pegawai",
+          "action": "delete",
+          "data": {"id_hewan": id},
+        }),
       );
+
+      print('Delete Hewan - Response status: ${response.statusCode}');
+      print('Delete Hewan - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
+        return response;
       } else {
         throw Exception(
             'Failed to delete data hewan from Pegawai: ${response.statusCode}');
@@ -324,8 +335,10 @@ class ApiService {
   /* PEMILIK */
   // Method GET
   static Future<List<dynamic>> getHewanPemilik(String token) async {
+    print('Token available: $token');
     try {
       final Uri uri = Uri.parse('$baseUrl/pemilik/hewan');
+      print('Using token: $token');
 
       final response = await http.post(
         uri,
@@ -339,6 +352,9 @@ class ApiService {
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -356,7 +372,6 @@ class ApiService {
       throw Exception('Error fetching hewan from Pemilik: $e');
     }
   }
-
   // // Method POST
   // static Future<Map<String, dynamic>> fetchPemilik(int id, String token) async {
   //   try {
