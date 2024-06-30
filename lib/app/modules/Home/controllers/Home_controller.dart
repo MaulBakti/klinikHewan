@@ -6,10 +6,9 @@ class HomeController extends GetxController {
   final box = GetStorage();
   var role = 'admin'.obs; // Observable untuk role pengguna
 
-  Future<String?> getToken() async {
-    final token = box.read('token');
-    print('Token retrieved: $token');
-    return token;
+  Future<String?> getRole() async {
+    final role = box.read('role');
+    return role;
   }
 
   // Method untuk mengubah role

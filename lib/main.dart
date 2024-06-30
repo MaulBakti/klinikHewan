@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Klinik Hewan',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
