@@ -1,5 +1,5 @@
 class Hewan {
-  int idHewan;
+  int? idHewan;
   int idPemilik;
   String namaHewan;
   String jenisHewan;
@@ -8,7 +8,7 @@ class Hewan {
   String jenisKelamin;
 
   Hewan({
-    required this.idHewan,
+    this.idHewan,
     required this.idPemilik,
     required this.namaHewan,
     required this.jenisHewan,

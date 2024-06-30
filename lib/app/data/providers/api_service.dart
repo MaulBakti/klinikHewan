@@ -66,7 +66,8 @@ class ApiService {
 
   // Method POST
   static Future<http.Response> postHewanAdmin(
-      String token, String action, Map<String, dynamic> data) async {
+      String token, Map<String, dynamic> hewanData) async {
+    print('Token available: $token');
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/admin/hewan'),
@@ -76,8 +77,8 @@ class ApiService {
         },
         body: json.encode({
           'role': 'admin',
-          'action': 'action',
-          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+          'action': 'create',
+          'data': hewanData, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
       return response;
@@ -112,7 +113,7 @@ class ApiService {
 
   // Method PUT
   static Future<http.Response> updateHewanAdmin(
-      String token, String action, Map<String, dynamic> data) async {
+      String token, Map<String, dynamic> data) async {
     try {
       final Uri uri = Uri.parse('$baseUrl/admin/hewan/${data['id_hewan']}');
 
@@ -124,11 +125,13 @@ class ApiService {
         },
         body: json.encode({
           'role': 'admin',
-          'action': 'action',
+          'action': 'update',
           'data': data, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
 
+      print('Update Hewan Admin - Response status: ${response.statusCode}');
+      print('Update Hewan Admin - Response body: ${response.body}');
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['success'] == true) {
@@ -149,13 +152,18 @@ class ApiService {
   // Method Delete
   static Future<http.Response> deleteHewanAdmin(int id, String token) async {
     try {
-      final response = await http.delete(
-        Uri.parse('$baseUrl/admin/hewan/$id'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
+      final response =
+          await http.delete(Uri.parse('$baseUrl/admin/hewan/$id'), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      }, body: {
+        "role": "admin",
+        "action": "delete",
+        "data": id,
+      });
+
+      print('Delete Hewan - Response status: ${response.statusCode}');
+      print('Delete Hewan - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -207,7 +215,7 @@ class ApiService {
 
   // Method POST
   static Future<http.Response> postHewanPegawai(
-      String token, String action, Map<String, dynamic> data) async {
+      String token, Map<String, dynamic> hewanData) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/pegawai/hewan'),
@@ -218,7 +226,7 @@ class ApiService {
         body: json.encode({
           'role': 'pegawai',
           'action': 'create',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+          'data': hewanData, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
       return response;
@@ -253,7 +261,7 @@ class ApiService {
 
   // Method PUT
   static Future<http.Response> updateHewanPegawai(
-      String token, String action, Map<String, dynamic> data) async {
+      String token, Map<String, dynamic> data) async {
     try {
       final Uri uri = Uri.parse('$baseUrl/pegawai/hewan/${data['id_hewan']}');
 
@@ -266,9 +274,12 @@ class ApiService {
         body: json.encode({
           'role': 'pegawai',
           'action': 'update',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
+
+      print('Update Hewan Pegawai - Response status: ${response.statusCode}');
+      print('Update Hewan Pegawai - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);

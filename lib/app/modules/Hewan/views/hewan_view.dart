@@ -78,6 +78,7 @@ class HewanView extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('ID Pemilik: ${hewan.idPemilik ?? ''}'),
                 Text('Jenis: ${hewan.jenisHewan ?? ''}'),
                 Text('Umur: ${hewan.umur ?? ''} tahun'),
                 Text('Berat: ${hewan.berat ?? ''} kg'),
@@ -110,6 +111,7 @@ class HewanView extends StatelessWidget {
   }
 
   void _addHewan(BuildContext context, String token) {
+    final TextEditingController idPemilikController = TextEditingController();
     final TextEditingController namaController = TextEditingController();
     final TextEditingController jenisController = TextEditingController();
     final TextEditingController umurController = TextEditingController();
@@ -127,6 +129,15 @@ class HewanView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
+                  controller: idPemilikController,
+                  decoration: InputDecoration(
+                    labelText: 'ID Pemilik',
+                    errorText: idPemilikController.text.isEmpty
+                        ? 'Field ini wajib diisi'
+                        : null,
+                  ),
+                ),
+                TextField(
                   controller: namaController,
                   decoration: InputDecoration(
                     labelText: 'Nama Hewan',
@@ -139,7 +150,7 @@ class HewanView extends StatelessWidget {
                   controller: jenisController,
                   decoration: InputDecoration(
                     labelText: 'Jenis Hewan',
-                    errorText: namaController.text.isEmpty
+                    errorText: jenisController.text.isEmpty
                         ? 'Field ini wajib diisi'
                         : null,
                   ),
@@ -148,7 +159,7 @@ class HewanView extends StatelessWidget {
                   controller: umurController,
                   decoration: InputDecoration(
                     labelText: 'Umur',
-                    errorText: namaController.text.isEmpty
+                    errorText: umurController.text.isEmpty
                         ? 'Field ini wajib diisi'
                         : null,
                   ),
@@ -158,7 +169,7 @@ class HewanView extends StatelessWidget {
                   controller: beratController,
                   decoration: InputDecoration(
                     labelText: 'Berat (kg)',
-                    errorText: namaController.text.isEmpty
+                    errorText: beratController.text.isEmpty
                         ? 'Field ini wajib diisi'
                         : null,
                   ),
@@ -168,7 +179,7 @@ class HewanView extends StatelessWidget {
                   controller: jenisKelaminController,
                   decoration: InputDecoration(
                     labelText: 'Jenis Kelamin',
-                    errorText: namaController.text.isEmpty
+                    errorText: jenisKelaminController.text.isEmpty
                         ? 'Field ini wajib diisi'
                         : null,
                   ),
@@ -188,6 +199,7 @@ class HewanView extends StatelessWidget {
                 _validateAndSaveHewan(
                     context,
                     token,
+                    idPemilikController,
                     namaController,
                     jenisController,
                     umurController,
@@ -205,27 +217,30 @@ class HewanView extends StatelessWidget {
   void _validateAndSaveHewan(
       BuildContext context,
       String token,
+      TextEditingController idPemilikController,
       TextEditingController namaController,
       TextEditingController jenisController,
       TextEditingController umurController,
       TextEditingController beratController,
       TextEditingController jenisKelaminController) {
-    if (namaController.text.isNotEmpty &&
+    if (idPemilikController.text.isNotEmpty &&
+        namaController.text.isNotEmpty &&
         jenisController.text.isNotEmpty &&
         umurController.text.isNotEmpty &&
         beratController.text.isNotEmpty &&
         jenisKelaminController.text.isNotEmpty) {
       final newHewan = Hewan(
         idHewan: 0,
-        idPemilik: 0, // To be handled by backend, not needed in frontend
+        idPemilik: int.tryParse(idPemilikController.text) ?? 0,
         namaHewan: namaController.text,
         jenisHewan: jenisController.text,
         umur: int.tryParse(umurController.text) ?? 0,
         berat: double.tryParse(beratController.text) ?? 0.0,
         jenisKelamin: jenisKelaminController.text,
       );
-      Get.find<HewanController>().postDataHewan(token, newHewan).then((_) {
+      Get.find<HewanController>().postDataHewan(newHewan).then((_) {
         // Reset form fields after successful submission
+        idPemilikController.clear();
         namaController.clear();
         jenisController.clear();
         umurController.clear();
@@ -341,7 +356,7 @@ class HewanView extends StatelessWidget {
         berat: double.tryParse(beratController.text) ?? 0.0,
         jenisKelamin: jenisKelaminController.text,
       );
-      Get.find<HewanController>().updateHewan(role, updatedHewan);
+      Get.find<HewanController>().updateHewan(updatedHewan);
       Navigator.of(context).pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -370,7 +385,7 @@ class HewanView extends StatelessWidget {
               onPressed: () {
                 // Call deleteHewan method from your controller
                 // Example assuming deleteHewan exists in your HewanController
-                Get.find<HewanController>().deleteHewan(role, idHewan);
+                Get.find<HewanController>().deleteHewan(idHewan);
                 Navigator.of(context).pop();
               },
               child: Text('Hapus'),
