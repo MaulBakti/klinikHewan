@@ -228,8 +228,8 @@ class HomeView extends StatelessWidget {
   }
 
   void _logout() {
-    homeController
-        .changeRole('admin'); // Ganti dengan peran default setelah logout
+    // homeController
+    //     .changeRole('admin'); // Ganti dengan peran default setelah logout
     Get.offAllNamed('/dashboard');
   }
 }

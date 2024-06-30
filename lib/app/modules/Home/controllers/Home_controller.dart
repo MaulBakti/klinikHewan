@@ -11,11 +11,6 @@ class HomeController extends GetxController {
     return role;
   }
 
-  // Method untuk mengubah role
-  void changeRole(String role) {
-    // Anda dapat menambahkan logika lain yang diperlukan di sini
-  }
-
   // Method untuk navigasi ke halaman HEWAN berdasarkan role
   void navigateToHewanView(String role) {
     final String? token = box.read('token');
@@ -32,7 +27,12 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Inisialisasi atau pengaturan awal dapat dilakukan di sini
+    // Initialize or set up early configurations
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   @override
