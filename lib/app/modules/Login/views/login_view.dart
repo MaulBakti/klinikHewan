@@ -97,8 +97,7 @@ class LoginView extends StatelessWidget {
                       // Login Button
                       ElevatedButton(
                         onPressed: () {
-                          loginController
-                              .login(loginController.selectedRole.value);
+                          loginController.login();
                         },
                         child: Text('Login'),
                         style: ButtonStyle(

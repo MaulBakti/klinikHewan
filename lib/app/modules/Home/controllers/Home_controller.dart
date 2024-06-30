@@ -4,11 +4,16 @@ import 'package:klinik_hewan/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final box = GetStorage();
-  var role = ''.obs; // Observable untuk role pengguna
+  var role = 'admin'.obs; // Observable untuk role pengguna
+
+  Future<String?> getToken() async {
+    final token = box.read('token');
+    print('Token retrieved: $token');
+    return token;
+  }
 
   // Method untuk mengubah role
   void changeRole(String role) {
-    role = box.read('role');
     // Anda dapat menambahkan logika lain yang diperlukan di sini
   }
 
