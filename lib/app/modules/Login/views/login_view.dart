@@ -53,7 +53,7 @@ class LoginView extends StatelessWidget {
                           border: OutlineInputBorder(),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 15),
                       // Password TextField
                       TextField(
                         onChanged: (value) =>
@@ -64,36 +64,39 @@ class LoginView extends StatelessWidget {
                         ),
                         obscureText: true,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 15),
                       // Role DropdownButton
                       Obx(() {
-                        return DropdownButton<String>(
-                          value: loginController.selectedRole.value,
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              loginController.selectedRole.value = newValue;
-                            }
-                          },
-                          items: roles.map<DropdownMenuItem<String>>(
-                            (String role) {
-                              return DropdownMenuItem<String>(
-                                value: role,
-                                child: Text(role.capitalizeFirst!),
-                              );
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton<String>(
+                            value: loginController.selectedRole.value,
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                loginController.selectedRole.value = newValue;
+                              }
                             },
-                          ).toList(),
-                          isExpanded: true,
-                          hint: Text('Select Role'),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.grey[300],
+                            items: roles.map<DropdownMenuItem<String>>(
+                              (String role) {
+                                return DropdownMenuItem<String>(
+                                  value: role,
+                                  child: Text(role.capitalizeFirst!),
+                                );
+                              },
+                            ).toList(),
+                            isExpanded: true,
+                            hint: Text('Select Role'),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.grey[300],
+                            ),
+                            dropdownColor: Colors.white,
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          dropdownColor: Colors.white,
-                          elevation: 2,
-                          borderRadius: BorderRadius.circular(10),
                         );
                       }),
-                      SizedBox(height: 20),
+                      SizedBox(height: 15),
                       // Login Button
                       ElevatedButton(
                         onPressed: () {

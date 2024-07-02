@@ -13,7 +13,7 @@ class LoginController extends GetxController {
   void login() async {
     String role = selectedRole.value;
     box.write('role', role);
-    print('Attempting to login with role: $role, username: $username');
+    print('Attempting to login with role: $role, username: ${username.value}');
     if (username.value.isNotEmpty && password.value.isNotEmpty) {
       isLoading.value = true;
       print(
@@ -35,30 +35,47 @@ class LoginController extends GetxController {
             box.write('token', token);
             print('Token saved: ${box.read('token')}');
 
-            Get.snackbar('Login', 'Login successful');
+            Get.defaultDialog(
+              title: 'Login',
+              middleText: 'Login successful',
+            );
             print('Using token: $token');
 
-            if (role == 'admin') {
-              Get.offAllNamed('/home');
-            } else if (role == 'pegawai') {
-              Get.offAllNamed('/home');
-            } else if (role == 'pemilik') {
-              Get.offAllNamed('/home');
-            }
+            Future.delayed(Duration(seconds: 2), () {
+              if (role == 'admin') {
+                Get.offAllNamed('/home');
+              } else if (role == 'pegawai') {
+                Get.offAllNamed('/home');
+              } else if (role == 'pemilik') {
+                Get.offAllNamed('/home');
+              }
+            });
           } else {
-            Get.snackbar('Error', 'Failed to login');
+            Get.defaultDialog(
+              title: 'Error',
+              middleText: 'Failed to login',
+            );
           }
         } else {
-          Get.snackbar('Error', 'Failed to login');
+          Get.defaultDialog(
+            title: 'Error',
+            middleText: 'Incorrect username and password',
+          );
         }
       } catch (e) {
         print('Login error: $e');
-        Get.snackbar('Error', 'An error occurred: $e');
+        Get.defaultDialog(
+          title: 'Error',
+          middleText: 'An error occurred: $e',
+        );
       } finally {
         isLoading.value = false;
       }
     } else {
-      Get.snackbar('Error', 'Please enter username and password');
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'Please enter username and password',
+      );
     }
   }
 

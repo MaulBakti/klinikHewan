@@ -54,13 +54,13 @@ class HewanView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Tidak ada data hewan'),
-          if (role == 'admin' || role == 'pegawai')
-            ElevatedButton(
-              onPressed: () {
-                _addHewan(context, token);
-              },
-              child: Text('Tambah Hewan'),
-            ),
+          // if (role == 'admin' || role == 'pegawai')
+          //   ElevatedButton(
+          //     onPressed: () {
+          //       _addHewan(context, token);
+          //     },
+          //     child: Text('Tambah Hewan'),
+          //   ),
         ],
       ),
     );
@@ -132,82 +132,85 @@ class HewanView extends StatelessWidget {
                   controller: idPemilikController,
                   decoration: InputDecoration(
                     labelText: 'ID Pemilik',
-                    errorText: idPemilikController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
+                    border: OutlineInputBorder(),
                   ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: namaController,
                   decoration: InputDecoration(
-                    labelText: 'Nama Hewan',
-                    errorText: namaController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
-                  ),
+                      labelText: 'Nama Hewan', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: jenisController,
                   decoration: InputDecoration(
-                    labelText: 'Jenis Hewan',
-                    errorText: jenisController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
-                  ),
+                      labelText: 'Jenis Hewan', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: umurController,
                   decoration: InputDecoration(
-                    labelText: 'Umur',
-                    errorText: umurController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
-                  ),
+                      labelText: 'Umur', border: OutlineInputBorder()),
                   keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: beratController,
                   decoration: InputDecoration(
-                    labelText: 'Berat (kg)',
-                    errorText: beratController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
-                  ),
+                      labelText: 'Berat (kg)', border: OutlineInputBorder()),
                   keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: jenisKelaminController,
                   decoration: InputDecoration(
-                    labelText: 'Jenis Kelamin',
-                    errorText: jenisKelaminController.text.isEmpty
-                        ? 'Field ini wajib diisi'
-                        : null,
-                  ),
+                      labelText: 'Jenis Kelamin', border: OutlineInputBorder()),
                 ),
               ],
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Batal'),
-            ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Batal'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  // backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                )),
             ElevatedButton(
-              onPressed: () {
-                _validateAndSaveHewan(
-                    context,
-                    token,
-                    idPemilikController,
-                    namaController,
-                    jenisController,
-                    umurController,
-                    beratController,
-                    jenisKelaminController);
-              },
-              child: Text('Simpan'),
-            ),
+                onPressed: () {
+                  _validateAndSaveHewan(
+                      context,
+                      token,
+                      idPemilikController,
+                      namaController,
+                      jenisController,
+                      umurController,
+                      beratController,
+                      jenisKelaminController);
+                },
+                child: Text('Simpan'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                )),
           ],
         );
       },
@@ -284,49 +287,76 @@ class HewanView extends StatelessWidget {
               children: [
                 TextField(
                   controller: namaController,
-                  decoration: InputDecoration(labelText: 'Nama Hewan'),
+                  decoration: InputDecoration(
+                      labelText: 'Nama Hewan', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: jenisController,
-                  decoration: InputDecoration(labelText: 'Jenis Hewan'),
+                  decoration: InputDecoration(
+                      labelText: 'Jenis Hewan', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: umurController,
-                  decoration: InputDecoration(labelText: 'Umur'),
+                  decoration: InputDecoration(
+                      labelText: 'Umur', border: OutlineInputBorder()),
                   keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: beratController,
-                  decoration: InputDecoration(labelText: 'Berat (kg)'),
+                  decoration: InputDecoration(
+                      labelText: 'Berat (kg)', border: OutlineInputBorder()),
                   keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: jenisKelaminController,
-                  decoration: InputDecoration(labelText: 'Jenis Kelamin'),
+                  decoration: InputDecoration(
+                      labelText: 'Jenis Kelamin', border: OutlineInputBorder()),
                 ),
               ],
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Batal'),
-            ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Batal'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  // backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                )),
             ElevatedButton(
-              onPressed: () {
-                _validateAndEditHewan(
-                    context,
-                    hewan,
-                    namaController,
-                    jenisController,
-                    umurController,
-                    beratController,
-                    jenisKelaminController);
-              },
-              child: Text('Simpan'),
-            ),
+                onPressed: () {
+                  _validateAndEditHewan(
+                      context,
+                      hewan,
+                      namaController,
+                      jenisController,
+                      umurController,
+                      beratController,
+                      jenisKelaminController);
+                },
+                child: Text('Simpan'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                )),
           ],
         );
       },
@@ -376,20 +406,30 @@ class HewanView extends StatelessWidget {
           content: Text('Apakah Anda yakin ingin menghapus hewan ini?'),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Batal'),
-            ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Batal'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  // backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                )),
             ElevatedButton(
-              onPressed: () {
-                // Call deleteHewan method from your controller
-                // Example assuming deleteHewan exists in your HewanController
-                Get.find<HewanController>().deleteHewan(idHewan);
-                Navigator.of(context).pop();
-              },
-              child: Text('Hapus'),
-            ),
+                onPressed: () {
+                  // Call deleteHewan method from your controller
+                  // Example assuming deleteHewan exists in your HewanController
+                  Get.find<HewanController>().deleteHewan(idHewan);
+                  Navigator.of(context).pop();
+                },
+                child: Text('Hapus'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                )),
           ],
         );
       },
