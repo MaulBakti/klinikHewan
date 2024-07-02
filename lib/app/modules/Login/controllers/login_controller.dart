@@ -2,23 +2,22 @@ import 'package:get/get.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
-import 'package:klinik_hewan/app/modules/home/controllers/home_controller.dart';
 
 class LoginController extends GetxController {
   var username = ''.obs;
   var password = ''.obs;
-  var selectedRole = ''.obs;
+  var selectedRole = 'admin'.obs;
   var isLoading = false.obs;
   final box = GetStorage();
 
   void login() async {
-    final role = selectedRole.value;
-    print('Attempting to login with role: $role, username: ${username.value}');
-
+    String role = selectedRole.value;
+    box.write('role', role);
+    print('Attempting to login with role: $role, username: $username');
     if (username.value.isNotEmpty && password.value.isNotEmpty) {
       isLoading.value = true;
       print(
-          'Logging in with role: $role, username: ${username.value}, password: ${password.value}');
+          'Attempting to login with role: $role, username: ${username.value}, password: ${password.value}');
       try {
         final response =
             await ApiService.login(role, username.value, password.value);
@@ -32,20 +31,20 @@ class LoginController extends GetxController {
             final token = data['data']['token'];
             print('Token received: $token');
 
-            // Save token and role to storage
+            // Menyimpan token ke storage
             box.write('token', token);
-            box.write('role', role);
-            print(
-                'Token and role saved: ${box.read('token')}, ${box.read('role')}');
+            print('Token saved: ${box.read('token')}');
 
             Get.snackbar('Login', 'Login successful');
             print('Using token: $token');
 
-            // Update role in HomeController
-            Get.find<HomeController>().changeRole();
-
-            // Navigate to home page
-            Get.offAllNamed('/home');
+            if (role == 'admin') {
+              Get.offAllNamed('/home');
+            } else if (role == 'pegawai') {
+              Get.offAllNamed('/home');
+            } else if (role == 'pemilik') {
+              Get.offAllNamed('/home');
+            }
           } else {
             Get.snackbar('Error', 'Failed to login');
           }
@@ -65,9 +64,8 @@ class LoginController extends GetxController {
 
   void logout() {
     box.remove('token');
-    box.remove('role');
-    print('Token and role removed on logout');
-    // Additional cleanup if necessary
+    print('Token removed on logout');
+    // Lainnya seperti membersihkan username, password, dan role jika diperlukan
   }
 
   Future<String?> getToken() async {
@@ -78,7 +76,6 @@ class LoginController extends GetxController {
 
   Future<String?> getRole() async {
     final role = box.read('role');
-    print('Role retrieved: $role');
     return role;
   }
 

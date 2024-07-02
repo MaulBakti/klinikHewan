@@ -16,15 +16,15 @@ class LoginView extends StatelessWidget {
       body: Stack(
         children: [
           // Background image
-          Container(
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage(
-              //         'assets/images/background.jpg'), // Ganti dengan path gambar latar belakang
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              ),
+          // Container(
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage(
+          //           'assets/images/logo.webp'), // Ganti dengan path gambar latar belakang
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -39,10 +39,10 @@ class LoginView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // Logo
-                      // Image.asset(
-                      //   'assets/images/logo.png', // Ganti dengan path gambar logo
-                      //   height: 100,
-                      // ),
+                      Image.asset(
+                        'assets/images/logo.webp', // Ganti dengan path gambar logo
+                        height: 100,
+                      ),
                       SizedBox(height: 20),
                       // Username TextField
                       TextField(
@@ -97,8 +97,7 @@ class LoginView extends StatelessWidget {
                       // Login Button
                       ElevatedButton(
                         onPressed: () {
-                          loginController
-                              .login(loginController.selectedRole.value);
+                          loginController.login();
                         },
                         child: Text('Login'),
                         style: ButtonStyle(

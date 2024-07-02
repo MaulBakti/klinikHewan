@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/home/controllers/home_controller.dart';
+import 'package:klinik_hewan/app/modules/Home/controllers/Home_controller.dart';
 
 class HomeView extends StatelessWidget {
   final HomeController homeController = Get.find<HomeController>();
@@ -14,15 +14,15 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              // Implement search functionality
-              // For example, Get.toNamed('/search');
+              // Implementasi fungsi pencarian
+              // Misalnya Get.toNamed('/search');
             },
           ),
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
-              // Implement notification functionality
-              // For example, Get.toNamed('/notifications');
+              // Implementasi fungsi notifikasi
+              // Misalnya Get.toNamed('/notifications');
             },
           ),
           IconButton(
@@ -68,7 +68,7 @@ class HomeView extends StatelessWidget {
           },
         ),
         _buildListTile(
-          title: 'Data Dokter',
+          title: 'Data Doctor',
           icon: Icons.medical_services,
           onTap: () {
             Get.toNamed('/doctor');
@@ -153,7 +153,7 @@ class HomeView extends StatelessWidget {
         ),
         _buildListTile(
           title: 'Data Hewan',
-          icon: Icons.pets,
+          icon: Icons.business,
           onTap: () {
             Get.toNamed('/hewan');
           },
@@ -228,7 +228,8 @@ class HomeView extends StatelessWidget {
   }
 
   void _logout() {
-    homeController.changeRole(); // Reset role on logout
-    Get.offAllNamed('/login');
+    // homeController
+    //     .changeRole('admin'); // Ganti dengan peran default setelah logout
+    Get.offAllNamed('/dashboard');
   }
 }

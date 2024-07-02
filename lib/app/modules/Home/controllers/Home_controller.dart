@@ -3,49 +3,47 @@ import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
-  var role = ''.obs; // Observable for user role
-  final box = GetStorage(); // Instance of GetStorage
+  final box = GetStorage();
+  var role = 'admin'.obs; // Observable untuk role pengguna
 
-  // Method to change role
-  void changeRole(String newRole) {
-    role.value = newRole;
-    box.write('role', newRole);
-    // Add any additional logic needed here
+  Future<String?> getRole() async {
+    final role = box.read('role');
+    return role;
   }
 
-  // Method to navigate to HewanView based on role
-  void navigateToHewanView() {
+  // Method untuk navigasi ke halaman HEWAN berdasarkan role
+  void navigateToHewanView(String role) {
     final String? token = box.read('token');
-    final String? currentRole = box.read('role');
-    if (token != null && currentRole != null) {
-      Get.toNamed(Routes.HEWAN,
-          parameters: {'role': currentRole, 'token': token});
+    if (token != null) {
+      Get.toNamed(Routes.HEWAN, parameters: {'role': role, 'token': token});
     } else {
-      // Handle case where token or role is null, perhaps show an error or redirect to login
-      Get.snackbar('Error', 'Token or role not found');
-      Get.offAllNamed(
-          Routes.LOGIN); // Redirect to login page if token or role is not found
+      // Handle case where token is null, perhaps show an error or redirect to login
+      Get.snackbar('Error', 'Token not found');
+      // Example of redirecting to login page if token is not found
+      // Get.offAllNamed(Routes.LOGIN);
     }
   }
 
   @override
   void onInit() {
     super.onInit();
-    // Initial setup or configuration can be done here
-    role.value = box.read('role') ??
-        ''; // Set default role from storage or empty if not available
-    print('HomeController initialized with role: ${role.value}');
+    // Initialize or set up early configurations
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   @override
   void onReady() {
     super.onReady();
-    // Additional setup when the controller is ready
+    // Di sini Anda dapat melakukan hal yang diperlukan saat controller siap digunakan
   }
 
   @override
   void onClose() {
     super.onClose();
-    // Clean up resources or close connections if needed
+    // Bersihkan sumber daya atau tutup koneksi jika diperlukan
   }
 }
