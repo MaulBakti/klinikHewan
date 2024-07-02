@@ -54,13 +54,6 @@ class HewanView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Tidak ada data hewan'),
-          // if (role == 'admin' || role == 'pegawai')
-          //   ElevatedButton(
-          //     onPressed: () {
-          //       _addHewan(context, token);
-          //     },
-          //     child: Text('Tambah Hewan'),
-          //   ),
         ],
       ),
     );
@@ -188,7 +181,6 @@ class HewanView extends StatelessWidget {
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
-                  // backgroundColor: Colors.red,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -250,16 +242,18 @@ class HewanView extends StatelessWidget {
         beratController.clear();
         jenisKelaminController.clear();
 
-        Get.back(); // Close dialog after successful submission
+        // Get.back(); // Close dialog after successful submission
       }).catchError((error) {
         // Handle specific errors or show generic error message
-        Get.snackbar('Error', 'Failed to create hewan: $error');
+        Get.defaultDialog(
+          title: 'Error',
+          middleText: 'Failed to create hewan: $error',
+        );
       });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Semua field harus diisi'),
-        ),
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'Semua field harus diisi',
       );
     }
   }
@@ -335,7 +329,6 @@ class HewanView extends StatelessWidget {
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
-                  // backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -389,10 +382,9 @@ class HewanView extends StatelessWidget {
       Get.find<HewanController>().updateHewan(updatedHewan);
       Navigator.of(context).pop();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Semua field harus diisi'),
-        ),
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: 'Semua field harus diisi',
       );
     }
   }
@@ -412,7 +404,6 @@ class HewanView extends StatelessWidget {
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
-                  // backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
