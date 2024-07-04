@@ -34,14 +34,15 @@ class DoctorController extends GetxController {
   }
 
   Future<void> getDataDoctor(String role) async {
-    role = box.read('role');
-    print('Fetching data dooctor for role: $role');
     try {
       isLoading.value = true;
+      role = box.read('role'); // Mengambil role dari GetStorage
+
+      print('Fetching data doctor for role: $role');
+
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false; // Reset loading state
         print('Error: Token not found');
         return;
       }
@@ -58,7 +59,6 @@ class DoctorController extends GetxController {
       } else {
         throw Exception('Invalid role: $role');
       }
-      print('List doctor: $doctorList');
 
       final List<Doctor> doctors =
           responseData.map((data) => Doctor.fromJson(data)).toList();

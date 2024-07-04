@@ -36,7 +36,7 @@ class PegawaiView extends StatelessWidget {
           return _buildPegawaiList(context);
         }
       }),
-      floatingActionButton: role == 'admin' || role == 'pegawai'
+      floatingActionButton: role == 'admin'
           ? FloatingActionButton(
               onPressed: () {
                 print(role);
@@ -79,7 +79,7 @@ class PegawaiView extends StatelessWidget {
             trailing: Wrap(
               spacing: 8.0,
               children: [
-                if (role == 'admin' || role == 'pegawai')
+                if (role == 'admin')
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {

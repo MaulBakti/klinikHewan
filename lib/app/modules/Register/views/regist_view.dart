@@ -28,6 +28,7 @@ class RegistView extends GetView<RegistController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      SizedBox(height: 15),
                       TextField(
                         decoration: InputDecoration(
                           labelText: 'Username',
@@ -42,6 +43,7 @@ class RegistView extends GetView<RegistController> {
                         ),
                         obscureText: true,
                       ),
+                      SizedBox(height: 15),
                       TextField(
                         decoration: InputDecoration(
                           labelText: 'Alamat',

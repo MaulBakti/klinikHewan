@@ -41,14 +41,14 @@ class DashboardView extends GetView<DashboardController> {
           children: [
             _buildListTile(
               title: 'Login',
-              icon: Icons.arrow_forward,
+              icon: Icons.login,
               onTap: () {
                 Get.toNamed('/login');
               },
             ),
             _buildListTile(
               title: 'Register',
-              icon: Icons.arrow_forward,
+              icon: Icons.app_registration,
               onTap: () {
                 Get.toNamed('/regist');
               },

@@ -44,7 +44,6 @@ class LoginView extends StatelessWidget {
                         height: 100,
                       ),
                       SizedBox(height: 20),
-                      // Username TextField
                       TextField(
                         onChanged: (value) =>
                             loginController.username.value = value,
@@ -118,17 +117,23 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-                      // Forgot Password Text Button
-                      TextButton(
+// Forgot Password Text Button
+                      TextButton.icon(
                         onPressed: () {
                           Get.toNamed('/forgotpass');
                           print('Forgot Password tapped');
                         },
-                        child: Text(
+                        icon: Icon(
+                          Icons.help_outline,
+                          color: Colors.blueAccent,
+                        ),
+                        label: Text(
                           'Forgot Password?',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
                             decoration: TextDecoration.underline,
+                            fontSize: 16,
                           ),
                         ),
                       ),

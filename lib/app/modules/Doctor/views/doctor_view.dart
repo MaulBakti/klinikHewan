@@ -71,7 +71,7 @@ class DoctorView extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Umur: ${doctor.spesialisasi ?? ''} tahun'),
+                Text('Spesialisasi: ${doctor.spesialisasi ?? ''}'),
               ],
             ),
             trailing: Wrap(

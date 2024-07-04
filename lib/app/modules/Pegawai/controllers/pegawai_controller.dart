@@ -51,10 +51,6 @@ class PegawaiController extends GetxController {
 
       if (role == 'admin') {
         responseData = await ApiService.getPegawaiAdmin(token);
-      } else if (role == 'pegawai') {
-        responseData = await ApiService.getPegawaiPegawai(token);
-      } else if (role == 'pemilik') {
-        responseData = await ApiService.getPegawaiPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -92,9 +88,6 @@ class PegawaiController extends GetxController {
       if (role == 'admin') {
         // response = await ApiService.postpegawaiAdmin(token, 'create', pegawai.toJson());
         response = await ApiService.postPegawaiAdmin(token, pegawaiData);
-      } else if (role == 'pegawai') {
-        // response = await ApiService.postpegawaiPegawai(token, 'create', pegawai.toJson());
-        response = await ApiService.postPegawaiPegawai(token, pegawaiData);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -140,8 +133,6 @@ class PegawaiController extends GetxController {
 
       if (role == 'admin') {
         response = await ApiService.updatePegawaiAdmin(token, data);
-      } else if (role == 'pegawai') {
-        response = await ApiService.updatePegawaiPegawai(token, data);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -191,8 +182,6 @@ class PegawaiController extends GetxController {
 
       if (role == 'admin') {
         response = await ApiService.deletePegawaiAdmin(idPegawai, token);
-      } else if (role == 'pegawai') {
-        response = await ApiService.deletePegawaiPegawai(idPegawai, token);
       } else {
         throw Exception('Invalid role: $role');
       }

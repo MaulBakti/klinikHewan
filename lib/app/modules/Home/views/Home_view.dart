@@ -117,6 +117,13 @@ class HomeView extends StatelessWidget {
     return ListView(
       children: [
         _buildListTile(
+          title: 'Data Doctor',
+          icon: Icons.medical_services,
+          onTap: () {
+            Get.toNamed('/doctor');
+          },
+        ),
+        _buildListTile(
           title: 'Data Hewan',
           icon: Icons.pets,
           onTap: () {
@@ -131,10 +138,24 @@ class HomeView extends StatelessWidget {
           },
         ),
         _buildListTile(
+          title: 'Data Obat',
+          icon: Icons.local_pharmacy,
+          onTap: () {
+            Get.toNamed('/obat');
+          },
+        ),
+        _buildListTile(
           title: 'Data Rekam Medis',
           icon: Icons.assignment,
           onTap: () {
             Get.toNamed('/rekam-medis');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Pembayaran',
+          icon: Icons.payment,
+          onTap: () {
+            Get.toNamed('/pembayaran');
           },
         ),
       ],
@@ -145,24 +166,24 @@ class HomeView extends StatelessWidget {
     return ListView(
       children: [
         _buildListTile(
-          title: 'Data Pemilik',
-          icon: Icons.business,
+          title: 'Data Doctor',
+          icon: Icons.medical_services,
           onTap: () {
-            Get.toNamed('/pemilik');
+            Get.toNamed('/doctor');
           },
         ),
         _buildListTile(
           title: 'Data Hewan',
-          icon: Icons.business,
+          icon: Icons.pets,
           onTap: () {
             Get.toNamed('/hewan');
           },
         ),
         _buildListTile(
-          title: 'Data Obat',
-          icon: Icons.local_pharmacy,
+          title: 'Data Resep',
+          icon: Icons.receipt,
           onTap: () {
-            Get.toNamed('/obat');
+            Get.toNamed('/resep');
           },
         ),
         _buildListTile(

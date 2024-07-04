@@ -375,8 +375,9 @@ class ApiService {
   }
   //HEWAN CLOSE
 
-  //Doctor
-  //ADMIN
+  /*
+  Doctor Admin
+  */
   //Method GET
   static Future<List<dynamic>> getDoctorAdmin(String token) async {
     print('Token available: $token');
@@ -513,7 +514,7 @@ class ApiService {
         body: json.encode({
           "role": "admin",
           "action": "delete",
-          "data": {"id_doctor": id},
+          "data": {"id_dokter": id},
         }),
       );
 
@@ -550,6 +551,9 @@ class ApiService {
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
+
+      print('GET Doctor Pegawai - Response status: ${response.statusCode}');
+      print('GET Doctor Pegawai - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -665,7 +669,7 @@ class ApiService {
         body: json.encode({
           "role": "pegawai",
           "action": "delete",
-          "data": {"id_doctor": id},
+          "data": {"id_dokter": id},
         }),
       );
 
@@ -714,20 +718,20 @@ class ApiService {
           return responseData['data'];
         } else {
           throw Exception(
-              'Failed to fetch doctor from Pemilik: ${responseData['message']}');
+              'Failed to fetch dokter from Pemilik: ${responseData['message']}');
         }
       } else {
         throw Exception(
-            'Failed to fetch doctor from Pemilik: ${response.statusCode}');
+            'Failed to fetch dokter from Pemilik: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching doctor from Pemilik: $e');
+      throw Exception('Error fetching dokter from Pemilik: $e');
     }
   }
-  //DOCTOR CLOSE
 
-  //PEGAWAI
-  //ADMIN
+  /*
+  Data Pegawai (Admin)
+  */
   //Method GET
   static Future<List<dynamic>> getPegawaiAdmin(String token) async {
     print('Token available: $token');
@@ -883,160 +887,6 @@ class ApiService {
     }
   }
 
-  /* PEGAWAI */
-  // Method GET
-  static Future<List<dynamic>> getPegawaiPegawai(String token) async {
-    try {
-      final Uri uri = Uri.parse('$baseUrl/pegawai/pegawai');
-
-      final response = await http.post(
-        uri,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode({
-          'role': 'pegawai',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to fetch pegawai from Pegawai: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to fetch pegawai from Pegawai: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error fetching pegawai from Pegawai: $e');
-    }
-  }
-
-  // Method POST
-  static Future<http.Response> postPegawaiPegawai(
-      String token, Map<String, dynamic> pegawaiData) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/pegawai/pegawai'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode({
-          'role': 'pegawai',
-          'action': 'create',
-          'data': pegawaiData, // Sesuaikan dengan data yang diperlukan jika ada
-        }),
-      );
-      return response;
-    } catch (e) {
-      throw Exception('Failed to create data pegawai from Pegawai:  $e');
-    }
-  }
-
-  // Method GET BY ID
-  static Future<Map<String, dynamic>> getPegawaiPegawaiById(
-      int id, String token) async {
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/pegawai/pegawai/$id'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
-      } else {
-        throw Exception(
-            'Failed to get data pegawai from Pegawai by ID: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error get data pegawai from Pegawai by ID: $e');
-    }
-  }
-
-  // Method PUT
-  static Future<http.Response> updatePegawaiPegawai(
-      String token, Map<String, dynamic> data) async {
-    try {
-      final Uri uri =
-          Uri.parse('$baseUrl/pegawai/pegawai/${data['id_pegawai']}');
-
-      final response = await http.put(
-        uri,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode({
-          'role': 'pegawai',
-          'action': 'update',
-          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
-        }),
-      );
-
-      print('Update Pegawai Pegawai - Response status: ${response.statusCode}');
-      print('Update Pegawai Pegawai - Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return response;
-        } else {
-          throw Exception(
-              'Failed to update data pegawai from Pegawai: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to update pegawai from Pegawai: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error updating pegawai from Pegawai: $e');
-    }
-  }
-
-  // Method Delete
-  static Future<http.Response> deletePegawaiPegawai(
-      int id, String token) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/pegawai/pegawai'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode({
-          "role": "pegawai",
-          "action": "delete",
-          "data": {"id_pegawai": id},
-        }),
-      );
-
-      print('Delete Pegawai - Response status: ${response.statusCode}');
-      print('Delete Pegawai - Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        return response;
-      } else {
-        throw Exception(
-            'Failed to delete data pegawai from Pegawai: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error delete data pegawai from Pegawai: $e');
-    }
-  }
-
   /* PEMILIK */
   // Method GET
   static Future<List<dynamic>> getPegawaiPemilik(String token) async {
@@ -1079,8 +929,9 @@ class ApiService {
   }
   //PEGAWAI CLOSE
 
-  //OBAT
-  //ADMIN
+  /*
+  Obat Admin
+  */
   //Method GET
   static Future<List<dynamic>> getObatAdmin(String token) async {
     print('Token available: $token');
@@ -1109,14 +960,13 @@ class ApiService {
           return responseData['data'];
         } else {
           throw Exception(
-              'Failed to get data obat from Admin: ${responseData['message']}');
+              'Failed to fetch obat data: ${responseData['message']}');
         }
       } else {
-        throw Exception(
-            'Failed to get obat from Admin: ${response.statusCode}');
+        throw Exception('Failed to fetch obat data: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error get data obat from Admin: $e');
+      throw Exception('Error fetching obat data: $e');
     }
   }
 

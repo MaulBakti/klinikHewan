@@ -23,10 +23,10 @@ import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
 import '../modules/Resep/model/resep.dart';
 import '../modules/Resep/views/resep_view.dart';
-import '../modules/forgotpass/bindings/forgotpass_binding.dart';
-import '../modules/forgotpass/views/forgotpass_view.dart';
-import '../modules/regist/bindings/regist_binding.dart';
-import '../modules/regist/views/regist_view.dart';
+import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
+import '../modules/ForgotPass/views/forgotpass_view.dart';
+import '../modules/Register/bindings/regist_binding.dart';
+import '../modules/Register/views/regist_view.dart';
 
 // Dashboard
 // Obat
