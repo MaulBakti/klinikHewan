@@ -1,20 +1,21 @@
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/Resep/model/resep.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/pemilik.dart';
+import 'package:get_storage/get_storage.dart';
+import '../../../data/providers/api_service.dart';
 
-class ResepController extends GetxController {
+class PemilikController extends GetxController {
+  //TODO: Implement PemilikController
   var isLoading = false.obs;
+  var pemilikList = <Pemilik>[].obs;
   var errorMessage = ''.obs;
-  var resepList = <Resep>[].obs;
   final box = GetStorage();
 
   @override
   void onInit() {
     super.onInit();
-    print('Initializing ResepController');
+    print('Initializing PemilikController');
   }
 
   Future<String?> getToken() async {
@@ -33,7 +34,7 @@ class ResepController extends GetxController {
     print('Token removed');
   }
 
-  Future<void> getDataResep(String role) async {
+  Future<void> getDataPemilik(String role) async {
     role = box.read('role');
     print('Fetching data dooctor for role: $role');
     try {
@@ -50,31 +51,31 @@ class ResepController extends GetxController {
       List<dynamic> responseData;
 
       if (role == 'admin') {
-        responseData = await ApiService.getResepAdmin(token);
+        responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
-        responseData = await ApiService.getResepPegawai(token);
+        responseData = await ApiService.getPemilikPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getResepPemilik(token);
+        responseData = await ApiService.getPemilikPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
-      print('List resep: $resepList');
+      print('List pemilik: $pemilikList');
 
-      final List<Resep> reseps =
-          responseData.map((data) => Resep.fromJson(data)).toList();
-      resepList.assignAll(reseps);
-      print('List resep: $resepList');
+      final List<Pemilik> pemiliks =
+          responseData.map((data) => Pemilik.fromJson(data)).toList();
+      pemilikList.assignAll(pemiliks);
+      print('List pemilik: $pemilikList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data resep: $e';
-      print('Error fetching data resep: $e');
+      errorMessage.value = 'Error fetching data pemilik: $e';
+      print('Error fetching data pemilik: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> postDataResep(Resep resep) async {
+  Future<void> postDataPemilik(Pemilik pemilik) async {
     final role = await getRole();
-    print('Posting data resep for role: $role');
+    print('Posting data pemilik for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
@@ -85,47 +86,47 @@ class ResepController extends GetxController {
       }
       print('Token: $token');
 
-      final resepData = resep.toJson();
-      print('Data resep: $resepData'); // Log data resep yang akan dikirim
+      final pemilikData = pemilik.toJson();
+      print('Data pemilik: $pemilikData'); // Log data pemilik yang akan dikirim
       http.Response response;
 
       if (role == 'admin') {
-        // response = await ApiService.postresepAdmin(token, 'create', resep.toJson());
-        response = await ApiService.postResepAdmin(token, resepData);
+        // response = await ApiService.postpemilikAdmin(token, 'create', pemilik.toJson());
+        response = await ApiService.postPemilikAdmin(token, pemilikData);
       } else if (role == 'pegawai') {
-        // response = await ApiService.postresepPegawai(token, 'create', resep.toJson());
-        response = await ApiService.postResepPegawai(token, resepData);
+        // response = await ApiService.postpegawaiPegawai(token, 'create', pegawai.toJson());
+        response = await ApiService.postPemilikPegawai(token, pemilikData);
       } else {
         throw Exception('Invalid role: $role');
       }
 
-      print('Create Resep - Response status: ${response.statusCode}');
-      print('Create Resep - Response body: ${response.body}');
+      print('Create Pemilik - Response status: ${response.statusCode}');
+      print('Create Pemilik - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final createdResep = Resep.fromJson(responseData['data']);
-        resepList.add(createdResep);
+        final createdPemilik = Pemilik.fromJson(responseData['data']);
+        pemilikList.add(createdPemilik);
         Get.defaultDialog(
           title: 'Success',
-          middleText: 'Resep created successfully',
+          middleText: 'Pemilik created successfully',
         );
       } else {
-        throw Exception('Failed to create resep: ${response.statusCode}');
+        throw Exception('Failed to create pemilik: ${response.statusCode}');
       }
     } catch (e) {
       Get.defaultDialog(
         title: 'Error',
-        middleText: 'Failed to create resep: $e',
+        middleText: 'Failed to create pemilik: $e',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> updateResep(Resep resep) async {
+  Future<void> updatePemilik(Pemilik pemilik) async {
     final role = await getRole();
-    print('Updating data resep for role: $role');
+    print('Updating data pemilik for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
@@ -135,48 +136,48 @@ class ResepController extends GetxController {
         return;
       }
       print('Token: $token');
-      final data = resep.toJson();
+      final data = pemilik.toJson();
       http.Response response;
 
       if (role == 'admin') {
-        response = await ApiService.updateResepAdmin(token, data);
+        response = await ApiService.updatePemilikAdmin(token, data);
       } else if (role == 'pegawai') {
-        response = await ApiService.updateResepPegawai(token, data);
+        response = await ApiService.updatePemilikPegawai(token, data);
       } else {
         throw Exception('Invalid role: $role');
       }
 
-      print('Update Resep - Response status: ${response.statusCode}');
-      print('Update Resep - Response body: ${response.body}');
+      print('Update Pemilik - Response status: ${response.statusCode}');
+      print('Update Pemilik - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final updatedResep = Resep.fromJson(responseData['data']);
-        int index = resepList
-            .indexWhere((element) => element.idResep == updatedResep.idResep);
+        final updatedPemilik = Pemilik.fromJson(responseData['data']);
+        int index = pemilikList.indexWhere(
+            (element) => element.idPemilik == updatedPemilik.idPemilik);
         if (index != -1) {
-          resepList[index] = updatedResep;
+          pemilikList[index] = updatedPemilik;
         }
         Get.defaultDialog(
           title: 'Success',
-          middleText: 'Resep updated successfully',
+          middleText: 'Pemilik updated successfully',
         );
       } else {
-        throw Exception('Failed to update resep: ${response.statusCode}');
+        throw Exception('Failed to update pemilik: ${response.statusCode}');
       }
     } catch (e) {
       Get.defaultDialog(
         title: 'Error',
-        middleText: 'Failed to update resep: $e',
+        middleText: 'Failed to update pemilik: $e',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> deleteResep(int idResep) async {
+  Future<void> deletePemilik(int idPemilik) async {
     final role = await getRole();
-    print('Deleting data resep for role: $role');
+    print('Deleting data pemilik for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
@@ -190,26 +191,26 @@ class ResepController extends GetxController {
       http.Response response;
 
       if (role == 'admin') {
-        response = await ApiService.deleteResepAdmin(idResep, token);
+        response = await ApiService.deletePemilikAdmin(idPemilik, token);
       } else if (role == 'pegawai') {
-        response = await ApiService.deleteResepPegawai(idResep, token);
+        response = await ApiService.deletePemilikPegawai(idPemilik, token);
       } else {
         throw Exception('Invalid role: $role');
       }
 
       if (response.statusCode == 200) {
-        resepList.removeWhere((element) => element.idResep == idResep);
+        pemilikList.removeWhere((element) => element.idPemilik == idPemilik);
         Get.defaultDialog(
           title: 'Success',
-          middleText: 'Resep deleted successfully',
+          middleText: 'Pemilik deleted successfully',
         );
       } else {
-        throw Exception('Failed to delete resep: ${response.statusCode}');
+        throw Exception('Failed to delete pemilik: ${response.statusCode}');
       }
     } catch (e) {
       Get.defaultDialog(
         title: 'Error',
-        middleText: 'Failed to delete resep: $e',
+        middleText: 'Failed to delete pemilik: $e',
       );
     } finally {
       isLoading.value = false;

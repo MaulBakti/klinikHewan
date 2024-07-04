@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/doctor_controller.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import '../controllers/pemilik_controller.dart';
+import '../models/pemilik.dart';
 
-class DoctorView extends StatelessWidget {
+class PemilikView extends StatelessWidget {
   final String role;
   final String token;
-  final DoctorController controller = Get.put(DoctorController());
+  final PemilikController controller = Get.put(PemilikController());
 
-  DoctorView({required this.role, required this.token}) {
+  PemilikView({required this.role, required this.token}) {
     controller.getToken();
     controller.getRole();
-    controller.getDataDoctor(role);
+    controller.getDataPemilik(role);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daftar Doctor'),
+        title: Text('Daftar Pemilik'),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -30,17 +30,17 @@ class DoctorView extends StatelessWidget {
           return Center(
             child: Text('Error: ${controller.errorMessage.value}'),
           );
-        } else if (controller.doctorList.isEmpty) {
+        } else if (controller.pemilikList.isEmpty) {
           return _buildEmptyState(context);
         } else {
-          return _buildDoctorList(context);
+          return _buildPemilikList(context);
         }
       }),
       floatingActionButton: role == 'admin' || role == 'pegawai'
           ? FloatingActionButton(
               onPressed: () {
                 print(role);
-                _addDoctor(context, token);
+                _addPemilik(context, token);
               },
               child: Icon(Icons.add),
             )
@@ -53,25 +53,26 @@ class DoctorView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Tidak ada data doctor'),
+          Text('Tidak ada data pemilik'),
         ],
       ),
     );
   }
 
-  Widget _buildDoctorList(BuildContext context) {
+  Widget _buildPemilikList(BuildContext context) {
     return ListView.builder(
-      itemCount: controller.doctorList.length,
+      itemCount: controller.pemilikList.length,
       itemBuilder: (context, index) {
-        final doctor = controller.doctorList[index];
+        final pemilik = controller.pemilikList[index];
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text(doctor.namaDokter ?? ''),
+            title: Text(pemilik.namaPemilik ?? ''),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Umur: ${doctor.spesialisasi ?? ''} tahun'),
+                Text('Alamat: ${pemilik.alamat ?? ''}'),
+                Text('No Telp: ${pemilik.noTelp ?? ''} tahun'),
               ],
             ),
             trailing: Wrap(
@@ -81,14 +82,14 @@ class DoctorView extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
-                      _editDoctor(context, doctor);
+                      _editPemilik(context, pemilik);
                     },
                   ),
                 if (role == 'admin')
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      _confirmDelete(context, doctor.idDokter ?? 0);
+                      _confirmDelete(context, pemilik.idPemilik ?? 0);
                     },
                   ),
               ],
@@ -99,16 +100,17 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  void _addDoctor(BuildContext context, String token) {
-    final TextEditingController idDokterController = TextEditingController();
+  void _addPemilik(BuildContext context, String token) {
     final TextEditingController namaController = TextEditingController();
-    final TextEditingController spesialisController = TextEditingController();
+    final TextEditingController alamatController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController noTelpController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Tambah Doctor'),
+          title: Text('Tambah Pemilik'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -116,18 +118,31 @@ class DoctorView extends StatelessWidget {
                 TextField(
                   controller: namaController,
                   decoration: InputDecoration(
-                      labelText: 'Nama Doctor', border: OutlineInputBorder()),
+                      labelText: 'Nama Pemilik', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: spesialisController,
+                  controller: alamatController,
                   decoration: InputDecoration(
-                      labelText: 'Spesialis', border: OutlineInputBorder()),
+                      labelText: 'Alamat', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
+                ),
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                      labelText: 'Password', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: noTelpController,
+                  decoration: InputDecoration(
+                      labelText: 'No Telp', border: OutlineInputBorder()),
                 ),
               ],
             ),
@@ -145,8 +160,8 @@ class DoctorView extends StatelessWidget {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  _validateAndSaveDoctor(
-                      context, token, namaController, spesialisController);
+                  _validateAndSavePemilik(context, token, namaController,
+                      alamatController, noTelpController, passwordController);
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -161,28 +176,39 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  void _validateAndSaveDoctor(
-      BuildContext context,
-      String token,
-      TextEditingController namaController,
-      TextEditingController spesialisController) {
-    if (namaController.text.isNotEmpty && spesialisController.text.isNotEmpty) {
-      final newDoctor = Doctor(
-        idDokter: 0,
-        namaDokter: namaController.text,
-        spesialisasi: spesialisController.text,
+  void _validateAndSavePemilik(
+    BuildContext context,
+    String token,
+    TextEditingController namaController,
+    TextEditingController alamatController,
+    TextEditingController noTelpController,
+    TextEditingController passwordController,
+  ) {
+    if (namaController.text.isNotEmpty &&
+        alamatController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        noTelpController.text.isNotEmpty) {
+      final newPemilik = Pemilik(
+        idPemilik: 0,
+        namaPemilik: namaController.text,
+        password: passwordController.text,
+        alamat: alamatController.text,
+        noTelp: noTelpController.text,
       );
-      Get.find<DoctorController>().postDataDoctor(newDoctor).then((_) {
+      Get.find<PemilikController>().postDataPemilik(newPemilik).then((_) {
         // Reset form fields after successful submission
         namaController.clear();
-        spesialisController.clear();
+
+        passwordController.clear();
+        alamatController.clear();
+        noTelpController.clear();
 
         // Get.back(); // Close dialog after successful submission
       }).catchError((error) {
         // Handle specific errors or show generic error message
         Get.defaultDialog(
           title: 'Error',
-          middleText: 'Failed to create doctor: $error',
+          middleText: 'Failed to create pemilik: $error',
         );
       });
     } else {
@@ -193,17 +219,22 @@ class DoctorView extends StatelessWidget {
     }
   }
 
-  void _editDoctor(BuildContext context, Doctor doctor) {
+  void _editPemilik(BuildContext context, Pemilik pemilik) {
     final TextEditingController namaController =
-        TextEditingController(text: doctor.namaDokter);
-    final TextEditingController spesialisController =
-        TextEditingController(text: doctor.spesialisasi);
+        TextEditingController(text: pemilik.namaPemilik);
+    final TextEditingController passwordController =
+        TextEditingController(text: pemilik.password);
+
+    final TextEditingController alamatController =
+        TextEditingController(text: pemilik.alamat);
+    final TextEditingController noTelpController =
+        TextEditingController(text: pemilik.noTelp);
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Doctor'),
+          title: Text('Edit pemilik'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -211,15 +242,31 @@ class DoctorView extends StatelessWidget {
                 TextField(
                   controller: namaController,
                   decoration: InputDecoration(
-                      labelText: 'Nama Doctor', border: OutlineInputBorder()),
+                      labelText: 'Nama Pemilik', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: spesialisController,
+                  controller: alamatController,
                   decoration: InputDecoration(
-                      labelText: 'Spesialisasi', border: OutlineInputBorder()),
+                      labelText: 'Alamat', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                      labelText: 'Password', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: noTelpController,
+                  decoration: InputDecoration(
+                      labelText: 'No Telp', border: OutlineInputBorder()),
                 ),
               ],
             ),
@@ -237,8 +284,8 @@ class DoctorView extends StatelessWidget {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  _validateAndEditDoctor(
-                      context, doctor, namaController, spesialisController);
+                  _validateAndEditPemilik(context, pemilik, namaController,
+                      alamatController, noTelpController, passwordController);
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -253,19 +300,26 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  void _validateAndEditDoctor(
+  void _validateAndEditPemilik(
     BuildContext context,
-    Doctor doctor,
+    Pemilik pemilik,
     TextEditingController namaController,
-    TextEditingController spesialisController,
+    TextEditingController alamatController,
+    TextEditingController noTelpController,
+    TextEditingController passwordController,
   ) {
-    if (namaController.text.isNotEmpty && spesialisController.text.isNotEmpty) {
-      final updatedDoctor = Doctor(
-        idDokter: doctor.idDokter,
-        namaDokter: namaController.text,
-        spesialisasi: spesialisController.text,
+    if (namaController.text.isNotEmpty &&
+        alamatController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        noTelpController.text.isNotEmpty) {
+      final updatedPemilik = Pemilik(
+        idPemilik: pemilik.idPemilik,
+        namaPemilik: namaController.text,
+        password: passwordController.text,
+        alamat: alamatController.text,
+        noTelp: noTelpController.text,
       );
-      Get.find<DoctorController>().updateDoctor(updatedDoctor);
+      Get.find<PemilikController>().updatePemilik(updatedPemilik);
       Navigator.of(context).pop();
     } else {
       Get.defaultDialog(
@@ -275,13 +329,13 @@ class DoctorView extends StatelessWidget {
     }
   }
 
-  void _confirmDelete(BuildContext context, int idDoctor) {
+  void _confirmDelete(BuildContext context, int idPemilik) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Konfirmasi Hapus'),
-          content: Text('Apakah Anda yakin ingin menghapus doctor ini?'),
+          content: Text('Apakah Anda yakin ingin menghapus pemilik ini?'),
           actions: [
             TextButton(
                 onPressed: () {
@@ -295,9 +349,9 @@ class DoctorView extends StatelessWidget {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  // Call deleteDoctor method from your controller
-                  // Example assuming deleteDoctor exists in your DoctorController
-                  Get.find<DoctorController>().deleteDoctor(idDoctor);
+                  // Call deletePemilik method from your controller
+                  // Example assuming deletePemilik exists in your PemilikController
+                  Get.find<PemilikController>().deletePemilik(idPemilik);
                   Navigator.of(context).pop();
                 },
                 child: Text('Hapus'),
@@ -312,4 +366,42 @@ class DoctorView extends StatelessWidget {
       },
     );
   }
+}
+
+void _confirmDelete(BuildContext context, int idPemilik) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Konfirmasi Hapus'),
+        content: Text('Apakah Anda yakin ingin menghapus pemilik ini?'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Batal'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+              )),
+          ElevatedButton(
+              onPressed: () {
+                // Call deletePemilik method from your controller
+                // Example assuming deletePemilik exists in your PemilikController
+                Get.find<PemilikController>().deletePemilik(idPemilik);
+                Navigator.of(context).pop();
+              },
+              child: Text('Hapus'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+              )),
+        ],
+      );
+    },
+  );
 }

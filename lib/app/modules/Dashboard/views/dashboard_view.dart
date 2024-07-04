@@ -50,7 +50,7 @@ class DashboardView extends GetView<DashboardController> {
               title: 'Register',
               icon: Icons.arrow_forward,
               onTap: () {
-                // Ganti dengan navigasi ke halaman profil
+                Get.toNamed('/regist');
               },
             ),
             _buildListTile(

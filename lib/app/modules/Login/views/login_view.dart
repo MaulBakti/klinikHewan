@@ -117,6 +117,21 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(height: 10),
+                      // Forgot Password Text Button
+                      TextButton(
+                        onPressed: () {
+                          Get.toNamed('/forgotpass');
+                          print('Forgot Password tapped');
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
