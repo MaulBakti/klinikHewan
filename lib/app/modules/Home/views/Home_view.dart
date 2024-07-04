@@ -82,17 +82,17 @@ class HomeView extends StatelessWidget {
           },
         ),
         _buildListTile(
-          title: 'Data Resep',
-          icon: Icons.receipt,
-          onTap: () {
-            Get.toNamed('/resep');
-          },
-        ),
-        _buildListTile(
           title: 'Data Obat',
           icon: Icons.local_pharmacy,
           onTap: () {
             Get.toNamed('/obat');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Resep',
+          icon: Icons.receipt,
+          onTap: () {
+            Get.toNamed('/resep');
           },
         ),
         _buildListTile(
@@ -177,6 +177,13 @@ class HomeView extends StatelessWidget {
           icon: Icons.pets,
           onTap: () {
             Get.toNamed('/hewan');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Obat',
+          icon: Icons.local_pharmacy,
+          onTap: () {
+            Get.toNamed('/obat');
           },
         ),
         _buildListTile(

@@ -887,52 +887,10 @@ class ApiService {
     }
   }
 
-  /* PEMILIK */
-  // Method GET
-  static Future<List<dynamic>> getPegawaiPemilik(String token) async {
-    print('Token available: $token');
-    try {
-      final Uri uri = Uri.parse('$baseUrl/pemilik/pegawai');
-      print('Using token: $token');
-
-      final response = await http.post(
-        uri,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode({
-          'role': 'pemilik',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
-      );
-
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to fetch pegawai from Pemilik: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to fetch pegawai from Pemilik: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error fetching pegawai from Pemilik: $e');
-    }
-  }
-  //PEGAWAI CLOSE
-
   /*
   Obat Admin
   */
-  //Method GET
+  // Method GET
   static Future<List<dynamic>> getObatAdmin(String token) async {
     print('Token available: $token');
     try {
@@ -951,8 +909,9 @@ class ApiService {
           'data': {} // Sesuaikan dengan data yang diperlukan jika ada
         }),
       );
-      print('GET Obat Admin - Response status: ${response.statusCode}');
-      print('GET Obat Admin - Response body: ${response.body}');
+
+      print('GET Obat Admin: ${response.statusCode}');
+      print('GET Obat Admin: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -960,13 +919,14 @@ class ApiService {
           return responseData['data'];
         } else {
           throw Exception(
-              'Failed to fetch obat data: ${responseData['message']}');
+              'Failed to fetch obat from Admin: ${responseData['message']}');
         }
       } else {
-        throw Exception('Failed to fetch obat data: ${response.statusCode}');
+        throw Exception(
+            'Failed to fetch obat from Admin: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching obat data: $e');
+      throw Exception('Error fetching obat from Admin: $e');
     }
   }
 
@@ -1086,12 +1046,15 @@ class ApiService {
     }
   }
 
-  /* OBAT */
+  /*
+  Obat Pegawai
+  */
   // Method GET
   static Future<List<dynamic>> getObatPegawai(String token) async {
+    print('Token available: $token');
     try {
       final Uri uri = Uri.parse('$baseUrl/pegawai/obat');
-
+      print('Using token: $token');
       final response = await http.post(
         uri,
         headers: {
@@ -1238,7 +1201,9 @@ class ApiService {
     }
   }
 
-  /* PEMILIK */
+  /*
+  Obat Pemilik
+  */
   // Method GET
   static Future<List<dynamic>> getObatPemilik(String token) async {
     print('Token available: $token');
@@ -1280,8 +1245,9 @@ class ApiService {
   }
   //OBAT CLOSE
 
-  //PEMILIK
-  /* ADMIN */
+  /*
+  Pemilik Admin
+  */
   // Method GET
   static Future<List<dynamic>> getPemilikAdmin(String token) async {
     print('Token available: $token');
@@ -1437,7 +1403,9 @@ class ApiService {
     }
   }
 
-  /* PEGAWAI */
+  /*
+  Pemilik Pegawai
+  */
   // Method GET
   static Future<List<dynamic>> getPemilikPegawai(String token) async {
     try {
@@ -1591,50 +1559,9 @@ class ApiService {
     }
   }
 
-  /* PEMILIK */
-  // Method GET
-  static Future<List<dynamic>> getPemilikPemilik(String token) async {
-    print('Token available: $token');
-    try {
-      final Uri uri = Uri.parse('$baseUrl/pemilik/pemilik');
-      print('Using token: $token');
-
-      final response = await http.post(
-        uri,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode({
-          'role': 'pemilik',
-          'action': 'read',
-          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
-        }),
-      );
-
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to fetch pemilik from Pemilik: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to fetch pemilik from Pemilik: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error fetching pemilik from Pemilik: $e');
-    }
-  }
-  //PEMILIK CLOSE
-
-  //RESEP
-  /* ADMIN */
+  /*
+  Resep Admin
+  */
   // Method GET
   static Future<List<dynamic>> getResepAdmin(String token) async {
     print('Token available: $token');
