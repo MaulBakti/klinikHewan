@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import '../controllers/regist_controller.dart';
 
 class RegistView extends GetView<RegistController> {
-  RegistView({Key? key}) : super(key: key);
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController alamatController = TextEditingController();
-  final TextEditingController noTelpController = TextEditingController();
+  const RegistView({Key? key}) : super(key: key);
+  //  TextEditingController usernameController = TextEditingController();
+  //  TextEditingController passwordController = TextEditingController();
+  //  TextEditingController alamatController = TextEditingController();
+  //  TextEditingController noTelpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class RegistView extends GetView<RegistController> {
                     children: [
                       SizedBox(height: 15),
                       TextField(
-                        controller: usernameController,
+                        // controller: usernameController,
                         decoration: InputDecoration(
                           labelText: 'Username',
                           border: OutlineInputBorder(),
@@ -42,7 +42,7 @@ class RegistView extends GetView<RegistController> {
                       ),
                       SizedBox(height: 15),
                       TextField(
-                        controller: passwordController,
+                        // controller: passwordController,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(),
@@ -51,7 +51,7 @@ class RegistView extends GetView<RegistController> {
                       ),
                       SizedBox(height: 15),
                       TextField(
-                        controller: alamatController,
+                        // controller: alamatController,
                         decoration: InputDecoration(
                           labelText: 'Alamat',
                           border: OutlineInputBorder(),
@@ -61,7 +61,7 @@ class RegistView extends GetView<RegistController> {
                         height: 15,
                       ),
                       TextField(
-                        controller: noTelpController,
+                        // controller: noTelpController,
                         decoration: InputDecoration(
                           labelText: 'No Telp',
                           border: OutlineInputBorder(),
