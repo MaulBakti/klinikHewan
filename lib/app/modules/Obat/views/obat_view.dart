@@ -71,7 +71,7 @@ class ObatView extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Keterangan: ${obat.keterangan ?? ''} tahun'),
+                Text('Keterangan: ${obat.keterangan ?? ''}'),
               ],
             ),
             trailing: Wrap(

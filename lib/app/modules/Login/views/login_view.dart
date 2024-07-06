@@ -5,6 +5,7 @@ import 'package:klinik_hewan/app/modules/login/controllers/login_controller.dart
 class LoginView extends StatelessWidget {
   final LoginController loginController = Get.put(LoginController());
   final List<String> roles = ['admin', 'pegawai', 'pemilik'];
+  final RxBool _obscureText = true.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +55,27 @@ class LoginView extends StatelessWidget {
                       ),
                       SizedBox(height: 15),
                       // Password TextField
-                      TextField(
-                        onChanged: (value) =>
-                            loginController.password.value = value,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(),
-                        ),
-                        obscureText: true,
-                      ),
+                      Obx(() {
+                        return TextField(
+                          onChanged: (value) =>
+                              loginController.password.value = value,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                _obscureText.value = !_obscureText.value;
+                              },
+                            ),
+                          ),
+                          obscureText: _obscureText.value,
+                        );
+                      }),
                       SizedBox(height: 15),
                       // Role DropdownButton
                       Obx(() {
@@ -117,7 +130,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-// Forgot Password Text Button
+                      // Forgot Password Text Button
                       TextButton.icon(
                         onPressed: () {
                           Get.toNamed('/forgotpass');
