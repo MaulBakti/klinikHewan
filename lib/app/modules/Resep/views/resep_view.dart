@@ -67,11 +67,13 @@ class ResepView extends StatelessWidget {
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text(resep.namaObat ?? ''),
+            title: Text('ID Resep: ${resep.idResep.toString()}'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Umur: ${resep.idRekamMedis ?? ''} tahun'),
+                Text('ID Rekam Medis: ${resep.idRekamMedis.toString()}'),
+                Text('ID Obat: ${resep.idRekamMedis.toString()}'),
+                Text('Jumlah Obat: ${resep.jumlahObat.toString()}'),
               ],
             ),
             trailing: Wrap(
@@ -104,8 +106,6 @@ class ResepView extends StatelessWidget {
         TextEditingController();
     final TextEditingController idObatController = TextEditingController();
     final TextEditingController jumlahObatController = TextEditingController();
-    final TextEditingController diagnosaController = TextEditingController();
-    final TextEditingController namaObatController = TextEditingController();
 
     showDialog(
       context: context,
@@ -140,22 +140,6 @@ class ResepView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: diagnosaController,
-                  decoration: InputDecoration(
-                      labelText: 'Diagnosis', border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: namaObatController,
-                  decoration: InputDecoration(
-                      labelText: 'Nama Obat', border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
               ],
             ),
           ),
@@ -173,13 +157,12 @@ class ResepView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   _validateAndSaveResep(
-                      context,
-                      token,
-                      idRekamMedisController,
-                      idObatController,
-                      jumlahObatController,
-                      diagnosaController,
-                      namaObatController);
+                    context,
+                    token,
+                    idRekamMedisController,
+                    idObatController,
+                    jumlahObatController,
+                  );
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -195,32 +178,26 @@ class ResepView extends StatelessWidget {
   }
 
   void _validateAndSaveResep(
-      BuildContext context,
-      String token,
-      TextEditingController idRekamMedisController,
-      TextEditingController idObatController,
-      TextEditingController jumlahObatController,
-      TextEditingController diagnosaController,
-      TextEditingController namaObatController) {
+    BuildContext context,
+    String token,
+    TextEditingController idRekamMedisController,
+    TextEditingController idObatController,
+    TextEditingController jumlahObatController,
+  ) {
     if (idRekamMedisController.text.isNotEmpty &&
         idObatController.text.isNotEmpty &&
-        jumlahObatController.text.isNotEmpty &&
-        diagnosaController.text.isNotEmpty &&
-        namaObatController.text.isNotEmpty) {
+        jumlahObatController.text.isNotEmpty) {
       final newResep = Resep(
-          idResep: 0,
-          idRekamMedis: int.tryParse(idRekamMedisController.text) ?? 0,
-          idObat: int.tryParse(idObatController.text) ?? 0,
-          diagnosa: diagnosaController.text,
-          jumlahObat: int.tryParse(jumlahObatController.text) ?? 0,
-          namaObat: namaObatController.text);
+        idResep: 0,
+        idRekamMedis: int.tryParse(idRekamMedisController.text) ?? 0,
+        idObat: int.tryParse(idObatController.text) ?? 0,
+        jumlahObat: int.tryParse(jumlahObatController.text) ?? 0,
+      );
       Get.find<ResepController>().postDataResep(newResep).then((_) {
         // Reset form fields after successful submission
         idRekamMedisController.clear();
         idObatController.clear();
-        diagnosaController.clear();
         jumlahObatController.clear();
-        namaObatController.clear();
 
         // Get.back(); // Close dialog after successful submission
       }).catchError((error) {
@@ -245,10 +222,6 @@ class ResepView extends StatelessWidget {
         TextEditingController(text: resep.idObat.toString());
     final TextEditingController jumlahObatController =
         TextEditingController(text: resep.jumlahObat.toString());
-    final TextEditingController diagnosaController =
-        TextEditingController(text: resep.diagnosa);
-    final TextEditingController namaObatController =
-        TextEditingController(text: resep.namaObat);
 
     showDialog(
       context: context,
@@ -270,7 +243,7 @@ class ResepView extends StatelessWidget {
                 TextField(
                   controller: idObatController,
                   decoration: InputDecoration(
-                      labelText: 'Id Obat', border: OutlineInputBorder()),
+                      labelText: 'Obat', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
@@ -279,22 +252,6 @@ class ResepView extends StatelessWidget {
                   controller: jumlahObatController,
                   decoration: InputDecoration(
                       labelText: 'Jumlah Obat', border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: diagnosaController,
-                  decoration: InputDecoration(
-                      labelText: 'Diagnosis', border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: namaObatController,
-                  decoration: InputDecoration(
-                      labelText: 'Nama Obat', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
@@ -316,13 +273,12 @@ class ResepView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   _validateAndEditResep(
-                      context,
-                      resep,
-                      idRekamMedisController,
-                      idObatController,
-                      jumlahObatController,
-                      diagnosaController,
-                      namaObatController);
+                    context,
+                    resep,
+                    idRekamMedisController,
+                    idObatController,
+                    jumlahObatController,
+                  );
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -342,21 +298,15 @@ class ResepView extends StatelessWidget {
       Resep resep,
       TextEditingController idRekamMedisController,
       TextEditingController idObatController,
-      TextEditingController jumlahObatController,
-      TextEditingController diagnosaController,
-      TextEditingController namaObatController) {
+      TextEditingController jumlahObatController) {
     if (idRekamMedisController.text.isNotEmpty &&
         idObatController.text.isNotEmpty &&
-        jumlahObatController.text.isNotEmpty &&
-        diagnosaController.text.isNotEmpty &&
-        namaObatController.text.isNotEmpty) {
+        jumlahObatController.text.isNotEmpty) {
       final updatedResep = Resep(
           idResep: resep.idResep,
           idRekamMedis: int.tryParse(idRekamMedisController.text) ?? 0,
           idObat: int.tryParse(idObatController.text) ?? 0,
-          diagnosa: diagnosaController.text,
-          jumlahObat: int.tryParse(jumlahObatController.text) ?? 0,
-          namaObat: namaObatController.text);
+          jumlahObat: int.tryParse(jumlahObatController.text) ?? 0);
       Get.find<ResepController>().updateResep(updatedResep);
       Navigator.of(context).pop();
     } else {

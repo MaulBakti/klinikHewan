@@ -47,6 +47,15 @@ VALUES
 (4, 4, 1, 1, 4, 'Nafsu makan menurun', 'Anoreksia', CURRENT_TIMESTAMP(3)),
 (5, 5, 1, 1, 5, 'Kulit kering', 'Dermatitis', CURRENT_TIMESTAMP(3));
 
+--Resep
+INSERT INTO Resep (id_rekam_medis, id_obat, jumlah_obat) VALUES
+(1, 1, 1), -- RekamMedis 1, Obat 1 (Antibiotik), 1 unit
+(2, 2, 2), -- RekamMedis 2, Obat 2 (Obat tetes mata), 2 units
+(3, 3, 1), -- RekamMedis 3, Obat 3 (Multivitamin), 1 unit
+(4, 4, 3), -- RekamMedis 4, Obat 4 (Painkiller), 3 units
+(5, 5, 2); -- RekamMedis 5, Obat 5 (Shampoo anti-jerawat), 2 units
+
+
 --Pembayaran
 INSERT INTO Pembayaran (id_pembayaran, id_rekam_medis, tgl_pembayaran, jumlah_pembayaran)
 VALUES 

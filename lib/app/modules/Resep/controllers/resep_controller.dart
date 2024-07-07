@@ -35,7 +35,7 @@ class ResepController extends GetxController {
 
   Future<void> getDataResep(String role) async {
     role = box.read('role');
-    print('Fetching data dooctor for role: $role');
+    print('Fetching data resep for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();

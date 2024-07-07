@@ -54,8 +54,6 @@ class PemilikController extends GetxController {
         responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getPemilikPegawai(token);
-      } else if (role == 'pemilik') {
-        responseData = await ApiService.getPemilikPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
