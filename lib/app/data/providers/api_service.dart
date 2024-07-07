@@ -1918,8 +1918,9 @@ class ApiService {
   }
   //RESEP CLOSE
 
-  //REKAMMEDIS
-  /* ADMIN */
+  /*
+  Rekam Medis Admin
+  */
   // Method GET
   static Future<List<dynamic>> getRekamMedisAdmin(String token) async {
     print('Token available: $token');

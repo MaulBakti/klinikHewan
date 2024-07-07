@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import '../../../data/providers/api_service.dart';
 
 class PemilikController extends GetxController {
-  //TODO: Implement PemilikController
   var isLoading = false.obs;
   var pemilikList = <Pemilik>[].obs;
   var errorMessage = ''.obs;
@@ -36,13 +35,13 @@ class PemilikController extends GetxController {
 
   Future<void> getDataPemilik(String role) async {
     role = box.read('role');
-    print('Fetching data dooctor for role: $role');
+    print('Fetching data pemilik for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false; // Reset loading state
+        isLoading.value = false;
         print('Error: Token not found');
         return;
       }
@@ -54,10 +53,13 @@ class PemilikController extends GetxController {
         responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getPemilikPegawai(token);
+      // } else if (role == 'pemilik') {
+      //   responseData = await ApiService.getPemilikPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
-      print('List pemilik: $pemilikList');
+
+      print('Response data: $responseData');
 
       final List<Pemilik> pemiliks =
           responseData.map((data) => Pemilik.fromJson(data)).toList();
@@ -79,20 +81,18 @@ class PemilikController extends GetxController {
       final String? token = GetStorage().read('token');
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false; // Added to reset loading state
+        isLoading.value = false;
         return;
       }
       print('Token: $token');
 
       final pemilikData = pemilik.toJson();
-      print('Data pemilik: $pemilikData'); // Log data pemilik yang akan dikirim
+      print('Data pemilik: $pemilikData');
       http.Response response;
 
       if (role == 'admin') {
-        // response = await ApiService.postpemilikAdmin(token, 'create', pemilik.toJson());
         response = await ApiService.postPemilikAdmin(token, pemilikData);
       } else if (role == 'pegawai') {
-        // response = await ApiService.postpegawaiPegawai(token, 'create', pegawai.toJson());
         response = await ApiService.postPemilikPegawai(token, pemilikData);
       } else {
         throw Exception('Invalid role: $role');

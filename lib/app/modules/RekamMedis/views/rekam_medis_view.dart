@@ -67,13 +67,17 @@ class RekamMedisView extends StatelessWidget {
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text(rekammedis.namaHewan ?? ''),
+            title: Text('ID Resep: ${rekammedis.idRekamMedis.toString()}'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('ID Hewan: ${rekammedis.idHewan ?? ''}'),
                 Text('ID Pemilik: ${rekammedis.idPemilik ?? ''}'),
-                Text('Jenis: ${rekammedis.namaPegawai ?? ''}'),
-                Text('Jenis Kelamin: ${rekammedis.diagnosa ?? ''}'),
+                Text('ID Pegawai: ${rekammedis.idPegawai ?? ''}'),
+                Text('ID Obat: ${rekammedis.idObat ?? ''}'),
+                Text('Keluhan: ${rekammedis.keluhan ?? ''}'),
+                Text('Diagnosa: ${rekammedis.diagnosa ?? ''}'),
+                Text('Tanggal Periksa: ${rekammedis.tglPeriksa ?? ''}'),
               ],
             ),
             trailing: Wrap(
@@ -173,12 +177,37 @@ class RekamMedisView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: tglPeriksaController,
-                  decoration: InputDecoration(
-                      labelText: 'Tgl Periksa', border: OutlineInputBorder()),
-                  keyboardType: TextInputType.number,
+                GestureDetector(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                      tglPeriksaController.text = formattedDate;
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: tglPeriksaController,
+                      decoration: InputDecoration(
+                        labelText: 'Tgl Periksa',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.datetime,
+                    ),
+                  ),
                 ),
+                // TextField(
+                //   controller: tglPeriksaController,
+                //   decoration: InputDecoration(
+                //       labelText: 'Tgl Periksa', border: OutlineInputBorder()),
+                //   keyboardType: TextInputType.number,
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -368,6 +397,7 @@ class RekamMedisView extends StatelessWidget {
                     labelText: 'ID Hewan',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: idPemilikController,
@@ -375,6 +405,7 @@ class RekamMedisView extends StatelessWidget {
                     labelText: 'ID Pemilik',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: idPegawaiController,
@@ -382,6 +413,7 @@ class RekamMedisView extends StatelessWidget {
                     labelText: 'ID Pegawai',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(
                   height: 10,
@@ -392,6 +424,7 @@ class RekamMedisView extends StatelessWidget {
                     labelText: 'ID Obat',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(
                   height: 10,
@@ -416,7 +449,6 @@ class RekamMedisView extends StatelessWidget {
                   controller: tglPeriksaController,
                   decoration: InputDecoration(
                       labelText: 'Tgl Periksa', border: OutlineInputBorder()),
-                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(
                   height: 10,
@@ -425,7 +457,6 @@ class RekamMedisView extends StatelessWidget {
                   controller: namaHewanController,
                   decoration: InputDecoration(
                       labelText: 'Nama Hewan', border: OutlineInputBorder()),
-                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(
                   height: 10,
@@ -434,6 +465,9 @@ class RekamMedisView extends StatelessWidget {
                   controller: namaPemilikController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: namaPegawaiController,

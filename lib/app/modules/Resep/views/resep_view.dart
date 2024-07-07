@@ -72,7 +72,7 @@ class ResepView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('ID Rekam Medis: ${resep.idRekamMedis.toString()}'),
-                Text('ID Obat: ${resep.idRekamMedis.toString()}'),
+                Text('ID Obat: ${resep.idObat.toString()}'),
                 Text('Jumlah Obat: ${resep.jumlahObat.toString()}'),
               ],
             ),
@@ -280,7 +280,7 @@ class ResepView extends StatelessWidget {
                     jumlahObatController,
                   );
                 },
-                child: Text('Simpan'),
+                child: Text('Edit'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.black,
