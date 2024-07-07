@@ -6,10 +6,7 @@ import '../controllers/regist_controller.dart';
 
 class RegistView extends GetView<RegistController> {
   const RegistView({Key? key}) : super(key: key);
-  //  TextEditingController usernameController = TextEditingController();
-  //  TextEditingController passwordController = TextEditingController();
-  //  TextEditingController alamatController = TextEditingController();
-  //  TextEditingController noTelpController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +31,7 @@ class RegistView extends GetView<RegistController> {
                     children: [
                       SizedBox(height: 15),
                       TextField(
-                        // controller: usernameController,
+                        onChanged: (value) => controller.username.value = value,
                         decoration: InputDecoration(
                           labelText: 'Username',
                           border: OutlineInputBorder(),
@@ -42,7 +39,7 @@ class RegistView extends GetView<RegistController> {
                       ),
                       SizedBox(height: 15),
                       TextField(
-                        // controller: passwordController,
+                        onChanged: (value) => controller.password.value = value,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(),
@@ -51,7 +48,7 @@ class RegistView extends GetView<RegistController> {
                       ),
                       SizedBox(height: 15),
                       TextField(
-                        // controller: alamatController,
+                        onChanged: (value) => controller.alamat.value = value,
                         decoration: InputDecoration(
                           labelText: 'Alamat',
                           border: OutlineInputBorder(),
@@ -61,7 +58,7 @@ class RegistView extends GetView<RegistController> {
                         height: 15,
                       ),
                       TextField(
-                        // controller: noTelpController,
+                        onChanged: (value) => controller.noTelp.value = value,
                         decoration: InputDecoration(
                           labelText: 'No Telp',
                           border: OutlineInputBorder(),
@@ -69,7 +66,9 @@ class RegistView extends GetView<RegistController> {
                       ),
                       SizedBox(height: 15),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.register();
+                        },
                         child: Text('Regist'),
                         style: ButtonStyle(
                           backgroundColor:

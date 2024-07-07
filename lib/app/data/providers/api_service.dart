@@ -24,6 +24,28 @@ class ApiService {
     }
   }
 
+  static Future<http.Response> regist(
+      String username, String password, String alamat, String notelp) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/pemilik/register/'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'username': username,
+          'password': password,
+          'jabatan': 'pemilik',
+          'alamat': alamat,
+          'no_telp': notelp,
+        }),
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Failed to regist: $e');
+    }
+  }
+
   //HEWAN
   /* ADMIN */
   // Method GET
