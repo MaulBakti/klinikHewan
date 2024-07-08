@@ -1,7 +1,6 @@
 class Pegawai {
   int idPegawai;
   String namaPegawai;
-  String password;
   String jabatan;
   String alamat;
   String noTelp;
@@ -9,7 +8,6 @@ class Pegawai {
   Pegawai({
     required this.idPegawai,
     required this.namaPegawai,
-    required this.password,
     required this.jabatan,
     required this.alamat,
     required this.noTelp,
@@ -19,7 +17,6 @@ class Pegawai {
     return Pegawai(
       idPegawai: json['id_pegawai'] ?? 0,
       namaPegawai: json['username'] ?? '',
-      password: json['password'] ?? '',
       jabatan: json['jabatan'] ?? '',
       alamat: json['alamat'] ?? '',
       noTelp: json['no_telp'] ?? '',
@@ -30,7 +27,6 @@ class Pegawai {
     return {
       'id_pegawai': idPegawai,
       'username': namaPegawai,
-      'password': password,
       'jabatan': jabatan,
       'alamat': alamat,
       'no_telp': noTelp,

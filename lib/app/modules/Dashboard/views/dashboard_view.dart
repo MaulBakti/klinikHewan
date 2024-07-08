@@ -54,13 +54,6 @@ class DashboardView extends GetView<DashboardController> {
               },
             ),
             _buildListTile(
-              title: 'Profile',
-              icon: Icons.person,
-              onTap: () {
-                // Ganti dengan navigasi ke halaman profil
-              },
-            ),
-            _buildListTile(
               title: 'Settings',
               icon: Icons.settings,
               onTap: () {
