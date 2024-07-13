@@ -4,6 +4,8 @@ import '../modules/Appointment/views/appointment_view.dart';
 import '../modules/Dashboard/bindings/dashboard_binding.dart';
 import '../modules/Dashboard/views/dashboard_view.dart';
 import '../modules/Doctor/views/doctor_view.dart';
+import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
+import '../modules/ForgotPass/views/forgotpass_view.dart';
 import '../modules/Hewan/bindings/hewan_binding.dart';
 import '../modules/Hewan/views/hewan_view.dart';
 import '../modules/Home/bindings/Home_binding.dart';
@@ -19,14 +21,14 @@ import '../modules/Pembayaran/PemilikPembayaran/bindings/pemilikPembayaran_bindi
 import '../modules/Pembayaran/PemilikPembayaran/views/pemilikPembayaran_view.dart';
 import '../modules/Pemilik/bindings/pemilik_binding.dart';
 import '../modules/Pemilik/views/pemilik_view.dart';
+import '../modules/Register/bindings/regist_binding.dart';
+import '../modules/Register/views/regist_view.dart';
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
 import '../modules/Resep/model/resep.dart';
 import '../modules/Resep/views/resep_view.dart';
-import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
-import '../modules/ForgotPass/views/forgotpass_view.dart';
-import '../modules/Register/bindings/regist_binding.dart';
-import '../modules/Register/views/regist_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 
 // Dashboard
 // Obat
@@ -180,6 +182,11 @@ class AppPages {
       name: _Paths.REGIST,
       page: () => const RegistView(),
       binding: RegistBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

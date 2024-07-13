@@ -47,6 +47,42 @@ class HomeView extends StatelessWidget {
           }
         }),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: 'Favorites'),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.message), label: 'Messages'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ],
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          onTap: (index) {
+            switch (index) {
+              case 0:
+                // Implementasi fungsi pencarian
+                Get.toNamed('/search');
+                break;
+              case 1:
+                // Implementasi fungsi favorites
+                Get.toNamed('/favorites');
+                break;
+              case 2:
+                // Implementasi fungsi add
+                Get.toNamed('/add');
+                break;
+              case 3:
+                // Implementasi fungsi messages
+                Get.toNamed('/messages');
+                break;
+              case 4:
+                // Implementasi fungsi profile
+                Get.toNamed('/profile');
+                break;
+            }
+          }),
     );
   }
 

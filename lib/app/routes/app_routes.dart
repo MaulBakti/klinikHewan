@@ -40,6 +40,7 @@ abstract class Routes {
   static const PEMBAYARAN = _Paths.PEMBAYARAN;
   static const FORGOTPASS = _Paths.FORGOTPASS;
   static const REGIST = _Paths.REGIST;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -80,4 +81,5 @@ abstract class _Paths {
   static const PEMBAYARAN = '/pembayaran';
   static const FORGOTPASS = '/forgotpass';
   static const REGIST = '/regist';
+  static const PROFILE = '/profile';
 }
