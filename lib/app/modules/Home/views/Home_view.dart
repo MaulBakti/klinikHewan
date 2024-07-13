@@ -153,6 +153,13 @@ class HomeView extends StatelessWidget {
     return ListView(
       children: [
         _buildListTile(
+          title: 'Profile',
+          icon: Icons.person,
+          onTap: () {
+            Get.toNamed('/pegawai');
+          },
+        ),
+        _buildListTile(
           title: 'Data Doctor',
           icon: Icons.medical_services,
           onTap: () {
@@ -201,6 +208,13 @@ class HomeView extends StatelessWidget {
   Widget _buildPemilikListView() {
     return ListView(
       children: [
+        _buildListTile(
+          title: 'Profile',
+          icon: Icons.person,
+          onTap: () {
+            Get.toNamed('/pemilik');
+          },
+        ),
         _buildListTile(
           title: 'Data Doctor',
           icon: Icons.medical_services,

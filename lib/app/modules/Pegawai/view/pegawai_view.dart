@@ -73,7 +73,7 @@ class PegawaiView extends StatelessWidget {
               children: [
                 Text('Jabatan: ${pegawai.jabatan ?? ''}'),
                 Text('Alamat: ${pegawai.alamat ?? ''}'),
-                Text('No Telp: ${pegawai.noTelp ?? ''} tahun'),
+                Text('No Telp: ${pegawai.noTelp ?? ''}'),
               ],
             ),
             trailing: Wrap(
@@ -105,7 +105,6 @@ class PegawaiView extends StatelessWidget {
     final TextEditingController namaController = TextEditingController();
     final TextEditingController jabatanController = TextEditingController();
     final TextEditingController alamatController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
     final TextEditingController noTelpController = TextEditingController();
 
     showDialog(
@@ -142,14 +141,6 @@ class PegawaiView extends StatelessWidget {
                   height: 10,
                 ),
                 TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                      labelText: 'Password', border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
                   controller: noTelpController,
                   decoration: InputDecoration(
                       labelText: 'No Telp', border: OutlineInputBorder()),
@@ -171,13 +162,13 @@ class PegawaiView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   _validateAndSavePegawai(
-                      context,
-                      token,
-                      namaController,
-                      jabatanController,
-                      alamatController,
-                      noTelpController,
-                      passwordController);
+                    context,
+                    token,
+                    namaController,
+                    jabatanController,
+                    alamatController,
+                    noTelpController,
+                  );
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -198,18 +189,15 @@ class PegawaiView extends StatelessWidget {
     TextEditingController namaController,
     TextEditingController alamatController,
     TextEditingController noTelpController,
-    TextEditingController passwordController,
     TextEditingController jabatanController,
   ) {
     if (namaController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
         jabatanController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
         noTelpController.text.isNotEmpty) {
       final newPegawai = Pegawai(
         idPegawai: 0,
         namaPegawai: namaController.text,
-        password: passwordController.text,
         jabatan: jabatanController.text,
         alamat: alamatController.text,
         noTelp: noTelpController.text,
@@ -218,7 +206,6 @@ class PegawaiView extends StatelessWidget {
         // Reset form fields after successful submission
         namaController.clear();
         jabatanController.clear();
-        passwordController.clear();
         alamatController.clear();
         noTelpController.clear();
 
@@ -241,8 +228,6 @@ class PegawaiView extends StatelessWidget {
   void _editPegawai(BuildContext context, Pegawai pegawai) {
     final TextEditingController namaController =
         TextEditingController(text: pegawai.namaPegawai);
-    final TextEditingController passwordController =
-        TextEditingController(text: pegawai.password);
     final TextEditingController jabatanController =
         TextEditingController(text: pegawai.jabatan);
     final TextEditingController alamatController =
@@ -284,14 +269,6 @@ class PegawaiView extends StatelessWidget {
                   height: 10,
                 ),
                 TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                      labelText: 'Password', border: OutlineInputBorder()),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
                   controller: noTelpController,
                   decoration: InputDecoration(
                       labelText: 'No Telp', border: OutlineInputBorder()),
@@ -313,13 +290,13 @@ class PegawaiView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   _validateAndEditPegawai(
-                      context,
-                      pegawai,
-                      namaController,
-                      jabatanController,
-                      alamatController,
-                      noTelpController,
-                      passwordController);
+                    context,
+                    pegawai,
+                    namaController,
+                    jabatanController,
+                    alamatController,
+                    noTelpController,
+                  );
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -340,18 +317,15 @@ class PegawaiView extends StatelessWidget {
     TextEditingController namaController,
     TextEditingController alamatController,
     TextEditingController noTelpController,
-    TextEditingController passwordController,
     TextEditingController jabatanController,
   ) {
     if (namaController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
         jabatanController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
         noTelpController.text.isNotEmpty) {
       final updatedPegawai = Pegawai(
         idPegawai: pegawai.idPegawai,
         namaPegawai: namaController.text,
-        password: passwordController.text,
         jabatan: jabatanController.text,
         alamat: alamatController.text,
         noTelp: noTelpController.text,
