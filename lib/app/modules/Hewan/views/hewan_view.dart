@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
+import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 
 class HewanView extends StatelessWidget {
   final String role;
@@ -12,6 +13,7 @@ class HewanView extends StatelessWidget {
     controller.getToken();
     controller.getRole();
     controller.getDataHewan(role);
+    controller.getDataPemilik(role);
   }
 
   @override
@@ -111,6 +113,7 @@ class HewanView extends StatelessWidget {
     final TextEditingController beratController = TextEditingController();
     final TextEditingController jenisKelaminController =
         TextEditingController();
+    Pemilik? selectedPemilik;
 
     showDialog(
       context: context,
@@ -121,13 +124,35 @@ class HewanView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  controller: idPemilikController,
-                  decoration: InputDecoration(
-                    labelText: 'ID Pemilik',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  } else if (controller.pemilikList.isEmpty) {
+                    return Text('Tidak ada data pemilik');
+                  } else {
+                    return DropdownButtonFormField<Pemilik>(
+                      value: selectedPemilik,
+                      hint: Text('Pilih Pemilik'),
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      onChanged: (Pemilik? newValue) {
+                        selectedPemilik = newValue;
+                      },
+                      items: controller.pemilikList.map((Pemilik pemilik) {
+                        return DropdownMenuItem<Pemilik>(
+                          value: pemilik,
+                          child: Text(pemilik.namaPemilik ?? ''),
+                        );
+                      }).toList(),
+                    );
+                  }
+                }),
+                // TextField(
+                //   controller: idPemilikController,
+                //   decoration: InputDecoration(
+                //     labelText: 'ID Pemilik',
+                //     border: OutlineInputBorder(),
+                //   ),
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -189,7 +214,8 @@ class HewanView extends StatelessWidget {
                   _validateAndSaveHewan(
                       context,
                       token,
-                      idPemilikController,
+                      selectedPemilik,
+                      // idPemilikController,
                       namaController,
                       jenisController,
                       umurController,
@@ -212,13 +238,15 @@ class HewanView extends StatelessWidget {
   void _validateAndSaveHewan(
       BuildContext context,
       String token,
-      TextEditingController idPemilikController,
+      Pemilik? selectedPemilik,
+      // TextEditingController idPemilikController,
       TextEditingController namaController,
       TextEditingController jenisController,
       TextEditingController umurController,
       TextEditingController beratController,
       TextEditingController jenisKelaminController) {
-    if (idPemilikController.text.isNotEmpty &&
+    if (selectedPemilik != null &&
+        // idPemilikController.text.isNotEmpty &&
         namaController.text.isNotEmpty &&
         jenisController.text.isNotEmpty &&
         umurController.text.isNotEmpty &&
@@ -226,7 +254,8 @@ class HewanView extends StatelessWidget {
         jenisKelaminController.text.isNotEmpty) {
       final newHewan = Hewan(
         idHewan: 0,
-        idPemilik: int.tryParse(idPemilikController.text) ?? 0,
+        idPemilik: selectedPemilik.idPemilik,
+        // int.tryParse(idPemilikController.text) ?? 0,
         namaHewan: namaController.text,
         jenisHewan: jenisController.text,
         umur: int.tryParse(umurController.text) ?? 0,
@@ -235,7 +264,7 @@ class HewanView extends StatelessWidget {
       );
       Get.find<HewanController>().postDataHewan(newHewan).then((_) {
         // Reset form fields after successful submission
-        idPemilikController.clear();
+        // idPemilikController.clear();
         namaController.clear();
         jenisController.clear();
         umurController.clear();

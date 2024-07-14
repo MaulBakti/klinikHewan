@@ -2,14 +2,16 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
+import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class HewanController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
-  var hewanList = <Hewan>[].obs;
   final box = GetStorage();
+  var hewanList = <Hewan>[].obs;
+  var pemilikList = <Pemilik>[].obs;
 
   @override
   void onInit() {
@@ -31,6 +33,46 @@ class HewanController extends GetxController {
   void clearToken() {
     box.remove('token');
     print('Token removed');
+  }
+
+  Future<void> getDataPemilik(String role) async {
+    role = box.read('role');
+    print('Fetching data pemilik for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false;
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getPemilikAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getPemilikPegawai(token);
+        // } else if (role == 'pemilik') {
+        //   responseData = await ApiService.getPemilikPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+
+      print('Response data: $responseData');
+
+      final List<Pemilik> pemiliks =
+          responseData.map((data) => Pemilik.fromJson(data)).toList();
+      pemilikList.assignAll(pemiliks);
+      print('List pemilik: $pemilikList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data pemilik: $e';
+      print('Error fetching data pemilik: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> getDataHewan(String role) async {

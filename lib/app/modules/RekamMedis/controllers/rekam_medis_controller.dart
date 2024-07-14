@@ -9,7 +9,18 @@ class RekamMedisController extends GetxController {
   //TODO: Implement RekamMedisController
   var isLoading = false.obs;
   var errorMessage = ''.obs;
+  var selecteHewan = ''.obs;
   var rekammedisList = <rekamMedis>[].obs;
+  var hewans = <dynamic>[
+    {
+      "id_hewan": "23",
+      "nama_hewan": "kucing",
+    },
+    {
+      "id_hewan": "24",
+      "nama_hewan": "Anjing",
+    }
+  ].obs;
   final box = GetStorage();
 
   @override
