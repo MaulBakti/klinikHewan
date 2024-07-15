@@ -10,11 +10,17 @@ class PegawaiController extends GetxController {
   var pegawaiList = <Pegawai>[].obs;
   var errorMessage = ''.obs;
   final box = GetStorage();
+  var role = 'admin'.obs;
 
   @override
   void onInit() {
     super.onInit();
     print('Initializing PegawaiController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {
