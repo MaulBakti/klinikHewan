@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class HewanView extends StatelessWidget {
   final String role;
@@ -106,7 +107,6 @@ class HewanView extends StatelessWidget {
   }
 
   void _addHewan(BuildContext context, String token) {
-    final TextEditingController idPemilikController = TextEditingController();
     final TextEditingController namaController = TextEditingController();
     final TextEditingController jenisController = TextEditingController();
     final TextEditingController umurController = TextEditingController();
