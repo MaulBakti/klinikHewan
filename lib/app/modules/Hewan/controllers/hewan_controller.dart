@@ -12,11 +12,17 @@ class HewanController extends GetxController {
   final box = GetStorage();
   var hewanList = <Hewan>[].obs;
   var pemilikList = <Pemilik>[].obs;
+  var role = 'admin'.obs;
 
   @override
   void onInit() {
     super.onInit();
     print('Initializing HewanController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {

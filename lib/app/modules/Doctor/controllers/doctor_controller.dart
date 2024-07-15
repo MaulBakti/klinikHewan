@@ -10,11 +10,17 @@ class DoctorController extends GetxController {
   var errorMessage = ''.obs;
   var doctorList = <Doctor>[].obs;
   final box = GetStorage();
+  var role = 'admin'.obs;
 
   @override
   void onInit() {
     super.onInit();
     print('Initializing DoctorController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {
