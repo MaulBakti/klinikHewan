@@ -10,11 +10,17 @@ class ObatController extends GetxController {
   var errorMessage = ''.obs;
   var obatList = <Obat>[].obs;
   final box = GetStorage();
+  var role = 'admin'.obs;
 
   @override
   void onInit() {
     super.onInit();
     print('Initializing ObatController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {

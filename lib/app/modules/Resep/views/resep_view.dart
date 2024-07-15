@@ -36,15 +36,22 @@ class ResepView extends StatelessWidget {
           return _buildResepList(context);
         }
       }),
-      floatingActionButton: role == 'admin' || role == 'pegawai'
-          ? FloatingActionButton(
-              onPressed: () {
-                print(role);
-                _addResep(context, token);
-              },
-              child: Icon(Icons.add),
-            )
-          : null,
+      floatingActionButton: Obx(() {
+        final role = controller.role.value;
+        // Define roles that should not have a FloatingActionButton
+        const restrictedRoles = ['pemilik'];
+
+        return Visibility(
+          visible: !restrictedRoles.contains(role),
+          child: FloatingActionButton(
+            onPressed: () {
+              print(role);
+              _addResep(context, token);
+            },
+            child: Icon(Icons.add),
+          ),
+        );
+      }),
     );
   }
 

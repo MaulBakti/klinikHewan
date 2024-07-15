@@ -212,7 +212,7 @@ class HomeView extends StatelessWidget {
           title: 'Profile',
           icon: Icons.person,
           onTap: () {
-            Get.toNamed('/pemilik');
+            Get.toNamed('/profile');
           },
         ),
         _buildListTile(

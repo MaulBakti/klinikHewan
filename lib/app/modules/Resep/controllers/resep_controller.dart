@@ -10,11 +10,17 @@ class ResepController extends GetxController {
   var errorMessage = ''.obs;
   var resepList = <Resep>[].obs;
   final box = GetStorage();
+  var role = 'admin'.obs;
 
   @override
   void onInit() {
     super.onInit();
     print('Initializing ResepController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {
