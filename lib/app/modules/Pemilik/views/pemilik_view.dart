@@ -36,15 +36,22 @@ class PemilikView extends StatelessWidget {
           return _buildPemilikList(context);
         }
       }),
-      floatingActionButton: role == 'admin' || role == 'pegawai'
-          ? FloatingActionButton(
-              onPressed: () {
-                print(role);
-                _addPemilik(context, token);
-              },
-              child: Icon(Icons.add),
-            )
-          : null,
+      floatingActionButton: Obx(() {
+        final role = controller.role.value;
+        // Define roles that should not have a FloatingActionButton
+        const restrictedRoles = ['pemilik'];
+
+        return Visibility(
+          visible: !restrictedRoles.contains(role),
+          child: FloatingActionButton(
+            onPressed: () {
+              print(role);
+              _addPemilik(context, token);
+            },
+            child: Icon(Icons.add),
+          ),
+        );
+      }),
     );
   }
 
@@ -102,6 +109,7 @@ class PemilikView extends StatelessWidget {
 
   void _addPemilik(BuildContext context, String token) {
     final TextEditingController namaController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     final TextEditingController alamatController = TextEditingController();
     final TextEditingController noTelpController = TextEditingController();
 
@@ -118,6 +126,14 @@ class PemilikView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                      labelText: 'Password', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
@@ -152,7 +168,7 @@ class PemilikView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   _validateAndSavePemilik(context, token, namaController,
-                      alamatController, noTelpController);
+                      alamatController, noTelpController, passwordController);
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -172,14 +188,18 @@ class PemilikView extends StatelessWidget {
     String token,
     TextEditingController namaController,
     TextEditingController alamatController,
+    TextEditingController passwordController,
     TextEditingController noTelpController,
   ) {
     if (namaController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
         noTelpController.text.isNotEmpty) {
       final newPemilik = Pemilik(
         idPemilik: 0,
         namaPemilik: namaController.text,
+        password: passwordController.text,
+        jabatan: 'pemilik',
         alamat: alamatController.text,
         noTelp: noTelpController.text,
       );
@@ -187,6 +207,8 @@ class PemilikView extends StatelessWidget {
         // Reset form fields after successful submission
         namaController.clear();
         alamatController.clear();
+        passwordController.clear();
+        passwordController.clear();
         noTelpController.clear();
 
         // Get.back(); // Close dialog after successful submission
@@ -208,6 +230,8 @@ class PemilikView extends StatelessWidget {
   void _editPemilik(BuildContext context, Pemilik pemilik) {
     final TextEditingController namaController =
         TextEditingController(text: pemilik.namaPemilik);
+    final TextEditingController passwordController =
+        TextEditingController(text: pemilik.password);
     final TextEditingController alamatController =
         TextEditingController(text: pemilik.alamat);
     final TextEditingController noTelpController =
@@ -226,6 +250,14 @@ class PemilikView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                      labelText: 'Password', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
@@ -260,7 +292,7 @@ class PemilikView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   _validateAndEditPemilik(context, pemilik, namaController,
-                      alamatController, noTelpController);
+                      alamatController, noTelpController, passwordController);
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -280,6 +312,7 @@ class PemilikView extends StatelessWidget {
     Pemilik pemilik,
     TextEditingController namaController,
     TextEditingController alamatController,
+    TextEditingController passwordController,
     TextEditingController noTelpController,
   ) {
     if (namaController.text.isNotEmpty &&
@@ -288,6 +321,8 @@ class PemilikView extends StatelessWidget {
       final updatedPemilik = Pemilik(
         idPemilik: pemilik.idPemilik,
         namaPemilik: namaController.text,
+        password: passwordController.text,
+        jabatan: 'pemilik',
         alamat: alamatController.text,
         noTelp: noTelpController.text,
       );
