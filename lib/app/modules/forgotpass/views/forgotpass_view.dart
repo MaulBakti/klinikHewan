@@ -17,7 +17,7 @@ class ForgotpassView extends GetView<ForgotpassController> {
       ),
       body: Stack(
         children: [
-          // // Background image
+          // Uncomment the following lines if you have a background image
           // Container(
           //   decoration: BoxDecoration(
           //     image: DecorationImage(
@@ -40,7 +40,7 @@ class ForgotpassView extends GetView<ForgotpassController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-// Logo
+                      // Logo
                       Image.asset(
                         'assets/images/logo.webp', // Ganti dengan path gambar logo
                         height: 100,
@@ -141,71 +141,6 @@ class ForgotpassView extends GetView<ForgotpassController> {
             ),
           ),
         ],
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Card(
-            elevation: 8,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 15),
-                  TextField(
-                    // onChanged: (value) => controller.noTelp.value = value,
-                    decoration: InputDecoration(
-                      labelText: 'No Telp',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Cari'),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.black),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(Size(200, 50)),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed('/dashboard');
-                    },
-                    child: Text('Batal'),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.grey),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(Size(200, 50)),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
->>>>>>> 033212a71ede1667c70501e239382ac1803d2ded
       ),
     );
   }
