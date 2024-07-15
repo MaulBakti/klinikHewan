@@ -3,6 +3,10 @@ import 'package:klinik_hewan/app/modules/RekamMedis/model/rekamMedis.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
+import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
+import 'package:klinik_hewan/app/modules/Pegawai/models/pegawai.dart';
+import 'package:klinik_hewan/app/modules/Obat/model/obat.dart';
 import 'dart:convert';
 
 class RekamMedisController extends GetxController {
@@ -11,16 +15,11 @@ class RekamMedisController extends GetxController {
   var errorMessage = ''.obs;
   var selecteHewan = ''.obs;
   var rekammedisList = <rekamMedis>[].obs;
-  var hewans = <dynamic>[
-    {
-      "id_hewan": "23",
-      "nama_hewan": "kucing",
-    },
-    {
-      "id_hewan": "24",
-      "nama_hewan": "Anjing",
-    }
-  ].obs;
+  var pemilikList = <Pemilik>[].obs;
+  var hewanList = <Hewan>[].obs;
+  var obatList = <Obat>[].obs;
+  var pegawaiList = <Pegawai>[].obs;
+
   final box = GetStorage();
 
   @override
@@ -43,6 +42,159 @@ class RekamMedisController extends GetxController {
   void clearToken() {
     box.remove('token');
     print('Token removed');
+  }
+
+  Future<void> getDataPemilik(String role) async {
+    role = box.read('role');
+    print('Fetching data pemilik for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false;
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getPemilikAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getPemilikPegawai(token);
+        // } else if (role == 'pemilik') {
+        //   responseData = await ApiService.getPemilikPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+
+      print('Response data: $responseData');
+
+      final List<Pemilik> pemiliks =
+          responseData.map((data) => Pemilik.fromJson(data)).toList();
+      pemilikList.assignAll(pemiliks);
+      print('List pemilik: $pemilikList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data pemilik: $e';
+      print('Error fetching data pemilik: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getDataHewan(String role) async {
+    role = box.read('role');
+    print('Fetching data hewan for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false; // Reset loading state
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getHewanAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getHewanPegawai(token);
+      } else if (role == 'pemilik') {
+        responseData = await ApiService.getHewanPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+      print('List hewan: $hewanList');
+
+      final List<Hewan> hewans =
+          responseData.map((data) => Hewan.fromJson(data)).toList();
+      hewanList.assignAll(hewans);
+      print('List hewan: $hewanList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data hewan: $e';
+      print('Error fetching data hewan: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getDataPegawai(String role) async {
+    role = box.read('role');
+    print('Fetching data dooctor for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false; // Reset loading state
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getPegawaiAdmin(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+      print('List pegawai: $pegawaiList');
+
+      final List<Pegawai> pegawais =
+          responseData.map((data) => Pegawai.fromJson(data)).toList();
+      pegawaiList.assignAll(pegawais);
+      print('List pegawai: $pegawaiList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data pegawai: $e';
+      print('Error fetching data pegawai: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getDataObat(String role) async {
+    role = box.read('role');
+    print('Fetching data dooctor for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false; // Reset loading state
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getObatAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getObatPegawai(token);
+      } else if (role == 'pemilik') {
+        responseData = await ApiService.getObatPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+      print('List obat: $obatList');
+
+      final List<Obat> obats =
+          responseData.map((data) => Obat.fromJson(data)).toList();
+      obatList.assignAll(obats);
+      print('List obat: $obatList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data obat: $e';
+      print('Error fetching data obat: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> getDataRekamMedis(String role) async {
