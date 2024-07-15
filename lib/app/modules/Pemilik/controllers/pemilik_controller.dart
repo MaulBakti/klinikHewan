@@ -10,11 +10,17 @@ class PemilikController extends GetxController {
   var pemilikList = <Pemilik>[].obs;
   var errorMessage = ''.obs;
   final box = GetStorage();
+  var role = 'admin'.obs;
 
   @override
   void onInit() {
     super.onInit();
     print('Initializing PemilikController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {
@@ -53,8 +59,8 @@ class PemilikController extends GetxController {
         responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getPemilikPegawai(token);
-      // } else if (role == 'pemilik') {
-      //   responseData = await ApiService.getPemilikPemilik(token);
+        // } else if (role == 'pemilik') {
+        //   responseData = await ApiService.getPemilikPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
