@@ -26,6 +26,10 @@ class ProfileView extends GetView<ProfileController> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Image.asset(
+                    'assets/images/logo.webp', // Ganti dengan path gambar logo
+                    height: 100,
+                  ),
                   SizedBox(height: 15),
                   TextField(
                     decoration: InputDecoration(

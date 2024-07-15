@@ -127,6 +127,36 @@ class RekamMedisView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Obx(() {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton<String>(
+                      value: controller.selecteHewan.value,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          controller.selecteHewan.value = newValue;
+                        }
+                      },
+                      items: controller.hewans.map<DropdownMenuItem<String>>(
+                        (dynamic hewan) {
+                          return DropdownMenuItem<String>(
+                            value: hewan['id_hewan'],
+                            child: Text(hewan['nama_hewan']),
+                          );
+                        },
+                      ).toList(),
+                      isExpanded: true,
+                      hint: Text('ID Hewan'),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.grey[300],
+                      ),
+                      dropdownColor: Colors.white,
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  );
+                }),
                 TextField(
                   controller: idHewanController,
                   decoration: InputDecoration(
