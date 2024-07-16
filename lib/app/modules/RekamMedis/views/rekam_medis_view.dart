@@ -75,14 +75,11 @@ class RekamMedisView extends StatelessWidget {
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text('ID Resep: ${rekammedis.idRekamMedis.toString()}'),
+            title: Text('Nama Hewan: ${rekammedis.namaHewan}'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('ID Hewan: ${rekammedis.idHewan ?? ''}'),
-                Text('ID Pemilik: ${rekammedis.idPemilik ?? ''}'),
-                Text('ID Pegawai: ${rekammedis.idPegawai ?? ''}'),
-                Text('ID Obat: ${rekammedis.idObat ?? ''}'),
+                Text('Nama Pemilik: ${rekammedis.namaPemilik ?? ''}'),
                 Text('Keluhan: ${rekammedis.keluhan ?? ''}'),
                 Text('Diagnosa: ${rekammedis.diagnosa ?? ''}'),
                 Text('Tanggal Periksa: ${rekammedis.tglPeriksa ?? ''}'),
@@ -114,10 +111,6 @@ class RekamMedisView extends StatelessWidget {
   }
 
   void _addrekammedis(BuildContext context, String token) {
-    // final TextEditingController idHewanController = TextEditingController();
-    // final TextEditingController idPemilikController = TextEditingController();
-    // final TextEditingController idPegawaiController = TextEditingController();
-    // final TextEditingController idobatController = TextEditingController();
     final TextEditingController keluhanController = TextEditingController();
     final TextEditingController diagnosaController = TextEditingController();
     final TextEditingController tglPeriksaController = TextEditingController();
@@ -125,10 +118,6 @@ class RekamMedisView extends StatelessWidget {
     Hewan? selectedHewan;
     Pegawai? selectedPegawai;
     Obat? selectedObat;
-    // final TextEditingController namaHewanController = TextEditingController();
-    // final TextEditingController namaPemilikController = TextEditingController();
-    // final TextEditingController namaPegawaiController = TextEditingController();
-    // final TextEditingController namaObatController = TextEditingController();
 
     showDialog(
       context: context,
@@ -280,46 +269,6 @@ class RekamMedisView extends StatelessWidget {
                     ),
                   ),
                 ),
-                // TextField(
-                //   controller: tglPeriksaController,
-                //   decoration: InputDecoration(
-                //       labelText: 'Tgl Periksa', border: OutlineInputBorder()),
-                //   keyboardType: TextInputType.number,
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: namaHewanController,
-                //   decoration: InputDecoration(
-                //       labelText: 'Nama Hewan', border: OutlineInputBorder()),
-                //   keyboardType: TextInputType.number,
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: namaPemilikController,
-                //   decoration: InputDecoration(
-                //       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
-                // ),
-                // TextField(
-                //   controller: namaPegawaiController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Nama Pegawai',
-                //     border: OutlineInputBorder(),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: namaObatController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Nama Obat',
-                //     border: OutlineInputBorder(),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -343,18 +292,9 @@ class RekamMedisView extends StatelessWidget {
                       selectedHewan,
                       selectedPegawai,
                       selectedObat,
-                      // idHewanController,
-                      // idPemilikController,
-                      // idPegawaiController,
-                      // idobatController,
                       keluhanController,
                       diagnosaController,
-                      tglPeriksaController
-                      // namaHewanController,
-                      // namaPemilikController,
-                      // namaPegawaiController,
-                      // namaObatController
-                      );
+                      tglPeriksaController);
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -372,10 +312,6 @@ class RekamMedisView extends StatelessWidget {
   void _validateAndSaverekammedis(
     BuildContext context,
     String token,
-    // TextEditingController idHewanController,
-    // TextEditingController idPemilikController,
-    // TextEditingController idPegawaiController,
-    // TextEditingController idobatController,
     Pemilik? selectedPemilik,
     Hewan? selectedHewan,
     Pegawai? selectedPegawai,
@@ -383,60 +319,35 @@ class RekamMedisView extends StatelessWidget {
     TextEditingController keluhanController,
     TextEditingController diagnosaController,
     TextEditingController tglPeriksaController,
-    // TextEditingController namaHewanController,
-    // TextEditingController namaPemilikController,
-    // TextEditingController namaPegawaiController,
-    // TextEditingController namaObatController
   ) {
     if (selectedPemilik != null &&
-            selectedHewan != null &&
-            selectedPegawai != null &&
-            selectedObat != null &&
-            keluhanController.text.isNotEmpty &&
-            diagnosaController.text.isNotEmpty &&
-            tglPeriksaController.text.isNotEmpty
-        // idHewanController.text.isNotEmpty &&
-        //       idPemilikController.text.isNotEmpty &&
-        //       idPegawaiController.text.isNotEmpty &&
-        //       idobatController.text.isNotEmpty &&
-
-        // namaHewanController.text.isNotEmpty &&
-        // namaPemilikController.text.isNotEmpty &&
-        // namaPegawaiController.text.isNotEmpty &&
-        // namaObatController.text.isNotEmpty
-        ) {
+        selectedHewan != null &&
+        selectedHewan.namaHewan != null &&
+        selectedPegawai != null &&
+        selectedObat != null &&
+        keluhanController.text.isNotEmpty &&
+        diagnosaController.text.isNotEmpty &&
+        tglPeriksaController.text.isNotEmpty) {
       final newrekammedis = rekamMedis(
         idRekamMedis: 0,
         idHewan: selectedHewan.idHewan ?? 0,
+        namaHewan: selectedHewan.namaHewan ?? '',
         idPemilik: selectedPemilik.idPemilik,
+        namaPemilik: selectedPemilik.namaPemilik ?? '',
         idPegawai: selectedPegawai.idPegawai,
+        namaPegawai: selectedPegawai.namaPegawai ?? '',
         idObat: selectedObat.idObat,
+        namaObat: selectedObat.namaObat ?? '',
         keluhan: keluhanController.text,
         diagnosa: diagnosaController.text,
         tglPeriksa: tglPeriksaController.text,
-        // namaHewan: namaHewanController.text,
-        // namaPemilik: namaPemilikController.text,
-        // namaPegawai: namaPegawaiController.text,
-        // namaObat: namaObatController.text,
       );
       Get.find<RekamMedisController>()
           .postDataRekamMedis(newrekammedis)
           .then((_) {
-        // Reset form fields after successful submission
-        // idPemilikController.clear();
-        // idHewanController.clear();
-        // idHewanController.clear();
-        // idPemilikController.clear();
-        // idPegawaiController.clear();
-        // idobatController.clear();
         keluhanController.clear();
         diagnosaController.clear();
         tglPeriksaController.clear();
-        // namaHewanController.clear();
-        // namaPemilikController.clear();
-        // namaPegawaiController.clear();
-        // namaObatController.clear();
-        // Get.back(); // Close dialog after successful submission
       }).catchError((error) {
         // Handle specific errors or show generic error message
         Get.defaultDialog(
@@ -453,28 +364,16 @@ class RekamMedisView extends StatelessWidget {
   }
 
   void _editrekammedis(BuildContext context, rekamMedis rekammedis) {
-    final TextEditingController idHewanController =
-        TextEditingController(text: rekammedis.idHewan.toString());
-    final TextEditingController idPemilikController =
-        TextEditingController(text: rekammedis.idPemilik.toString());
-    final TextEditingController idPegawaiController =
-        TextEditingController(text: rekammedis.idPegawai.toString());
-    final TextEditingController idobatController =
-        TextEditingController(text: rekammedis.idObat.toString());
+    Pemilik? selectedPemilik;
+    Hewan? selectedHewan;
+    Pegawai? selectedPegawai;
+    Obat? selectedObat;
     final TextEditingController keluhanController =
         TextEditingController(text: rekammedis.keluhan);
     final TextEditingController diagnosaController =
         TextEditingController(text: rekammedis.diagnosa);
     final TextEditingController tglPeriksaController =
         TextEditingController(text: rekammedis.tglPeriksa);
-    // final TextEditingController namaHewanController =
-    //     TextEditingController(text: rekammedis.namaHewan);
-    // final TextEditingController namaPemilikController =
-    //     TextEditingController(text: rekammedis.namaPemilik);
-    // final TextEditingController namaPegawaiController =
-    //     TextEditingController(text: rekammedis.namaPegawai);
-    // final TextEditingController namaObatController =
-    //     TextEditingController(text: rekammedis.namaObat);
 
     showDialog(
       context: context,
@@ -485,41 +384,138 @@ class RekamMedisView extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  controller: idHewanController,
-                  decoration: InputDecoration(
-                    labelText: 'ID Hewan',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: idPemilikController,
-                  decoration: InputDecoration(
-                    labelText: 'ID Pemilik',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: idPegawaiController,
-                  decoration: InputDecoration(
-                    labelText: 'ID Pegawai',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  } else if (controller.hewanList.isEmpty) {
+                    return Text('Tidak ada data Hewan');
+                  } else {
+                    return DropdownButtonFormField<Hewan>(
+                      value: selectedHewan,
+                      hint: Text('Pilih Hewan'),
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      onChanged: (Hewan? newValue) {
+                        selectedHewan = newValue;
+                      },
+                      items: controller.hewanList.map((Hewan hewan) {
+                        return DropdownMenuItem<Hewan>(
+                          value: hewan,
+                          child: Text(hewan.namaHewan ?? ''),
+                        );
+                      }).toList(),
+                    );
+                  }
+                }),
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: idobatController,
-                  decoration: InputDecoration(
-                    labelText: 'ID Obat',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  } else if (controller.pemilikList.isEmpty) {
+                    return Text('Tidak ada data pemilik');
+                  } else {
+                    return DropdownButtonFormField<Pemilik>(
+                      value: selectedPemilik,
+                      hint: Text('Pilih Pemilik'),
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      onChanged: (Pemilik? newValue) {
+                        selectedPemilik = newValue;
+                      },
+                      items: controller.pemilikList.map((Pemilik pemilik) {
+                        return DropdownMenuItem<Pemilik>(
+                          value: pemilik,
+                          child: Text(pemilik.namaPemilik ?? ''),
+                        );
+                      }).toList(),
+                    );
+                  }
+                }),
+                SizedBox(
+                  height: 10,
                 ),
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  } else if (controller.pegawaiList.isEmpty) {
+                    return Text('Tidak ada data pegawai');
+                  } else {
+                    return DropdownButtonFormField<Pegawai>(
+                      value: selectedPegawai,
+                      hint: Text('Pilih Pegawai'),
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      onChanged: (Pegawai? newValue) {
+                        selectedPegawai = newValue;
+                      },
+                      items: controller.pegawaiList.map((Pegawai pegawai) {
+                        return DropdownMenuItem<Pegawai>(
+                          value: pegawai,
+                          child: Text(pegawai.namaPegawai ?? ''),
+                        );
+                      }).toList(),
+                    );
+                  }
+                }),
+                SizedBox(
+                  height: 10,
+                ),
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  } else if (controller.obatList.isEmpty) {
+                    return Text('Tidak ada data obat');
+                  } else {
+                    return DropdownButtonFormField<Obat>(
+                      value: selectedObat,
+                      hint: Text('Pilih Obat'),
+                      decoration: InputDecoration(border: OutlineInputBorder()),
+                      onChanged: (Obat? newValue) {
+                        selectedObat = newValue;
+                      },
+                      items: controller.obatList.map((Obat obat) {
+                        return DropdownMenuItem<Obat>(
+                          value: obat,
+                          child: Text(obat.namaObat ?? ''),
+                        );
+                      }).toList(),
+                    );
+                  }
+                }),
+                // TextField(
+                //   controller: idHewanController,
+                //   decoration: InputDecoration(
+                //     labelText: 'ID Hewan',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   keyboardType: TextInputType.number,
+                // ),
+                // TextField(
+                //   controller: idPemilikController,
+                //   decoration: InputDecoration(
+                //     labelText: 'ID Pemilik',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   keyboardType: TextInputType.number,
+                // ),
+                // TextField(
+                //   controller: idPegawaiController,
+                //   decoration: InputDecoration(
+                //     labelText: 'ID Pegawai',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   keyboardType: TextInputType.number,
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // TextField(
+                //   controller: idobatController,
+                //   decoration: InputDecoration(
+                //     labelText: 'ID Obat',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   keyboardType: TextInputType.number,
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -539,10 +535,30 @@ class RekamMedisView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: tglPeriksaController,
-                  decoration: InputDecoration(
-                      labelText: 'Tgl Periksa', border: OutlineInputBorder()),
+                GestureDetector(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                      tglPeriksaController.text = formattedDate;
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: tglPeriksaController,
+                      decoration: InputDecoration(
+                        labelText: 'Tgl Periksa',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.datetime,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -599,10 +615,10 @@ class RekamMedisView extends StatelessWidget {
                   _validateAndEditrekammedis(
                       context,
                       rekammedis,
-                      idHewanController,
-                      idPemilikController,
-                      idPegawaiController,
-                      idobatController,
+                      selectedPemilik,
+                      selectedHewan,
+                      selectedPegawai,
+                      selectedObat,
                       keluhanController,
                       diagnosaController,
                       tglPeriksaController
@@ -628,10 +644,14 @@ class RekamMedisView extends StatelessWidget {
   void _validateAndEditrekammedis(
     BuildContext context,
     rekamMedis rekammedis,
-    TextEditingController idHewanController,
-    TextEditingController idPemilikController,
-    TextEditingController idPegawaiController,
-    TextEditingController idobatController,
+    // TextEditingController idHewanController,
+    // TextEditingController idPemilikController,
+    // TextEditingController idPegawaiController,
+    // TextEditingController idobatController,
+    Pemilik? selectedPemilik,
+    Hewan? selectedHewan,
+    Pegawai? selectedPegawai,
+    Obat? selectedObat,
     TextEditingController keluhanController,
     TextEditingController diagnosaController,
     TextEditingController tglPeriksaController,
@@ -640,10 +660,14 @@ class RekamMedisView extends StatelessWidget {
     // TextEditingController namaPegawaiController,
     // TextEditingController namaObatController
   ) {
-    if (idHewanController.text.isNotEmpty &&
-            idPemilikController.text.isNotEmpty &&
-            idPegawaiController.text.isNotEmpty &&
-            idobatController.text.isNotEmpty &&
+    if (selectedPemilik != null &&
+            selectedHewan != null &&
+            selectedPegawai != null &&
+            selectedObat != null &&
+            // idHewanController.text.isNotEmpty &&
+            //       idPemilikController.text.isNotEmpty &&
+            //       idPegawaiController.text.isNotEmpty &&
+            //       idobatController.text.isNotEmpty &&
             keluhanController.text.isNotEmpty &&
             diagnosaController.text.isNotEmpty &&
             tglPeriksaController.text.isNotEmpty
@@ -654,10 +678,14 @@ class RekamMedisView extends StatelessWidget {
         ) {
       final updatedrekammedis = rekamMedis(
         idRekamMedis: 0,
-        idHewan: int.tryParse(idHewanController.text) ?? 0,
-        idPemilik: int.tryParse(idPemilikController.text) ?? 0,
-        idPegawai: int.tryParse(idPegawaiController.text) ?? 0,
-        idObat: int.tryParse(idobatController.text) ?? 0,
+        idHewan: selectedHewan.idHewan ?? 0,
+        namaHewan: selectedHewan.namaHewan,
+        idPemilik: selectedPemilik.idPemilik,
+        namaPemilik: selectedPemilik.namaPemilik ?? '',
+        idPegawai: selectedPegawai.idPegawai,
+        namaPegawai: selectedPegawai.namaPegawai ?? '',
+        idObat: selectedObat.idObat,
+        namaObat: selectedObat.namaObat ?? '',
         keluhan: keluhanController.text,
         diagnosa: diagnosaController.text,
         tglPeriksa: tglPeriksaController.text,

@@ -269,9 +269,10 @@ class RekamMedisController extends GetxController {
       print('Create rekammedis - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final createdrekammedis = rekamMedis.fromJson(responseData['data']);
-        rekammedisList.add(createdrekammedis);
+        // final responseData = jsonDecode(response.body);
+        // final createdrekammedis = rekamMedis.fromJson(responseData['data']);
+        // rekammedisList.add(createdrekammedis);
+        getDataRekamMedis(token);
         Get.defaultDialog(
           title: 'Success',
           middleText: 'rekammedis created successfully',
@@ -280,6 +281,7 @@ class RekamMedisController extends GetxController {
         throw Exception('Failed to create rekammedis: ${response.statusCode}');
       }
     } catch (e) {
+      print("woyyyyy");
       Get.defaultDialog(
         title: 'Error',
         middleText: 'Failed to create rekammedis: $e',
