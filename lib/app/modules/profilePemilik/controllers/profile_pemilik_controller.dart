@@ -59,8 +59,14 @@ class ProfilePemilikController extends GetxController {
           await ApiService.getPemilikPemilikById(token, id);
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final pemilik = Pemilik.fromJson(responseData['data']);
-        this.pemilik.value = pemilik; // Simpan data pegawai
+        if (responseData['data'] is List) {
+          // Jika data adalah array, ambil elemen pertama
+          final pemilik = Pemilik.fromJson(responseData['data'][0]);
+          this.pemilik.value = pemilik; // Simpan data pegawai
+        } else {
+          final pemilik = Pemilik.fromJson(responseData['data']);
+          this.pemilik.value = pemilik; // Simpan data pegawai
+        }
       } else {
         errorMessage.value = 'pemilik not found';
         print('Error: pemilik not found, Status code: ${response.statusCode}');
@@ -106,16 +112,4 @@ class ProfilePemilikController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  // void increment() => count.value++;
 }

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../../Pemilik/models/pemilik.dart';
-import 'package:get_storage/get_storage.dart';
-import '../../../data/providers/api_service.dart';
 import '../controllers/profile_pemilik_controller.dart';
+import '../../Pemilik/models/pemilik.dart';
 
 class ProfilePemilikView extends StatelessWidget {
   final ProfilePemilikController controller =
@@ -134,7 +129,7 @@ class ProfilePemilikView extends StatelessWidget {
       return;
     }
 
-    Pemilik updatedPemilik = Pemilik(
+    Pemilik updatePemilik = Pemilik(
       idPemilik: pemilik.idPemilik,
       namaPemilik: usernameController.text,
       password:
@@ -144,7 +139,7 @@ class ProfilePemilikView extends StatelessWidget {
       noTelp: noTelpController.text,
     );
 
-    controller.updatePemilik(updatedPemilik).then((_) {
+    controller.updatePemilik(updatePemilik).then((_) {
       Get.snackbar(
         'Success',
         'Profile updated successfully!',

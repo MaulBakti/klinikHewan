@@ -1311,7 +1311,7 @@ class ApiService {
           'Authorization': 'Bearer $token',
         },
         body: json.encode({
-          'role': 'pegawai',
+          'role': 'pemilik',
           'action': 'update',
           'data': data, // Sesuaikan dengan data yang diperlukan jika ada
         }),
@@ -1320,20 +1320,12 @@ class ApiService {
       print('Update Pemilik  - Response status: ${response.statusCode}');
       print('Update Pemilik  - Response body: ${response.body}');
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return response;
-        } else {
-          throw Exception(
-              'Failed to update data pemilik from pemilik: ${responseData['message']}');
-        }
-      } else {
-        throw Exception(
-            'Failed to update pemilik from pemilik: ${response.statusCode}');
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update pemilik: ${response.statusCode}');
       }
+      return response;
     } catch (e) {
-      throw Exception('Error updating pemilik from pemilik: $e');
+      throw Exception('Error updating pemilik: $e');
     }
   }
 

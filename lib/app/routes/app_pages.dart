@@ -24,8 +24,8 @@ import '../modules/Register/views/regist_view.dart';
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
 import '../modules/Resep/views/resep_view.dart';
-import '../modules/profile/bindings/profile_binding.dart';
-import '../modules/profile/views/profile_view.dart';
+import '../modules/profilePegawai/bindings/profile_pegawai_binding.dart';
+import '../modules/profilePegawai/views/profile_pegawai_view.dart';
 import '../modules/profilePemilik/bindings/profile_pemilik_binding.dart';
 import '../modules/profilePemilik/views/profile_pemilik_view.dart';
 
@@ -185,9 +185,9 @@ class AppPages {
       binding: RegistBinding(),
     ),
     GetPage(
-      name: _Paths.PROFILE,
-      page: () => ProfileView(),
-      binding: ProfileBinding(),
+      name: _Paths.PROFILE_PEGAWAI,
+      page: () => ProfilePegawaiView(),
+      binding: ProfilePegawaiBinding(),
     ),
     GetPage(
       name: _Paths.PROFILE_PEMILIK,

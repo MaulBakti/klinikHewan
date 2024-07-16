@@ -1,17 +1,17 @@
 class Pemilik {
   int idPemilik;
   String namaPemilik;
-  String alamat;
   String? password;
   String jabatan;
+  String alamat;
   String noTelp;
 
   Pemilik({
     required this.idPemilik,
     required this.namaPemilik,
-    required this.alamat,
+    this.password,
     required this.jabatan,
-    required this.password,
+    required this.alamat,
     required this.noTelp,
   });
 

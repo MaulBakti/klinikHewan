@@ -5,7 +5,7 @@ import '../../Pegawai/models/pegawai.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../data/providers/api_service.dart';
 
-class ProfileController extends GetxController {
+class ProfilePegawaiController extends GetxController {
   var isLoading = false.obs;
   var pegawaiList = <Pegawai>[].obs;
   var errorMessage = ''.obs;
@@ -58,8 +58,14 @@ class ProfileController extends GetxController {
           await ApiService.getPegawaiPegawaiById(token, id);
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final pegawai = Pegawai.fromJson(responseData['data']);
-        this.pegawai.value = pegawai; // Simpan data pegawai
+        if (responseData['data'] is List) {
+          // Jika data adalah array, ambil elemen pertama
+          final pegawai = Pegawai.fromJson(responseData['data'][0]);
+          this.pegawai.value = pegawai; // Simpan data pegawai
+        } else {
+          final pegawai = Pegawai.fromJson(responseData['data']);
+          this.pegawai.value = pegawai; // Simpan data pegawai
+        }
       } else {
         errorMessage.value = 'Pegawai not found';
         print('Error: Pegawai not found, Status code: ${response.statusCode}');

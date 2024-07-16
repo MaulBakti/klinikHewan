@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/profile_pegawai_controller.dart';
 import '../../Pegawai/models/pegawai.dart';
 
-class ProfileView extends StatelessWidget {
-  final ProfileController controller = Get.put(ProfileController());
+class ProfilePegawaiView extends StatelessWidget {
+  final ProfilePegawaiController controller =
+      Get.put(ProfilePegawaiController());
 
   // Declare the controllers here
   final TextEditingController usernameController = TextEditingController();
