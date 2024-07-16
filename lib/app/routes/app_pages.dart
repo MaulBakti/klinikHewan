@@ -17,16 +17,14 @@ import '../modules/Pembayaran/AdminPembayaran/bindings/adminPembayaran_binding.d
 import '../modules/Pembayaran/AdminPembayaran/views/adminPembayaran_view.dart';
 import '../modules/Pembayaran/PegawaiPembayaran/bindings/pegawaiPembayaran_binding.dart';
 import '../modules/Pembayaran/PegawaiPembayaran/views/pegawaiPembayaran_view.dart';
-import '../modules/Pembayaran/PemilikPembayaran/bindings/pemilikPembayaran_binding.dart';
-import '../modules/Pembayaran/PemilikPembayaran/views/pemilikPembayaran_view.dart';
 import '../modules/Pemilik/bindings/pemilik_binding.dart';
 import '../modules/Pemilik/views/pemilik_view.dart';
 import '../modules/Register/bindings/regist_binding.dart';
 import '../modules/Register/views/regist_view.dart';
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
-import '../modules/Resep/model/resep.dart';
 import '../modules/Resep/views/resep_view.dart';
+// Profile
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 
@@ -185,7 +183,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
   ];

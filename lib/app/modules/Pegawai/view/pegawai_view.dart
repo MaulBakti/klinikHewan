@@ -83,28 +83,31 @@ class PegawaiView extends StatelessWidget {
                 Text('No Telp: ${pegawai.noTelp ?? ''}'),
               ],
             ),
-            trailing: Wrap(
-              spacing: 8.0,
-              children: [
-                if (role == 'admin')
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      _editPegawai(context, pegawai);
-                    },
-                  ),
-                if (role == 'admin')
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      _confirmDelete(context, pegawai.idPegawai ?? 0);
-                    },
-                  ),
-              ],
-            ),
+            trailing:
+                role == 'admin' ? _buildAdminActions(context, pegawai) : null,
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAdminActions(BuildContext context, Pegawai pegawai) {
+    return Wrap(
+      spacing: 8.0,
+      children: [
+        IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            _editPegawai(context, pegawai);
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {
+            _confirmDelete(context, pegawai.idPegawai ?? 0);
+          },
+        ),
+      ],
     );
   }
 

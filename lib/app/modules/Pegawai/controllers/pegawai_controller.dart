@@ -41,7 +41,7 @@ class PegawaiController extends GetxController {
 
   Future<void> getDataPegawai(String role) async {
     role = box.read('role');
-    print('Fetching data dooctor for role: $role');
+    print('Fetching data pegawai for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -79,7 +79,7 @@ class PegawaiController extends GetxController {
     print('Posting data pegawai for role: $role');
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
+      final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
         isLoading.value = false; // Added to reset loading state
@@ -92,7 +92,6 @@ class PegawaiController extends GetxController {
       http.Response response;
 
       if (role == 'admin') {
-        // response = await ApiService.postpegawaiAdmin(token, 'create', pegawai.toJson());
         response = await ApiService.postPegawaiAdmin(token, pegawaiData);
       } else {
         throw Exception('Invalid role: $role');
@@ -127,7 +126,7 @@ class PegawaiController extends GetxController {
     print('Updating data pegawai for role: $role');
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
+      final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
         isLoading.value = false;
@@ -139,6 +138,8 @@ class PegawaiController extends GetxController {
 
       if (role == 'admin') {
         response = await ApiService.updatePegawaiAdmin(token, data);
+      } else if (role == 'pegawai') {
+        response = await ApiService.updatePegawaiPegawai(token, data);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -171,12 +172,12 @@ class PegawaiController extends GetxController {
     }
   }
 
-  Future<void> deletePegawai(int idPegawai) async {
+  Future<void> deletePegawai(int id) async {
     final role = await getRole();
     print('Deleting data pegawai for role: $role');
     try {
       isLoading.value = true;
-      final String? token = GetStorage().read('token');
+      final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
         isLoading.value = false;
@@ -187,13 +188,13 @@ class PegawaiController extends GetxController {
       http.Response response;
 
       if (role == 'admin') {
-        response = await ApiService.deletePegawaiAdmin(idPegawai, token);
+        response = await ApiService.deletePegawaiAdmin(token, id);
       } else {
         throw Exception('Invalid role: $role');
       }
 
       if (response.statusCode == 200) {
-        pegawaiList.removeWhere((element) => element.idPegawai == idPegawai);
+        pegawaiList.removeWhere((element) => element.idPegawai == id);
         Get.defaultDialog(
           title: 'Success',
           middleText: 'Pegawai deleted successfully',

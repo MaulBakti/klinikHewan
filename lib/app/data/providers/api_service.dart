@@ -817,8 +817,7 @@ class ApiService {
   }
 
   // Method GET BY ID
-  static Future<Map<String, dynamic>> getPegawaiAdminById(
-      int id, String token) async {
+  static Future<http.Response> getPegawaiAdminById(String token, int id) async {
     try {
       final response = await http.get(
         Uri.parse('$baseUrl/admin/pegawai/$id'),
@@ -830,7 +829,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        return responseData['data'];
+        return response;
       } else {
         throw Exception(
             'Failed to get data pegawai from Admin by ID: ${response.statusCode}');
@@ -879,10 +878,10 @@ class ApiService {
   }
 
   // Method Delete
-  static Future<http.Response> deletePegawaiAdmin(int id, String token) async {
+  static Future<http.Response> deletePegawaiAdmin(String token, int id) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/admin/pegawai'),
+        Uri.parse('$baseUrl/admin/pegawai/:id'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -890,7 +889,7 @@ class ApiService {
         body: json.encode({
           "role": "admin",
           "action": "delete",
-          "data": {"id_pegawai": id},
+          "data": id,
         }),
       );
 
@@ -910,7 +909,58 @@ class ApiService {
   }
 
   /*
-  Pemilik Admin
+  Data Pegawai (Pegawai)
+  */
+  // Method GET BY ID
+  static Future<http.Response> getPegawaiPegawaiById(
+      String token, int id) async {
+    try {
+      final response =
+          await http.post(Uri.parse('$baseUrl/pegawai/pegawai/$id'),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token',
+              },
+              body: json.encode({
+                'role': 'pegawai',
+                'action': 'read',
+                'data': id, // Sesuaikan dengan data yang diperlukan jika ada
+              }));
+      if (response.statusCode != 200) {
+        throw Exception('Failed to get pegawai: ${response.statusCode}');
+      }
+      return response;
+    } catch (e) {
+      throw Exception('Error getting pegawai: $e');
+    }
+  }
+
+  static Future<http.Response> updatePegawaiPegawai(
+      String token, Map<String, dynamic> data) async {
+    try {
+      final Uri uri =
+          Uri.parse('$baseUrl/pegawai/pegawai/${data['id_pegawai']}');
+      final response = await http.put(uri,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: json.encode({
+            'role': 'pegawai',
+            'action': 'update',
+            'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+          }));
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update pegawai: ${response.statusCode}');
+      }
+      return response;
+    } catch (e) {
+      throw Exception('Error updating pegawai: $e');
+    }
+  }
+
+  /*
+  Data Pemilik (Admin)
   */
   // Method GET
   static Future<List<dynamic>> getPemilikAdmin(String token) async {

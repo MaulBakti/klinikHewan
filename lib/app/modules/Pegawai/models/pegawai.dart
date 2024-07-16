@@ -1,16 +1,16 @@
 class Pegawai {
-  int idPegawai;
-  String namaPegawai;
-  String jabatan;
-  String password;
-  String alamat;
-  String noTelp;
+  final int idPegawai;
+  final String namaPegawai;
+  final String? password; //optional
+  final String jabatan;
+  final String alamat;
+  final String noTelp;
 
   Pegawai({
     required this.idPegawai,
     required this.namaPegawai,
+    this.password,
     required this.jabatan,
-    required this.password,
     required this.alamat,
     required this.noTelp,
   });
