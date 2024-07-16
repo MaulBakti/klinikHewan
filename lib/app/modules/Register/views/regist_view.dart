@@ -9,6 +9,7 @@ class RegistView extends GetView<RegistController> {
 
   @override
   Widget build(BuildContext context) {
+    final RxBool _obscureText = true.obs;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Regist'),
@@ -38,14 +39,27 @@ class RegistView extends GetView<RegistController> {
                         ),
                       ),
                       SizedBox(height: 15),
-                      TextField(
-                        onChanged: (value) => controller.password.value = value,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(),
-                        ),
-                        obscureText: true,
-                      ),
+                      Obx(() {
+                        return TextField(
+                          onChanged: (value) =>
+                              controller.password.value = value,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                _obscureText.value = !_obscureText.value;
+                              },
+                            ),
+                          ),
+                          obscureText: _obscureText.value,
+                        );
+                      }),
                       SizedBox(height: 15),
                       TextField(
                         onChanged: (value) => controller.alamat.value = value,
