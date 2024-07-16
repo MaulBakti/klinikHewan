@@ -288,12 +288,32 @@ class HomeView extends StatelessWidget {
           actions: [
             TextButton(
               child: const Text("Batal"),
+              style: ButtonStyle(
+                // backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                // foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
               child: const Text("Logout"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
                 _logout();
