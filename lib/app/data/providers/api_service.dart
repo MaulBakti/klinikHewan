@@ -1273,6 +1273,70 @@ class ApiService {
     }
   }
 
+  // Method GET BY ID
+  static Future<http.Response> getPemilikPemilikById(
+      String token, int id) async {
+    try {
+      final response =
+          await http.post(Uri.parse('$baseUrl/pemilik/pemilik/$id'),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token',
+              },
+              body: json.encode({
+                'role': 'pemilik',
+                'action': 'read',
+                'data': id, // Sesuaikan dengan data yang diperlukan jika ada
+              }));
+      if (response.statusCode != 200) {
+        throw Exception('Failed to get pemilik: ${response.statusCode}');
+      }
+      return response;
+    } catch (e) {
+      throw Exception('Error getting pemilik: $e');
+    }
+  }
+
+  // update Pemilik Pemilik
+  static Future<http.Response> updatePemilikPemilik(
+      String token, Map<String, dynamic> data) async {
+    try {
+      final Uri uri =
+          Uri.parse('$baseUrl/pemilik/pemilik/${data['id_pemilik']}');
+
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'role': 'pegawai',
+          'action': 'update',
+          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+        }),
+      );
+
+      print('Update Pemilik  - Response status: ${response.statusCode}');
+      print('Update Pemilik  - Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          return response;
+        } else {
+          throw Exception(
+              'Failed to update data pemilik from pemilik: ${responseData['message']}');
+        }
+      } else {
+        throw Exception(
+            'Failed to update pemilik from pemilik: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error updating pemilik from pemilik: $e');
+    }
+  }
+
   /*
   Obat Admin
   */

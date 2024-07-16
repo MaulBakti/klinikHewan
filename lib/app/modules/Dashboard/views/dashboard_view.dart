@@ -35,32 +35,35 @@ class DashboardView extends GetView<DashboardController> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            _buildListTile(
-              title: 'Login',
-              icon: Icons.login,
-              onTap: () {
-                Get.toNamed('/login');
-              },
-            ),
-            _buildListTile(
-              title: 'Register',
-              icon: Icons.app_registration,
-              onTap: () {
-                Get.toNamed('/regist');
-              },
-            ),
-            _buildListTile(
-              title: 'Settings',
-              icon: Icons.settings,
-              onTap: () {
-                // Ganti dengan navigasi ke halaman pengaturan
-              },
-            ),
-          ],
+      body: Container(
+        color: Colors.pink,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              _buildListTile(
+                title: 'Login',
+                icon: Icons.login,
+                onTap: () {
+                  Get.toNamed('/login');
+                },
+              ),
+              _buildListTile(
+                title: 'Register',
+                icon: Icons.app_registration,
+                onTap: () {
+                  Get.toNamed('/regist');
+                },
+              ),
+              _buildListTile(
+                title: 'Settings',
+                icon: Icons.settings,
+                onTap: () {
+                  // Ganti dengan navigasi ke halaman pengaturan
+                },
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
