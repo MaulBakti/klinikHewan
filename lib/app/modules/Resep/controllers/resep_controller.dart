@@ -161,7 +161,7 @@ class ResepController extends GetxController {
         int index = resepList
             .indexWhere((element) => element.idResep == updatedResep.idResep);
         if (index != -1) {
-          resepList[index] = updatedResep;
+          resepList[index] = updatedResep; // Memperbarui item di list
         }
         Get.defaultDialog(
           title: 'Success',

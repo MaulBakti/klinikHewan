@@ -1806,23 +1806,24 @@ class ApiService {
         body: json.encode({
           'role': 'admin',
           'action': 'update',
-          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+          'data': data,
         }),
       );
 
       print('Update Resep Admin - Response status: ${response.statusCode}');
       print('Update Resep Admin - Response body: ${response.body}');
+
+      // Periksa status respons
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return response;
+        if (responseData['success'] == 'update') {
+          return response; // Berhasil
         } else {
           throw Exception(
-              'Failed to update data resep from Admin: ${responseData['message']}');
+              'Update failed: ${responseData['message'] ?? 'Unknown error'}');
         }
       } else {
-        throw Exception(
-            'Failed to update resep from Admin: ${response.statusCode}');
+        throw Exception('Failed to update resep: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Error updating resep: $e');
