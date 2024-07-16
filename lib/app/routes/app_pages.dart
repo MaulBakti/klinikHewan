@@ -24,9 +24,12 @@ import '../modules/Register/views/regist_view.dart';
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
 import '../modules/Resep/views/resep_view.dart';
-// Profile
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/profilePemilik/bindings/profile_pemilik_binding.dart';
+import '../modules/profilePemilik/views/profile_pemilik_view.dart';
+
+// Profile
 
 // Dashboard
 // Obat
@@ -185,6 +188,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE_PEMILIK,
+      page: () => ProfilePemilikView(),
+      binding: ProfilePemilikBinding(),
     ),
   ];
 }

@@ -41,6 +41,7 @@ abstract class Routes {
   static const FORGOTPASS = _Paths.FORGOTPASS;
   static const REGIST = _Paths.REGIST;
   static const PROFILE = _Paths.PROFILE;
+  static const PROFILE_PEMILIK = _Paths.PROFILE_PEMILIK;
 }
 
 abstract class _Paths {
@@ -82,4 +83,5 @@ abstract class _Paths {
   static const FORGOTPASS = '/forgotpass';
   static const REGIST = '/regist';
   static const PROFILE = '/profile';
+  static const PROFILE_PEMILIK = '/profile-pemilik';
 }

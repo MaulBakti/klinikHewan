@@ -2,7 +2,7 @@ class Pemilik {
   int idPemilik;
   String namaPemilik;
   String alamat;
-  String password;
+  String? password;
   String jabatan;
   String noTelp;
 
