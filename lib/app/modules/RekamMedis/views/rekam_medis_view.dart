@@ -364,10 +364,18 @@ class RekamMedisView extends StatelessWidget {
   }
 
   void _editrekammedis(BuildContext context, rekamMedis rekammedis) {
-    Pemilik? selectedPemilik;
-    Hewan? selectedHewan;
-    Pegawai? selectedPegawai;
-    Obat? selectedObat;
+    Pemilik? selectedPemilik = controller.pemilikList.firstWhere(
+      (pemilik) => pemilik.idPemilik == rekammedis.idPemilik,
+    );
+    Hewan? selectedHewan = controller.hewanList.firstWhere(
+      (hewan) => hewan.idHewan == rekammedis.idHewan,
+    );
+    Pegawai? selectedPegawai = controller.pegawaiList.firstWhere(
+      (pegawai) => pegawai.idPegawai == rekammedis.idPegawai,
+    );
+    Obat? selectedObat = controller.obatList.firstWhere(
+      (obat) => obat.idObat == rekammedis.idObat,
+    );
     final TextEditingController keluhanController =
         TextEditingController(text: rekammedis.keluhan);
     final TextEditingController diagnosaController =
@@ -481,41 +489,6 @@ class RekamMedisView extends StatelessWidget {
                     );
                   }
                 }),
-                // TextField(
-                //   controller: idHewanController,
-                //   decoration: InputDecoration(
-                //     labelText: 'ID Hewan',
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   keyboardType: TextInputType.number,
-                // ),
-                // TextField(
-                //   controller: idPemilikController,
-                //   decoration: InputDecoration(
-                //     labelText: 'ID Pemilik',
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   keyboardType: TextInputType.number,
-                // ),
-                // TextField(
-                //   controller: idPegawaiController,
-                //   decoration: InputDecoration(
-                //     labelText: 'ID Pegawai',
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   keyboardType: TextInputType.number,
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: idobatController,
-                //   decoration: InputDecoration(
-                //     labelText: 'ID Obat',
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   keyboardType: TextInputType.number,
-                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -563,39 +536,6 @@ class RekamMedisView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                // TextField(
-                //   controller: namaHewanController,
-                //   decoration: InputDecoration(
-                //       labelText: 'Nama Hewan', border: OutlineInputBorder()),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: namaPemilikController,
-                //   decoration: InputDecoration(
-                //       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: namaPegawaiController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Nama Pegawai',
-                //     border: OutlineInputBorder(),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
-                // TextField(
-                //   controller: namaObatController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Nama Obat',
-                //     border: OutlineInputBorder(),
-                //   ),
-                // ),
               ],
             ),
           ),
