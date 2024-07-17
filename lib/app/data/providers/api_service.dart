@@ -24,7 +24,8 @@ class ApiService {
     }
   }
 
-  static Future<http.Response> regist(
+// Register Pemilik
+  static Future<http.Response> register(
       String username, String password, String alamat, String notelp) async {
     try {
       final response = await http.post(
@@ -35,14 +36,20 @@ class ApiService {
         body: jsonEncode({
           'username': username,
           'password': password,
-          'jabatan': 'pemilik',
+          'jabatan': 'pemilik', // jabatan sudah didefinisi secara default
           'alamat': alamat,
           'no_telp': notelp,
         }),
       );
-      return response;
+
+      // Periksa status kode HTTP untuk penanganan error dasar
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception('Failed to register: ${response.body}');
+      }
     } catch (e) {
-      throw Exception('Failed to regist: $e');
+      throw Exception('Failed to register: $e');
     }
   }
 
@@ -2765,4 +2772,165 @@ class ApiService {
     }
   }
   //APPOINTMENT CLOSE
+
+  /*Pembayaran*/
+  // Method GET
+  static Future<http.Response> getPembayaran(String role, String token) async {
+    print('Token available: $token');
+    try {
+      final Uri uri = Uri.parse('$baseUrl/$role/hewan');
+      print('Using token: $token');
+
+      final response = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'role': role,
+          'action': 'read',
+          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+        }),
+      );
+      print(
+          'GET Pembayaran by ${role} - Response status: ${response.statusCode}');
+      print('GET Pembayaran by ${role} - Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          return responseData['data'];
+        } else {
+          throw Exception(
+              'Failed to get data pembayaran from ${role}: ${responseData['message']}');
+        }
+      } else {
+        throw Exception(
+            'Failed to get data pembayaran from ${role}: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error get data pembayaran from ${role}: $e');
+    }
+  }
+
+  // Method POST
+  static Future<http.Response> postPembayaran(
+      String role, String token, Map<String, dynamic> data) async {
+    print('Token available: $token');
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$role/pembayaran'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'role': role,
+          'action': 'create',
+          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+        }),
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Failed to create pembayaran from ${role}: $e');
+    }
+  }
+
+  // Method GET BY ID
+  static Future<Map<String, dynamic>> getPembayaranById(
+      String role, int id, String token) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/$role/pembayaran/$id'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return responseData['data'];
+      } else {
+        throw Exception(
+            'Failed to get data pembayaran by ID from ${role}: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error get data pembayaran by ID from ${role}: $e');
+    }
+  }
+
+  // Method PUT
+  static Future<http.Response> updatePembayaran(
+      String role, String token, Map<String, dynamic> data) async {
+    try {
+      final Uri uri =
+          Uri.parse('$baseUrl/$role/pembayaran/${data['id_pembayaran']}');
+
+      final response = await http.put(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'role': role,
+          'action': 'update',
+          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+        }),
+      );
+
+      print(
+          'Update Pembayaran by ${role} - Response status: ${response.statusCode}');
+      print('Update Pembayaran by ${role} - Response body: ${response.body}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          return response;
+        } else {
+          throw Exception(
+              'Failed to update data pembayaran from ${role}: ${responseData['message']}');
+        }
+      } else {
+        throw Exception(
+            'Failed to update data pembayaran from ${role}: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error updating data pembayaran from ${role}: $e');
+    }
+  }
+
+  // Method Delete
+  static Future<http.Response> deletePembayaran(
+      String role, int id, String token) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$role/pembayaran'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          "role": role,
+          "action": "delete",
+          "data": {"id_pembayaran": id},
+        }),
+      );
+
+      print(
+          'Delete Pembayaran by ${role} - Response status: ${response.statusCode}');
+      print('Delete Pembayaran by ${role} - Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return response;
+      } else {
+        throw Exception(
+            'Failed to delete data pembayaran from ${role} : ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error delete data pembayaran from ${role} : $e');
+    }
+  }
 }

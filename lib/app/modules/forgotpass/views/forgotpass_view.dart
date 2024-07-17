@@ -134,6 +134,27 @@ class ForgotpassView extends GetView<ForgotpassController> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 10),
+                      // Login Text Button
+                      TextButton.icon(
+                        onPressed: () {
+                          Get.toNamed('/login');
+                          print('Login tapped');
+                        },
+                        icon: Icon(
+                          Icons.help_outline,
+                          color: Colors.blueAccent,
+                        ),
+                        label: Text(
+                          'Login?',
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

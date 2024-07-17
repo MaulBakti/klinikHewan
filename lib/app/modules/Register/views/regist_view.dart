@@ -12,7 +12,7 @@ class RegistView extends GetView<RegistController> {
     final RxBool _obscureText = true.obs;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Regist'),
+        title: const Text('Register'),
         centerTitle: true,
       ),
       body: Stack(
@@ -30,6 +30,11 @@ class RegistView extends GetView<RegistController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Logo
+                      Image.asset(
+                        'assets/images/logo.webp', // Ganti dengan path gambar logo
+                        height: 100,
+                      ),
                       SizedBox(height: 15),
                       TextField(
                         onChanged: (value) => controller.username.value = value,
@@ -62,14 +67,6 @@ class RegistView extends GetView<RegistController> {
                       }),
                       SizedBox(height: 15),
                       TextField(
-                        onChanged: (value) => controller.jabatan.value = value,
-                        decoration: InputDecoration(
-                          labelText: 'Alamat',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      TextField(
                         onChanged: (value) => controller.alamat.value = value,
                         decoration: InputDecoration(
                           labelText: 'Alamat',
@@ -91,7 +88,7 @@ class RegistView extends GetView<RegistController> {
                         onPressed: () {
                           controller.register();
                         },
-                        child: Text('Regist'),
+                        child: Text('Register'),
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black),
@@ -103,6 +100,27 @@ class RegistView extends GetView<RegistController> {
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      // Login Text Button
+                      TextButton.icon(
+                        onPressed: () {
+                          Get.toNamed('/login');
+                          print('Login tapped');
+                        },
+                        icon: Icon(
+                          Icons.help_outline,
+                          color: Colors.blueAccent,
+                        ),
+                        label: Text(
+                          'Sudah punya akun?',
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            fontSize: 16,
                           ),
                         ),
                       ),

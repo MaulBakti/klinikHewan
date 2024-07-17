@@ -32,15 +32,23 @@ abstract class Routes {
 
   // Resep
   static const RESEP = _Paths.RESEP;
-  // Pembayaran
-  static const ADMIN_PEMBAYARAN = _Paths.ADMIN_PEMBAYARAN;
-  static const PEGAWAI_PEMBAYARAN = _Paths.PEGAWAI_PEMBAYARAN;
 
-  static const REKAM_MEDIS = _Paths.REKAM_MEDIS;
+  // Pembayaran
   static const PEMBAYARAN = _Paths.PEMBAYARAN;
+
+  // Rekam Medis
+  static const REKAM_MEDIS = _Paths.REKAM_MEDIS;
+
+  // Forgot Pass
   static const FORGOTPASS = _Paths.FORGOTPASS;
+
+  // Regis
   static const REGIST = _Paths.REGIST;
+
+  // Profile Pegawai
   static const PROFILE_PEGAWAI = _Paths.PROFILE_PEGAWAI;
+
+  // Profil Pemilik
   static const PROFILE_PEMILIK = _Paths.PROFILE_PEMILIK;
 }
 
@@ -74,14 +82,25 @@ abstract class _Paths {
 
   // Resep
   static const RESEP = '/resep';
-  // Pembayaran
-  static const ADMIN_PEMBAYARAN = '/admin/pembayaran';
-  static const PEGAWAI_PEMBAYARAN = '/pegawai/pembayaran';
 
+  // Pembayaran
+  static const ADMIN_PEMBAYARAN = '/pembayaran';
+
+  // Rekam Medis
   static const REKAM_MEDIS = '/rekam-medis';
+
+  // Pembayaran
   static const PEMBAYARAN = '/pembayaran';
+
+  // Forgot Pass
   static const FORGOTPASS = '/forgotpass';
+
+  // Register
   static const REGIST = '/regist';
+
+  // Profil Pegawai
   static const PROFILE_PEGAWAI = '/profile-pegawai';
+
+  // Profil Pemilik
   static const PROFILE_PEMILIK = '/profile-pemilik';
 }

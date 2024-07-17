@@ -1,48 +1,56 @@
 import 'package:get/get.dart';
 
-import '../modules/Appointment/views/appointment_view.dart';
-import '../modules/Dashboard/bindings/dashboard_binding.dart';
-import '../modules/Dashboard/views/dashboard_view.dart';
-import '../modules/Doctor/views/doctor_view.dart';
-import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
-import '../modules/ForgotPass/views/forgotpass_view.dart';
-import '../modules/Hewan/bindings/hewan_binding.dart';
-import '../modules/Hewan/views/hewan_view.dart';
-import '../modules/Home/bindings/Home_binding.dart';
-import '../modules/Home/views/Home_view.dart';
-import '../modules/Login/views/login_view.dart';
-import '../modules/Obat/views/obat_view.dart';
-import '../modules/Pegawai/view/pegawai_view.dart';
-import '../modules/Pembayaran/AdminPembayaran/bindings/adminPembayaran_binding.dart';
-import '../modules/Pembayaran/AdminPembayaran/views/adminPembayaran_view.dart';
-import '../modules/Pembayaran/PegawaiPembayaran/bindings/pegawaiPembayaran_binding.dart';
-import '../modules/Pembayaran/PegawaiPembayaran/views/pegawaiPembayaran_view.dart';
-import '../modules/Pemilik/bindings/pemilik_binding.dart';
-import '../modules/Pemilik/views/pemilik_view.dart';
+// Register
 import '../modules/Register/bindings/regist_binding.dart';
 import '../modules/Register/views/regist_view.dart';
+// Login
+import '../modules/Login/views/login_view.dart';
+// import '../modules/Login/bindings/login_binding.dart';
+// Forgot Pass
+import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
+import '../modules/ForgotPass/views/forgotpass_view.dart';
+// Dashboard
+import '../modules/Dashboard/bindings/dashboard_binding.dart';
+import '../modules/Dashboard/views/dashboard_view.dart';
+// Hewan
+import '../modules/Hewan/bindings/hewan_binding.dart';
+import '../modules/Hewan/views/hewan_view.dart';
+// Home
+import '../modules/Home/bindings/Home_binding.dart';
+import '../modules/Home/views/Home_view.dart';
+// Obat
+import '../modules/Obat/views/obat_view.dart';
+import '../modules/Obat/bindings/obat_binding.dart';
+// Pegawai
+import '../modules/Pegawai/view/pegawai_view.dart';
+import '../modules/Pegawai/bindings/pegawai_binding.dart';
+
+// Pembayaran
+import '../modules/Pembayaran/bindings/pembayaran_binding.dart';
+import '../modules/Pembayaran/views/pembayaran_view.dart';
+// Pemilik
+import '../modules/Pemilik/bindings/pemilik_binding.dart';
+import '../modules/Pemilik/views/pemilik_view.dart';
+import '../modules/Resep/views/resep_view.dart';
+// Rekam Medis
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
-import '../modules/Resep/views/resep_view.dart';
+// Resep
+// import '../modules/Resep/views/resep_view.dart';
+import '../modules/Resep/bindings/resep_binding.dart';
+// Profil Pegawai
 import '../modules/profilePegawai/bindings/profile_pegawai_binding.dart';
 import '../modules/profilePegawai/views/profile_pegawai_view.dart';
+// Profil Pemilik
 import '../modules/profilePemilik/bindings/profile_pemilik_binding.dart';
 import '../modules/profilePemilik/views/profile_pemilik_view.dart';
-
-// Profile
-
-// Dashboard
-// Obat
-// Pegawai
-
-// Home
-// Login
-
-// Hewan
-// Rekam Medis
-// Pembayaran
 // Doctor
-// import '../modules/Doctor/bindings/doctor_binding.dart';
+import '../modules/Doctor/bindings/doctor_binding.dart';
+import '../modules/Doctor/views/doctor_view.dart';
+// Appointment
+import '../modules/Appointment/Bindings/appointment_binding.dart';
+import '../modules/Appointment/views/appointment_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -62,6 +70,7 @@ class AppPages {
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginView(),
+      // binding: LoginBinding(),
     ),
 
     /* HOME */
@@ -92,7 +101,7 @@ class AppPages {
         return DoctorView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      // binding: (),
+      binding: DoctorBinding(),
     ),
 
     /* PEGAWAI */
@@ -104,9 +113,10 @@ class AppPages {
         return PegawaiView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      // binding: (),
+      binding: PegawaiBinding(),
     ),
 
+    // Obat
     GetPage(
       name: _Paths.OBAT,
       page: () {
@@ -115,9 +125,10 @@ class AppPages {
         return ObatView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      // binding: (),
+      binding: ObatBinding(),
     ),
 
+    // Resep
     GetPage(
       name: _Paths.RESEP,
       page: () {
@@ -126,9 +137,10 @@ class AppPages {
         return ResepView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      // binding: (),
+      binding: ResepBinding(),
     ),
 
+    // Appointment
     GetPage(
       name: _Paths.APPOINTMENT,
       page: () {
@@ -137,9 +149,10 @@ class AppPages {
         return AppointmentView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      // binding: (),
+      binding: AppointmentBinding(),
     ),
 
+    // Rekam Medis
     GetPage(
       name: _Paths.REKAM_MEDIS,
       page: () {
@@ -151,19 +164,18 @@ class AppPages {
       binding: RekamMedisBinding(),
     ),
 
-    /* PEMBAYARAN */
-    // Pembayaran Admin
+    // Pembayaran
     GetPage(
       name: _Paths.ADMIN_PEMBAYARAN,
-      page: () => const AdminpembayaranView(),
-      binding: AdminpembayaranBinding(),
+      page: () {
+        final role = Get.parameters['role'] ?? 'admin'; // default role
+        final token = Get.parameters['token'] ?? ''; // default token
+        return pembayaranView(
+            role: role, token: token); // Pass token to DoctorView constructor
+      },
+      binding: pembayaranBinding(),
     ),
-    // Pegawai Admin
-    GetPage(
-      name: _Paths.PEGAWAI_PEMBAYARAN,
-      page: () => const PegawaipembayaranView(),
-      binding: PegawaipembayaranBinding(),
-    ),
+
     // Pemilik
     GetPage(
       name: _Paths.PEMILIK,
@@ -174,21 +186,29 @@ class AppPages {
       },
       binding: PemilikBinding(),
     ),
+
+    // Forgot Pass
     GetPage(
       name: _Paths.FORGOTPASS,
       page: () => const ForgotpassView(),
       binding: ForgotpassBinding(),
     ),
+
+    // Register
     GetPage(
       name: _Paths.REGIST,
       page: () => const RegistView(),
       binding: RegistBinding(),
     ),
+
+    // Profil Pegawai
     GetPage(
       name: _Paths.PROFILE_PEGAWAI,
       page: () => ProfilePegawaiView(),
       binding: ProfilePegawaiBinding(),
     ),
+
+    // Profile Pemilik
     GetPage(
       name: _Paths.PROFILE_PEMILIK,
       page: () => ProfilePemilikView(),
