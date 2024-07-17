@@ -62,6 +62,14 @@ class RegistView extends GetView<RegistController> {
                       }),
                       SizedBox(height: 15),
                       TextField(
+                        onChanged: (value) => controller.jabatan.value = value,
+                        decoration: InputDecoration(
+                          labelText: 'Alamat',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      TextField(
                         onChanged: (value) => controller.alamat.value = value,
                         decoration: InputDecoration(
                           labelText: 'Alamat',

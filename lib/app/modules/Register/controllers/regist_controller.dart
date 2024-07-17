@@ -1,67 +1,71 @@
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-import '../../../data/providers/api_service.dart';
+// import 'dart:ffi';
 
-class RegistController extends GetxController {
-  //TODO: Implement RegistController
-  var isLoading = false.obs;
-  var username = ''.obs;
-  var password = ''.obs;
-  var alamat = ''.obs;
-  var noTelp = ''.obs;
+// import 'package:flutter/widgets.dart';
+// import 'package:get/get.dart';
+// import '../../../data/providers/api_service.dart';
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+// class RegistController extends GetxController {
+//   //TODO: Implement RegistController
+//   var isLoading = false.obs;
+//   var username = ''.obs;
+//   var password = ''.obs;
+//   var jabatan = ''.obs;
+//   var alamat = ''.obs;
+//   var noTelp = ''.obs;
 
-  void register() async {
-    try {
-      final response = await ApiService.regist(
-        username.value,
-        password.value,
-        alamat.value,
-        noTelp.value,
-      );
+//   final count = 0.obs;
+//   @override
+//   void onInit() {
+//     super.onInit();
+//   }
 
-      print('Register response status: ${response.statusCode}');
-      print('Register response body: ${response.body}');
+//   void register() async {
+//     try {
+//       final response = await ApiService.regist(
+//         username.value,
+//         password.value,
+//         jabatan.value,
+//         alamat.value,
+//         noTelp.value,
+//       );
 
-      if (response.statusCode == 200) {
-        // Registration successful, handle accordingly
-        print('Registration successful');
-        Get.defaultDialog(
-          title: 'Regist',
-          middleText: 'Regist successful',
-        );
-      } else {
-        // Registration failed, show error message
-        print('Registration failed');
-        Get.defaultDialog(
-          title: 'Regist',
-          middleText: 'Regist Failed',
-        );
-      }
-    } catch (error) {
-      // Handle network or other errors
-      print('Error: $error');
-      Get.defaultDialog(
-        title: 'Regist',
-        middleText: 'Regist error: $error',
-      );
-    }
-  }
+//       print('Register response status: ${response.statusCode}');
+//       print('Register response body: ${response.body}');
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+//       if (response.statusCode == 200) {
+//         // Registration successful, handle accordingly
+//         print('Registration successful');
+//         Get.defaultDialog(
+//           title: 'Regist',
+//           middleText: 'Regist successful',
+//         );
+//       } else {
+//         // Registration failed, show error message
+//         print('Registration failed');
+//         Get.defaultDialog(
+//           title: 'Regist',
+//           middleText: 'Regist Failed',
+//         );
+//       }
+//     } catch (error) {
+//       // Handle network or other errors
+//       print('Error: $error');
+//       Get.defaultDialog(
+//         title: 'Regist',
+//         middleText: 'Regist error: $error',
+//       );
+//     }
+//   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+//   @override
+//   void onReady() {
+//     super.onReady();
+//   }
 
-  void increment() => count.value++;
-}
+//   @override
+//   void onClose() {
+//     super.onClose();
+//   }
+
+//   void increment() => count.value++;
+// }
