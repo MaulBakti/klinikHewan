@@ -304,6 +304,7 @@ class RekamMedisController extends GetxController {
       }
       print('Token: $token');
       final data = rekammedis.toJson();
+
       http.Response response;
 
       if (role == 'admin') {
