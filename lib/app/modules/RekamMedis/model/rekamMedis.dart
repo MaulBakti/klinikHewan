@@ -55,7 +55,7 @@ class rekamMedis {
       'diagnosa': diagnosa,
       'tgl_periksa': tglPeriksa,
       'hewan': {'nama_hewan': namaHewan},
-      'pemilik': {'nama_pemilik': namaPemilik},
+      'pemilik': {'username': namaPemilik},
       'pegawai': {'nama_pegawai': namaPegawai},
       'obat': {'nama_obat': namaObat},
     };

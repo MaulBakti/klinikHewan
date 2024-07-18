@@ -1,26 +1,70 @@
 class Pembayaran {
-  String? idPembayaran; // id_pembayaran
-  String? idRekamMedis; // id_rekam_medis
-  DateTime? tanggalPembayaran; // tgl_pembayaran
-  double? jumlahPembayaran; // jumlah_pembayaran
-  String? buktiPembayaran; // bukti_pembayaran
+  int? idPembayaran;
+  int? idRekamMedis;
+  int? idPemilik;
+  int? idHewan;
+  int? idDokter;
+  int? idAppointment;
+  int? idObat;
+  int? idResep;
+  String? tanggalPembayaran; // Diganti menjadi tipe String
+  String? jumlahPembayaran; // Diganti menjadi tipe String
+  String? buktiPembayaran;
+  // Exclude
+  String? namaPemilik;
+  String? namaHewan;
+  String? namaDokter;
+  String? catatan;
+  String? keluhan;
+  String? namaObat;
+  int? jumlahObat;
 
   Pembayaran({
     this.idPembayaran,
     this.idRekamMedis,
+    this.idPemilik,
+    this.idHewan,
+    this.idDokter,
+    this.idAppointment,
+    this.idObat,
+    this.idResep,
     this.tanggalPembayaran,
     this.jumlahPembayaran,
     this.buktiPembayaran,
+    // Exclude
+    this.namaPemilik,
+    this.namaHewan,
+    this.namaDokter,
+    this.catatan,
+    this.keluhan,
+    this.namaObat,
+    this.jumlahObat,
   });
 
   // Factory method untuk membuat objek dari JSON
   factory Pembayaran.fromJson(Map<String, dynamic> json) {
     return Pembayaran(
-      idPembayaran: json['id_pembayaran'] as String?,
-      idRekamMedis: json['id_rekam_medis'] as String?,
-      tanggalPembayaran: DateTime.parse(json['tanggal_pembayaran']),
-      jumlahPembayaran: (json['jumlah_pembayaran'] as num?)?.toDouble(),
-      buktiPembayaran: json['bukti_pembayaran'] as String?,
+      idPembayaran: json['id_pembayaran'],
+      idRekamMedis: json['id_rekam_medis'],
+      idPemilik: json['id_pemilik'],
+      idHewan: json['id_hewan'],
+      idDokter: json['id_dokter'],
+      idAppointment: json['id_appointment'],
+      idObat: json['id_obat'],
+      idResep: json['id_resep'],
+      tanggalPembayaran: json['tgl_pembayaran'], // Tetap string dari JSON
+      jumlahPembayaran:
+          json['jumlah_pembayaran'].toString(), // Konversi ke string
+      buktiPembayaran: json['bukti_pembayaran'],
+      // Exclude
+      namaPemilik: json['pemilik'] != null ? json['pemilik']['username'] : '',
+      namaHewan: json['hewan'] != null ? json['hewan']['nama_hewan'] : '',
+      namaDokter: json['doctor'] != null ? json['doctor']['nama_dokter'] : '',
+      catatan:
+          json['appointment'] != null ? json['appointment']['catatan'] : '',
+      keluhan: json['rekammedis'] != null ? json['rekammedis']['keluhan'] : '',
+      namaObat: json['obat'] != null ? json['obat']['nama_obat'] : '',
+      jumlahObat: json['resep'] != null ? json['resep']['jumlah_obat'] : 0,
     );
   }
 
@@ -29,9 +73,23 @@ class Pembayaran {
     return {
       'id_pembayaran': idPembayaran,
       'id_rekam_medis': idRekamMedis,
-      'tgl_pembayaran': tanggalPembayaran?.toIso8601String(),
+      'id_hewan': idHewan,
+      'id_pemilik': idPemilik,
+      'id_dokter': idDokter,
+      'id_obat': idObat,
+      'id_appointment': idAppointment,
+      'id_resep': idResep,
+      'tgl_pembayaran': tanggalPembayaran,
       'jumlah_pembayaran': jumlahPembayaran,
       'bukti_pembayaran': buktiPembayaran,
+      // Exclude
+      'pemilik': {'username': namaPemilik},
+      'hewan': {'nama_hewan': namaHewan},
+      'doctor': {'nama_dokter': namaDokter},
+      'appointment': {'catatan': catatan},
+      'rekammedis': {'keluhan': keluhan},
+      'obat': {'nama_obat': namaObat},
+      'resep': {'jumlah_obat': jumlahObat},
     };
   }
 }

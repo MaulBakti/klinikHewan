@@ -2441,7 +2441,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
+        if (responseData['success'] == 'read') {
           return responseData['data'];
         } else {
           throw Exception(
@@ -2795,23 +2795,17 @@ class ApiService {
         }),
       );
       print(
-          'GET Pembayaran by ${role} - Response status: ${response.statusCode}');
-      print('GET Pembayaran by ${role} - Response body: ${response.body}');
+          'GET Pembayaran by $role - Response status: ${response.statusCode}');
+      print('GET Pembayaran by $role - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          return responseData['data'];
-        } else {
-          throw Exception(
-              'Failed to get data pembayaran from ${role}: ${responseData['message']}');
-        }
+        return response;
       } else {
         throw Exception(
-            'Failed to get data pembayaran from ${role}: ${response.statusCode}');
+            'Failed to get data pembayaran from $role: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error get data pembayaran from ${role}: $e');
+      throw Exception('Error get data pembayaran from $role: $e');
     }
   }
 

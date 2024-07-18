@@ -1,16 +1,25 @@
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/Appointment/model/appointment.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../data/providers/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
+import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
+import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import 'package:klinik_hewan/app/modules/Appointment/model/appointment.dart';
 
 class AppointmentController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
+  var selectedPemilik = ''.obs;
+  var selectedHewan = ''.obs;
+  var selectedDoctor = ''.obs;
+  var pemilikList = <Pemilik>[].obs;
+  var hewanList = <Hewan>[].obs;
+  var doctorList = <Doctor>[].obs;
   var appointmentList = <Appointment>[].obs;
-  final box = GetStorage();
 
+  final box = GetStorage();
   @override
   void onInit() {
     super.onInit();
@@ -33,15 +42,136 @@ class AppointmentController extends GetxController {
     print('Token removed');
   }
 
-  Future<void> getDataAppointment(String role) async {
+// Data Doctor
+  Future<void> getDataDoctor(String role) async {
     role = box.read('role');
-    print('Fetching data dooctor for role: $role');
+    print('Fetching data doctor for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
         isLoading.value = false; // Reset loading state
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getDoctorAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getDoctorPegawai(token);
+      } else if (role == 'pemilik') {
+        responseData = await ApiService.getDoctorPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+      print('List Doctor: $doctorList');
+
+      final List<Doctor> doctors =
+          responseData.map((data) => Doctor.fromJson(data)).toList();
+      doctorList.assignAll(doctors);
+      print('List Doctor: $doctorList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data doctor: $e';
+      print('Error fetching data doctor: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+// Data Hewan
+  Future<void> getDataHewan(String role) async {
+    role = box.read('role');
+    print('Fetching data hewan for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false; // Reset loading state
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getHewanAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getHewanPegawai(token);
+      } else if (role == 'pemilik') {
+        responseData = await ApiService.getHewanPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+      print('List hewan: $hewanList');
+
+      final List<Hewan> hewans =
+          responseData.map((data) => Hewan.fromJson(data)).toList();
+      hewanList.assignAll(hewans);
+      print('List hewan: $hewanList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data hewan: $e';
+      print('Error fetching data hewan: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+// Data Pemilik
+  Future<void> getDataPemilik(String role) async {
+    role = box.read('role');
+    print('Fetching data pemilik for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false;
+        print('Error: Token not found');
+        return;
+      }
+
+      print('Using token: $token');
+      List<dynamic> responseData;
+
+      if (role == 'admin') {
+        responseData = await ApiService.getPemilikAdmin(token);
+      } else if (role == 'pegawai') {
+        responseData = await ApiService.getPemilikPegawai(token);
+        // } else if (role == 'pemilik') {
+        //   responseData = await ApiService.getPemilikPemilik(token);
+      } else {
+        throw Exception('Invalid role: $role');
+      }
+
+      print('Response data: $responseData');
+
+      final List<Pemilik> pemiliks =
+          responseData.map((data) => Pemilik.fromJson(data)).toList();
+      pemilikList.assignAll(pemiliks);
+      print('List pemilik: $pemilikList');
+    } catch (e) {
+      errorMessage.value = 'Error fetching data pemilik: $e';
+      print('Error fetching data pemilik: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getDataAppointment(String role) async {
+    role = box.read('role');
+    print('Fetching data appointment for role: $role');
+    try {
+      isLoading.value = true;
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        isLoading.value = false;
         print('Error: Token not found');
         return;
       }
@@ -58,7 +188,6 @@ class AppointmentController extends GetxController {
       } else {
         throw Exception('Invalid role: $role');
       }
-      print('List appointment: $appointmentList');
 
       final List<Appointment> appointments =
           responseData.map((data) => Appointment.fromJson(data)).toList();

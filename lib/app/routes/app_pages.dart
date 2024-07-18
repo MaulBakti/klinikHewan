@@ -137,7 +137,7 @@ class AppPages {
         return ResepView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      binding: ResepBinding(),
+      // binding: ResepBinding(),
     ),
 
     // Appointment

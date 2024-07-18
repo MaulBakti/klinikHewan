@@ -139,6 +139,13 @@ class HomeView extends StatelessWidget {
           },
         ),
         _buildListTile(
+          title: 'Data Appointment',
+          icon: Icons.payment,
+          onTap: () {
+            Get.toNamed('/appointment');
+          },
+        ),
+        _buildListTile(
           title: 'Data Pembayaran',
           icon: Icons.payment,
           onTap: () {
@@ -171,6 +178,13 @@ class HomeView extends StatelessWidget {
           icon: Icons.medical_services,
           onTap: () {
             Get.toNamed('/doctor');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Appointment',
+          icon: Icons.payment,
+          onTap: () {
+            Get.toNamed('/appointment');
           },
         ),
         _buildListTile(
@@ -255,6 +269,13 @@ class HomeView extends StatelessWidget {
           icon: Icons.assignment,
           onTap: () {
             Get.toNamed('/rekam-medis');
+          },
+        ),
+        _buildListTile(
+          title: 'Data Appointment',
+          icon: Icons.payment,
+          onTap: () {
+            Get.toNamed('/appointment');
           },
         ),
         _buildListTile(
