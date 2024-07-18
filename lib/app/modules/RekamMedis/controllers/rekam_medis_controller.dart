@@ -19,6 +19,7 @@ class RekamMedisController extends GetxController {
   var hewanList = <Hewan>[].obs;
   var obatList = <Obat>[].obs;
   var pegawaiList = <Pegawai>[].obs;
+  var role = 'admin'.obs;
 
   final box = GetStorage();
 
@@ -26,6 +27,11 @@ class RekamMedisController extends GetxController {
   void onInit() {
     super.onInit();
     print('Initializing rekamMedisController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
+      }
+    });
   }
 
   Future<String?> getToken() async {
@@ -319,13 +325,14 @@ class RekamMedisController extends GetxController {
       print('Update RekamMedis - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final updatedrekammedis = rekamMedis.fromJson(responseData['data']);
-        int index = rekammedisList.indexWhere((element) =>
-            element.idRekamMedis == updatedrekammedis.idRekamMedis);
-        if (index != -1) {
-          rekammedisList[index] = updatedrekammedis;
-        }
+        // final responseData = jsonDecode(response.body);
+        // final updatedrekammedis = rekamMedis.fromJson(responseData['data']);
+        // int index = rekammedisList.indexWhere((element) =>
+        //     element.idRekamMedis == updatedrekammedis.idRekamMedis);
+        // if (index != -1) {
+        //   rekammedisList[index] = updatedrekammedis;
+        // }
+        getDataRekamMedis(token);
         Get.defaultDialog(
           title: 'Success',
           middleText: 'rekammedis updated successfully',
@@ -355,7 +362,7 @@ class RekamMedisController extends GetxController {
         return;
       }
       print('Token: $token');
-
+      print('id rekam medis : $idrekammedis');
       http.Response response;
 
       if (role == 'admin') {
@@ -370,6 +377,7 @@ class RekamMedisController extends GetxController {
       if (response.statusCode == 200) {
         rekammedisList
             .removeWhere((element) => element.idRekamMedis == idrekammedis);
+        print(rekammedisList);
         Get.defaultDialog(
           title: 'Success',
           middleText: 'rekammedis deleted successfully',

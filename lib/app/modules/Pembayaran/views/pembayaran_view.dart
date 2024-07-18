@@ -34,19 +34,15 @@ class pembayaranView extends StatelessWidget {
           return _buildPembayaranList(context);
         }
       }),
-      floatingActionButton: Obx(() {
-        const restrictedRoles = ['pemilik']; // Ganti sesuai dengan kebutuhan
-
-        return Visibility(
-          visible: !restrictedRoles.contains(role),
-          child: FloatingActionButton(
-            onPressed: () {
-              _addPembayaran(context, token);
-            },
-            child: Icon(Icons.add),
-          ),
-        );
-      }),
+      floatingActionButton: Visibility(
+        visible: !_isRestrictedRole(role),
+        child: FloatingActionButton(
+          onPressed: () {
+            _addPembayaran(context, token);
+          },
+          child: Icon(Icons.add),
+        ),
+      ),
     );
   }
 
@@ -81,7 +77,7 @@ class pembayaranView extends StatelessWidget {
             trailing: Wrap(
               spacing: 8.0,
               children: [
-                if (role == 'admin' || role == 'pegawai')
+                if (_isAdminOrPegawai(role))
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
@@ -105,8 +101,6 @@ class pembayaranView extends StatelessWidget {
   }
 
   void _addPembayaran(BuildContext context, String token) {
-    // Implementasi dialog untuk menambah data pembayaran, mirip dengan metode _addHewan
-    // Tambahkan semua field yang diperlukan untuk model Pembayaran
     final TextEditingController idRekamMedisController =
         TextEditingController();
     final TextEditingController jumlahController = TextEditingController();
@@ -172,31 +166,28 @@ class pembayaranView extends StatelessWidget {
   }
 
   void _validateAndSavePembayaran(
-      BuildContext context,
-      String token,
-      TextEditingController idRekamMedisController,
-      TextEditingController jumlahController,
-      TextEditingController tanggalController) {
+    BuildContext context,
+    String token,
+    TextEditingController idRekamMedisController,
+    TextEditingController jumlahController,
+    TextEditingController tanggalController,
+  ) {
     if (idRekamMedisController.text.isNotEmpty &&
         jumlahController.text.isNotEmpty &&
         tanggalController.text.isNotEmpty) {
       final newPembayaran = Pembayaran(
-        idPembayaran: toString(),
         idRekamMedis: idRekamMedisController.text,
         jumlahPembayaran: double.tryParse(jumlahController.text) ?? 0.0,
-        tanggalPembayaran: DateTime.tryParse(
-            tanggalController.text), // Mengonversi ke DateTime
+        tanggalPembayaran: DateTime.tryParse(tanggalController.text),
       );
 
       Get.find<pembayaranController>()
           .CreatePembayaran(role, token, newPembayaran)
           .then((_) {
-        // Reset form fields after successful submission
         idRekamMedisController.clear();
         jumlahController.clear();
         tanggalController.clear();
-
-        Navigator.of(context).pop(); // Close dialog after successful submission
+        Navigator.of(context).pop();
       }).catchError((error) {
         Get.defaultDialog(
           title: 'Error',
@@ -212,15 +203,12 @@ class pembayaranView extends StatelessWidget {
   }
 
   void _editPembayaran(BuildContext context, Pembayaran pembayaran) {
-    // Implementasi dialog untuk mengedit data pembayaran
     final TextEditingController idRekamMedisController =
         TextEditingController(text: pembayaran.idRekamMedis);
     final TextEditingController jumlahController =
         TextEditingController(text: pembayaran.jumlahPembayaran.toString());
     final TextEditingController tanggalController = TextEditingController(
-        text: pembayaran.tanggalPembayaran
-            ?.toIso8601String()
-            .split('T')[0]); // Mengubah DateTime ke String
+        text: pembayaran.tanggalPembayaran?.toIso8601String().split('T')[0]);
 
     showDialog(
       context: context,
@@ -249,7 +237,7 @@ class pembayaranView extends StatelessWidget {
                 TextField(
                   controller: tanggalController,
                   decoration: InputDecoration(
-                      labelText: 'Tanggal Pembayaran',
+                      labelText: 'Tanggal Pembayaran (yyyy-mm-dd)',
                       border: OutlineInputBorder()),
                   keyboardType: TextInputType.datetime,
                 ),
@@ -282,11 +270,12 @@ class pembayaranView extends StatelessWidget {
   }
 
   void _validateAndEditPembayaran(
-      BuildContext context,
-      Pembayaran pembayaran,
-      TextEditingController idRekamMedisController,
-      TextEditingController jumlahController,
-      TextEditingController tanggalController) {
+    BuildContext context,
+    Pembayaran pembayaran,
+    TextEditingController idRekamMedisController,
+    TextEditingController jumlahController,
+    TextEditingController tanggalController,
+  ) {
     if (idRekamMedisController.text.isNotEmpty &&
         jumlahController.text.isNotEmpty &&
         tanggalController.text.isNotEmpty) {
@@ -298,8 +287,15 @@ class pembayaranView extends StatelessWidget {
       );
 
       Get.find<pembayaranController>()
-          .updatePembayaran(role, token, pembayaran);
-      Navigator.of(context).pop();
+          .updatePembayaran(role, token, updatedPembayaran)
+          .then((_) {
+        Navigator.of(context).pop();
+      }).catchError((error) {
+        Get.defaultDialog(
+          title: 'Error',
+          middleText: 'Failed to update pembayaran: $error',
+        );
+      });
     } else {
       Get.defaultDialog(
         title: 'Error',
@@ -325,8 +321,15 @@ class pembayaranView extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Get.find<pembayaranController>()
-                    .deletePembayaran(role, idPembayaran, token);
-                Navigator.of(context).pop();
+                    .deletePembayaran(role, idPembayaran, token)
+                    .then((_) {
+                  Navigator.of(context).pop();
+                }).catchError((error) {
+                  Get.defaultDialog(
+                    title: 'Error',
+                    middleText: 'Failed to delete pembayaran: $error',
+                  );
+                });
               },
               child: Text('Hapus'),
             ),
@@ -334,5 +337,14 @@ class pembayaranView extends StatelessWidget {
         );
       },
     );
+  }
+
+  bool _isAdminOrPegawai(String role) {
+    return role == 'admin' || role == 'pegawai';
+  }
+
+  bool _isRestrictedRole(String role) {
+    const restrictedRoles = ['pemilik']; // Modify as needed
+    return restrictedRoles.contains(role);
   }
 }

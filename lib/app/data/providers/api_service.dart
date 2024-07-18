@@ -2187,6 +2187,7 @@ class ApiService {
   // Method Delete
   static Future<http.Response> deleteRekamMedisAdmin(
       int id, String token) async {
+    print('rekamedis: $id');
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/admin/rekammedis'),

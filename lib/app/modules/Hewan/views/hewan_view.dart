@@ -77,37 +77,44 @@ class HewanView extends StatelessWidget {
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text(hewan.namaHewan ?? ''),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('ID Pemilik: ${hewan.idPemilik ?? ''}'),
-                Text('Jenis: ${hewan.jenisHewan ?? ''}'),
-                Text('Umur: ${hewan.umur ?? ''} tahun'),
-                Text('Berat: ${hewan.berat ?? ''} kg'),
-                Text('Jenis Kelamin: ${hewan.jenisKelamin ?? ''}'),
-              ],
-            ),
-            trailing: Wrap(
-              spacing: 8.0,
-              children: [
-                if (role == 'admin' || role == 'pegawai')
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      _editHewan(context, hewan);
-                    },
-                  ),
-                if (role == 'admin')
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      _confirmDelete(context, hewan.idHewan ?? 0);
-                    },
-                  ),
-              ],
-            ),
-          ),
+              title: Text(hewan.namaHewan ?? ''),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('ID Pemilik: ${hewan.idPemilik ?? ''}'),
+                  Text('Jenis: ${hewan.jenisHewan ?? ''}'),
+                  Text('Umur: ${hewan.umur ?? ''} tahun'),
+                  Text('Berat: ${hewan.berat ?? ''} kg'),
+                  Text('Jenis Kelamin: ${hewan.jenisKelamin ?? ''}'),
+                ],
+              ),
+              trailing: Obx(() {
+                final role = controller.role.value;
+                // Define roles that should not have a FloatingActionButton
+                const restrictedRoles = ['pemilik'];
+
+                return Visibility(
+                    visible: !restrictedRoles.contains(role),
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: [
+                        if (role == 'admin' || role == 'pegawai')
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _editHewan(context, hewan);
+                            },
+                          ),
+                        if (role == 'admin')
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _confirmDelete(context, hewan.idHewan ?? 0);
+                            },
+                          ),
+                      ],
+                    ));
+              })),
         );
       },
     );

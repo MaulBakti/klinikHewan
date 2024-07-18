@@ -15,11 +15,11 @@ class RekamMedisView extends StatelessWidget {
   RekamMedisView({required this.role, required this.token}) {
     controller.getToken();
     controller.getRole();
-    controller.getDataRekamMedis(role);
     controller.getDataPemilik(role);
     controller.getDataHewan(role);
     controller.getDataPegawai(role);
     controller.getDataObat(role);
+    controller.getDataRekamMedis(role);
   }
 
   @override
@@ -44,15 +44,22 @@ class RekamMedisView extends StatelessWidget {
           return _buildrekammedisList(context);
         }
       }),
-      floatingActionButton: role == 'admin' || role == 'pegawai'
-          ? FloatingActionButton(
-              onPressed: () {
-                print(role);
-                _addrekammedis(context, token);
-              },
-              child: Icon(Icons.add),
-            )
-          : null,
+      floatingActionButton: Obx(() {
+        final role = controller.role.value;
+        // Define roles that should not have a FloatingActionButton
+        const restrictedRoles = ['pemilik'];
+
+        return Visibility(
+          visible: !restrictedRoles.contains(role),
+          child: FloatingActionButton(
+            onPressed: () {
+              print(role);
+              _addrekammedis(context, token);
+            },
+            child: Icon(Icons.add),
+          ),
+        );
+      }),
     );
   }
 
@@ -75,36 +82,44 @@ class RekamMedisView extends StatelessWidget {
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text('Nama Hewan: ${rekammedis.namaHewan}'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Nama Pemilik: ${rekammedis.namaPemilik ?? ''}'),
-                Text('Keluhan: ${rekammedis.keluhan ?? ''}'),
-                Text('Diagnosa: ${rekammedis.diagnosa ?? ''}'),
-                Text('Tanggal Periksa: ${rekammedis.tglPeriksa ?? ''}'),
-              ],
-            ),
-            trailing: Wrap(
-              spacing: 8.0,
-              children: [
-                if (role == 'admin' || role == 'pegawai')
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      _editrekammedis(context, rekammedis);
-                    },
-                  ),
-                if (role == 'admin')
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      _confirmDelete(context, rekammedis.idRekamMedis ?? 0);
-                    },
-                  ),
-              ],
-            ),
-          ),
+              title: Text('Nama Hewan: ${rekammedis.namaHewan}'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Nama Pemilik: ${rekammedis.namaPemilik ?? ''}'),
+                  Text('Keluhan: ${rekammedis.keluhan ?? ''}'),
+                  Text('Diagnosa: ${rekammedis.diagnosa ?? ''}'),
+                  Text('Tanggal Periksa: ${rekammedis.tglPeriksa ?? ''}'),
+                ],
+              ),
+              trailing: Obx(() {
+                final role = controller.role.value;
+                // Define roles that should not have a FloatingActionButton
+                const restrictedRoles = ['pemilik'];
+
+                return Visibility(
+                    visible: !restrictedRoles.contains(role),
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: [
+                        if (role == 'admin' || role == 'pegawai')
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _editrekammedis(context, rekammedis);
+                            },
+                          ),
+                        if (role == 'admin')
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _confirmDelete(
+                                  context, rekammedis.idRekamMedis ?? 0);
+                            },
+                          ),
+                      ],
+                    ));
+              })),
         );
       },
     );
@@ -617,7 +632,7 @@ class RekamMedisView extends StatelessWidget {
         // namaObatController.text.isNotEmpty
         ) {
       final updatedrekammedis = rekamMedis(
-        idRekamMedis: 0,
+        idRekamMedis: rekammedis.idRekamMedis,
         idHewan: selectedHewan.idHewan ?? 0,
         namaHewan: selectedHewan.namaHewan,
         idPemilik: selectedPemilik.idPemilik,
@@ -634,6 +649,7 @@ class RekamMedisView extends StatelessWidget {
         // namaPegawai: namaPegawaiController.text,
         // namaObat: namaObatController.text,
       );
+      print(updatedrekammedis);
       Get.find<RekamMedisController>().updateRekamMedis(updatedrekammedis);
       Navigator.of(context).pop();
     } else {
@@ -645,6 +661,7 @@ class RekamMedisView extends StatelessWidget {
   }
 
   void _confirmDelete(BuildContext context, int idrekammedis) {
+    print('id rekam medis : $idrekammedis');
     showDialog(
       context: context,
       builder: (BuildContext context) {
