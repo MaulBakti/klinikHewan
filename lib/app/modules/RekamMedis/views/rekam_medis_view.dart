@@ -26,6 +26,12 @@ class RekamMedisView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.toNamed('/home');
+          },
+        ),
         title: Text('Daftar Rekam Medis'),
         centerTitle: true,
       ),

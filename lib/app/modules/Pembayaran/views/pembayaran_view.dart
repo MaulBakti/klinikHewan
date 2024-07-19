@@ -32,6 +32,12 @@ class pembayaranView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.toNamed('/home');
+          },
+        ),
         title: Text('Daftar Pembayaran'),
         backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
@@ -91,9 +97,9 @@ class pembayaranView extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Nama Hewan: ${pembayaran.namaHewan ?? ''}'),
-                  Text('Nama Dokter: ${pembayaran.namaDokter ?? ''}'),
-                  Text('Appointment: ${pembayaran.catatan ?? ''}'),
+                  Text("Nama Hewan: ${pembayaran.namaHewan ?? ""}"),
+                  Text('Nama Dokter: ${pembayaran.namaDokter}'),
+                  Text('Appointment: ${pembayaran.catatan}'),
                   Text('Keluhan: ${pembayaran.keluhan ?? ''}'),
                   Text('Nama Obat: ${pembayaran.namaObat ?? ''}'),
                   Text('Jumlah Obat: ${pembayaran.jumlahObat ?? ''}'),

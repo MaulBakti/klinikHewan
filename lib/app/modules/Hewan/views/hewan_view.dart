@@ -21,6 +21,12 @@ class HewanView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.toNamed('/home');
+          },
+        ),
         title: Text('Daftar Hewan'),
         backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,

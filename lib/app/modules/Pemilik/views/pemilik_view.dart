@@ -18,15 +18,15 @@ class PemilikView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daftar Pemilik'),
-        backgroundColor: Color(0xFFFFE4C4),
-        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            Get.toNamed('/home');
           },
         ),
+        title: Text('Daftar Pemilik'),
+        backgroundColor: Color(0xFFFFE4C4),
+        centerTitle: true,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
