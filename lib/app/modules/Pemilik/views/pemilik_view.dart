@@ -21,6 +21,12 @@ class PemilikView extends StatelessWidget {
         title: Text('Daftar Pemilik'),
         backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
+        ),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -79,6 +85,7 @@ class PemilikView extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('Password: ${pemilik.password ?? ''}'),
                 Text('Alamat: ${pemilik.alamat ?? ''}'),
                 Text('No Telp: ${pemilik.noTelp ?? ''}'),
               ],

@@ -1,3 +1,15 @@
+--Admin
+INSERT INTO `Admin` (username, password, nama, jabatan)
+VALUES 
+('Admin', 'Admin1234', 'Admin', 'Admin'),
+
+--Pegawai
+INSERT INTO `Pegawai` (username, password, jabatan, alamat, no_telp)
+VALUES 
+('Zidan', 'Zidan1234', 'Pegawai', 'Tangerang', '0812'),
+('Radja', 'Radja1234', 'Pegawai', 'Tangerang', '0857'),
+('Aghniya', 'Aghniya1234', 'Pegawai', 'Tangerang', '08953');
+
 --Doctor
 INSERT INTO `Doctor` (`nama_dokter`, `spesialisasi`) VALUES
 ('Dr. Asep Wijaya', 'Exotics'),
@@ -30,13 +42,13 @@ VALUES
 (5, 'Shampoo anti-jerawat', 'Untuk mengobati dermatitis');
 
 --Appointment
-INSERT INTO Appointment (id_appointment, id_hewan, id_dokter, tgl_appointment, catatan)
+INSERT INTO Appointment (id_appointment, id_pemilik ,id_hewan, id_dokter, tgl_appointment, catatan)
 VALUES 
-(1, 1, 1, CURRENT_TIMESTAMP(3), 'Periksa kesehatan rutin'),
-(2, 2, 2, CURRENT_TIMESTAMP(3), 'Vaksinasi'),
-(3, 3, 3, CURRENT_TIMESTAMP(3), 'Konsultasi diet'),
-(4, 4, 4, CURRENT_TIMESTAMP(3), 'Operasi sterilisasi'),
-(5, 5, 5, CURRENT_TIMESTAMP(3), 'Pemeriksaan gigi');
+(1, 1,1, 1, CURRENT_TIMESTAMP(3), 'Periksa kesehatan rutin'),
+(2, 2,2, 2, CURRENT_TIMESTAMP(3), 'Vaksinasi'),
+(3, 3,3, 3, CURRENT_TIMESTAMP(3), 'Konsultasi diet'),
+(4, 4,4, 4, CURRENT_TIMESTAMP(3), 'Operasi sterilisasi'),
+(5, 5,5, 5, CURRENT_TIMESTAMP(3), 'Pemeriksaan gigi');
 
 --RekamMedis
 INSERT INTO RekamMedis (id_rekam_medis, id_hewan, id_pemilik, id_pegawai, id_obat, keluhan, diagnosa, tgl_periksa)
