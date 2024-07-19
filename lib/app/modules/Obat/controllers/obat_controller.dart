@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/modules/Obat/model/obat.dart';
@@ -113,6 +114,9 @@ class ObatController extends GetxController {
         final createdObat = Obat.fromJson(responseData['data']);
         obatList.add(createdObat);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Obat created successfully',
         );
@@ -121,6 +125,9 @@ class ObatController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create obat: $e',
       );
@@ -164,6 +171,9 @@ class ObatController extends GetxController {
           obatList[index] = updatedObat;
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Obat updated successfully',
         );
@@ -172,6 +182,9 @@ class ObatController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update obat: $e',
       );
@@ -206,6 +219,9 @@ class ObatController extends GetxController {
       if (response.statusCode == 200) {
         obatList.removeWhere((element) => element.idObat == idObat);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Obat deleted successfully',
         );
@@ -214,6 +230,9 @@ class ObatController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete obat: $e',
       );

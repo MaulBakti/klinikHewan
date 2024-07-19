@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
@@ -36,6 +37,9 @@ class LoginController extends GetxController {
             print('Token saved: ${box.read('token')}');
 
             Get.defaultDialog(
+              backgroundColor: Colors.green,
+              titleStyle: TextStyle(color: Colors.white),
+              middleTextStyle: TextStyle(color: Colors.white),
               title: 'Login',
               middleText: 'Login successful',
             );
@@ -58,6 +62,9 @@ class LoginController extends GetxController {
           }
         } else {
           Get.defaultDialog(
+            backgroundColor: Colors.red,
+            titleStyle: TextStyle(color: Colors.white),
+            middleTextStyle: TextStyle(color: Colors.white),
             title: 'Error',
             middleText: 'Incorrect username and password',
           );
@@ -65,6 +72,9 @@ class LoginController extends GetxController {
       } catch (e) {
         print('Login error: $e');
         Get.defaultDialog(
+          backgroundColor: Colors.red,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Error',
           middleText: 'An error occurred: $e',
         );
@@ -73,6 +83,9 @@ class LoginController extends GetxController {
       }
     } else {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Please enter username and password',
       );

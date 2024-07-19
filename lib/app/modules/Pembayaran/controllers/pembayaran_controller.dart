@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'dart:convert';
@@ -384,9 +385,23 @@ class pembayaranController extends GetxController {
         // Tambahkan pembayaran ke dalam data jika berhasil
         pembayaranList.add(Pembayaran.fromJson(
             json.decode(response.body))); // Pastikan response.body di-decode
+        Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
+          title: 'Success',
+          middleText: 'Pembayaran Create successfully',
+        );
       }
     } catch (e) {
       print('Error creating pembayaran: $e');
+      Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
+        title: 'Error',
+        middleText: 'Failed to create Pembayaran: $e',
+      );
     }
   }
 
@@ -404,9 +419,23 @@ class pembayaranController extends GetxController {
           pembayaranList[index] = Pembayaran.fromJson(json
               .decode(response.body)); // Update objek pembayaran di dalam list
         }
+        Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
+          title: 'Success',
+          middleText: 'Pembayaran Update successfully',
+        );
       }
     } catch (e) {
       print('Error updating pembayaran: $e');
+      Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
+        title: 'Error',
+        middleText: 'Failed to update Pembayaran: $e',
+      );
     }
   }
 
@@ -418,9 +447,23 @@ class pembayaranController extends GetxController {
         // Hapus pembayaran dari list jika berhasil
         pembayaranList
             .removeWhere((item) => item.idPembayaran == id.toString());
+        Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
+          title: 'Success',
+          middleText: 'Pembayaran deleted successfully',
+        );
       }
     } catch (e) {
       print('Error deleting pembayaran: $e');
+      Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
+        title: 'Error',
+        middleText: 'Failed to delete Pembayaran: $e',
+      );
     }
   }
 }

@@ -19,6 +19,7 @@ class PegawaiView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Pegawai'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -179,6 +180,7 @@ class PegawaiView extends StatelessWidget {
                     alamatController,
                     noTelpController,
                   );
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -307,6 +309,7 @@ class PegawaiView extends StatelessWidget {
                     alamatController,
                     noTelpController,
                   );
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

@@ -19,6 +19,7 @@ class ObatView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Obat'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -160,6 +161,7 @@ class ObatView extends StatelessWidget {
                 onPressed: () {
                   _validateAndSaveObat(
                       context, token, namaController, keteranganController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -253,6 +255,7 @@ class ObatView extends StatelessWidget {
                 onPressed: () {
                   _validateAndEditObat(
                       context, obat, namaController, keteranganController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

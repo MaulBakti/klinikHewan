@@ -310,6 +310,7 @@ class RekamMedisView extends StatelessWidget {
                       keluhanController,
                       diagnosaController,
                       tglPeriksaController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -582,6 +583,7 @@ class RekamMedisView extends StatelessWidget {
                       // namaPegawaiController,
                       // namaObatController
                       );
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

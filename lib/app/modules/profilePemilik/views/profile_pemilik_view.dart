@@ -98,6 +98,19 @@ class ProfilePemilikView extends StatelessWidget {
                         _validateAndUpdateProfile(context, pemilik);
                       },
                       child: const Text('Update Profile'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        minimumSize:
+                            MaterialStateProperty.all<Size>(Size(200, 50)),
+                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

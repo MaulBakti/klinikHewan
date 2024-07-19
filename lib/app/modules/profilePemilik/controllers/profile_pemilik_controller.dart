@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -94,17 +95,26 @@ class ProfilePemilikController extends GetxController {
           await ApiService.updatePemilikPemilik(token, data);
       if (response.statusCode == 200) {
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'pemilik updated successfully',
         );
       } else {
         Get.defaultDialog(
+          backgroundColor: Colors.red,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Error',
           middleText: 'Failed to update pemilik: ${response.statusCode}',
         );
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Error updating pemilik: $e',
       );

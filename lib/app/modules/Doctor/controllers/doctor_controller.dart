@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
 import 'package:get_storage/get_storage.dart';
@@ -113,6 +114,9 @@ class DoctorController extends GetxController {
         final createdDoctor = Doctor.fromJson(responseData['data']);
         doctorList.add(createdDoctor);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Doctor created successfully',
         );
@@ -121,6 +125,9 @@ class DoctorController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create doctor: $e',
       );
@@ -164,6 +171,9 @@ class DoctorController extends GetxController {
           doctorList[index] = updatedDoctor;
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Doctor updated successfully',
         );
@@ -172,6 +182,9 @@ class DoctorController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update doctor: $e',
       );
@@ -206,6 +219,9 @@ class DoctorController extends GetxController {
       if (response.statusCode == 200) {
         doctorList.removeWhere((element) => element.idDokter == idDoctor);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Doctor deleted successfully',
         );
@@ -214,6 +230,9 @@ class DoctorController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete doctor: $e',
       );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../data/providers/api_service.dart';
@@ -239,6 +240,9 @@ class AppointmentController extends GetxController {
         final createdAppointment = Appointment.fromJson(responseData['data']);
         appointmentList.add(createdAppointment);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Appointment created successfully',
         );
@@ -247,6 +251,9 @@ class AppointmentController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create appointment: $e',
       );
@@ -290,6 +297,9 @@ class AppointmentController extends GetxController {
           appointmentList[index] = updatedAppointment;
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Appointment updated successfully',
         );
@@ -298,6 +308,9 @@ class AppointmentController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update appointment: $e',
       );
@@ -335,6 +348,9 @@ class AppointmentController extends GetxController {
         appointmentList
             .removeWhere((element) => element.idAppointment == idAppointment);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Appointment deleted successfully',
         );
@@ -343,6 +359,9 @@ class AppointmentController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete appointment: $e',
       );

@@ -19,6 +19,7 @@ class PemilikView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Pemilik'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -169,6 +170,7 @@ class PemilikView extends StatelessWidget {
                 onPressed: () {
                   _validateAndSavePemilik(context, token, namaController,
                       alamatController, noTelpController, passwordController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -293,6 +295,7 @@ class PemilikView extends StatelessWidget {
                 onPressed: () {
                   _validateAndEditPemilik(context, pemilik, namaController,
                       alamatController, noTelpController, passwordController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

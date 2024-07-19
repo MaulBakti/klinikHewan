@@ -19,6 +19,7 @@ class ResepView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Resep'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -170,6 +171,7 @@ class ResepView extends StatelessWidget {
                     idObatController,
                     jumlahObatController,
                   );
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -286,6 +288,7 @@ class ResepView extends StatelessWidget {
                     idObatController,
                     jumlahObatController,
                   );
+                  Get.back();
                 },
                 child: Text('Edit'),
                 style: ElevatedButton.styleFrom(

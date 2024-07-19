@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
@@ -155,6 +156,9 @@ class HewanController extends GetxController {
         final createdHewan = Hewan.fromJson(responseData['data']);
         hewanList.add(createdHewan);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Hewan created successfully',
         );
@@ -163,6 +167,9 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create hewan: $e',
       );
@@ -206,6 +213,9 @@ class HewanController extends GetxController {
           hewanList[index] = updatedHewan;
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Hewan updated successfully',
         );
@@ -214,6 +224,9 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update hewan: $e',
       );
@@ -248,6 +261,9 @@ class HewanController extends GetxController {
       if (response.statusCode == 200) {
         hewanList.removeWhere((element) => element.idHewan == idHewan);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Hewan deleted successfully',
         );
@@ -256,6 +272,9 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete hewan: $e',
       );
@@ -263,17 +282,4 @@ class HewanController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  // Future<String> getNamaPemilik(int idPemilik) async {
-  //   try {
-  //     isLoading.value = true;
-  //     var pemilik = await ApiService.fetchPemilik(idPemilik, token);
-  //     return pemilik['username'] ?? '';
-  //   } catch (e) {
-  //     print('Error fetching pemilik: $e');
-  //     return '';
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
 }

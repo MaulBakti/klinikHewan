@@ -17,15 +17,15 @@ class DashboardView extends GetView<DashboardController> {
             color: Colors.black87,
           ),
         ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {
-              // Implementasi aksi ketika ikon notifikasi ditekan
-            },
-          ),
-        ],
+        backgroundColor: Color(0xFFFFE4C4),
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.notifications, color: Colors.black),
+        //     onPressed: () {
+        //       // Implementasi aksi ketika ikon notifikasi ditekan
+        //     },
+        //   ),
+        // ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -36,7 +36,6 @@ class DashboardView extends GetView<DashboardController> {
         ),
       ),
       body: Container(
-        color: Colors.pink,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ListView(
@@ -66,18 +65,18 @@ class DashboardView extends GetView<DashboardController> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const [
+      //     BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.favorite), label: 'Favorites'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      //   ],
+      //   selectedItemColor: Colors.blue,
+      //   unselectedItemColor: Colors.grey,
+      // ),
     );
   }
 

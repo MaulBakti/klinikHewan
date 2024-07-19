@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -93,17 +94,26 @@ class ProfilePegawaiController extends GetxController {
           await ApiService.updatePegawaiPegawai(token, data);
       if (response.statusCode == 200) {
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pegawai updated successfully',
         );
       } else {
         Get.defaultDialog(
+          backgroundColor: Colors.red,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Error',
           middleText: 'Failed to update pegawai: ${response.statusCode}',
         );
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Error updating pegawai: $e',
       );

@@ -19,6 +19,7 @@ class DoctorView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Doctor'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -160,6 +161,7 @@ class DoctorView extends StatelessWidget {
                 onPressed: () {
                   _validateAndSaveDoctor(
                       context, token, namaController, spesialisController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -252,6 +254,7 @@ class DoctorView extends StatelessWidget {
                 onPressed: () {
                   _validateAndEditDoctor(
                       context, doctor, namaController, spesialisController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

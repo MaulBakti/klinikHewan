@@ -26,6 +26,7 @@ class AppointmentView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Appointment'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -238,6 +239,7 @@ class AppointmentView extends StatelessWidget {
                       selectedDoctor,
                       TglController,
                       CatatanController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -436,6 +438,7 @@ class AppointmentView extends StatelessWidget {
                       selectedDoctor,
                       TglController,
                       CatatanController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

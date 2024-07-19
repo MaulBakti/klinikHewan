@@ -38,6 +38,7 @@ class RegistController extends GetxController {
           title: 'Register',
           middleText: 'Register successful',
         );
+        Get.toNamed('/login');
       } else {
         // Registration failed, show error message
         print('Registration failed');

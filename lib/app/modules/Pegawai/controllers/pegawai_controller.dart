@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -105,6 +106,9 @@ class PegawaiController extends GetxController {
         final createdPegawai = Pegawai.fromJson(responseData['data']);
         pegawaiList.add(createdPegawai);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pegawai created successfully',
         );
@@ -113,6 +117,9 @@ class PegawaiController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create pegawai: $e',
       );
@@ -156,6 +163,9 @@ class PegawaiController extends GetxController {
           pegawaiList[index] = updatedPegawai;
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pegawai updated successfully',
         );
@@ -164,6 +174,9 @@ class PegawaiController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update pegawai: $e',
       );
@@ -196,6 +209,9 @@ class PegawaiController extends GetxController {
       if (response.statusCode == 200) {
         pegawaiList.removeWhere((element) => element.idPegawai == id);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pegawai deleted successfully',
         );
@@ -204,6 +220,9 @@ class PegawaiController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete pegawai: $e',
       );

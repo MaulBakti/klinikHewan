@@ -33,6 +33,7 @@ class pembayaranView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Pembayaran'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -399,6 +400,7 @@ class pembayaranView extends StatelessWidget {
                   tanggalPembayaranController,
                   buktiPembayaranController,
                 );
+                Get.back();
               },
               child: Text('Simpan'),
             ),
@@ -751,6 +753,7 @@ class pembayaranView extends StatelessWidget {
                     jumlahPembayaranController,
                     buktiPembayaranController,
                   );
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

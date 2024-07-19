@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:klinik_hewan/app/modules/Hewan/controllers/hewan_controller.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
 class HewanView extends StatelessWidget {
   final String role;
@@ -22,6 +22,7 @@ class HewanView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Daftar Hewan'),
+        backgroundColor: Color(0xFFFFE4C4),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -235,6 +236,7 @@ class HewanView extends StatelessWidget {
                       umurController,
                       beratController,
                       jenisKelaminController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -385,6 +387,7 @@ class HewanView extends StatelessWidget {
                       umurController,
                       beratController,
                       jenisKelaminController);
+                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -112,6 +113,9 @@ class PemilikController extends GetxController {
         final createdPemilik = Pemilik.fromJson(responseData['data']);
         pemilikList.add(createdPemilik);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pemilik created successfully',
         );
@@ -120,6 +124,9 @@ class PemilikController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create pemilik: $e',
       );
@@ -163,6 +170,9 @@ class PemilikController extends GetxController {
           pemilikList[index] = updatedPemilik;
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pemilik updated successfully',
         );
@@ -171,6 +181,9 @@ class PemilikController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update pemilik: $e',
       );
@@ -205,6 +218,9 @@ class PemilikController extends GetxController {
       if (response.statusCode == 200) {
         pemilikList.removeWhere((element) => element.idPemilik == idPemilik);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Pemilik deleted successfully',
         );
@@ -213,6 +229,9 @@ class PemilikController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete pemilik: $e',
       );

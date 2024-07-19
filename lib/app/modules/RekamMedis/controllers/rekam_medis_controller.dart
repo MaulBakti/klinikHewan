@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/RekamMedis/model/rekamMedis.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
@@ -280,6 +281,9 @@ class RekamMedisController extends GetxController {
         // rekammedisList.add(createdrekammedis);
         getDataRekamMedis(token);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'rekammedis created successfully',
         );
@@ -289,6 +293,9 @@ class RekamMedisController extends GetxController {
     } catch (e) {
       print("woyyyyy");
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create rekammedis: $e',
       );
@@ -334,6 +341,9 @@ class RekamMedisController extends GetxController {
         // }
         getDataRekamMedis(token);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'rekammedis updated successfully',
         );
@@ -342,6 +352,9 @@ class RekamMedisController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update rekammedis: $e',
       );
@@ -379,6 +392,9 @@ class RekamMedisController extends GetxController {
             .removeWhere((element) => element.idRekamMedis == idrekammedis);
         print(rekammedisList);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'rekammedis deleted successfully',
         );
@@ -387,6 +403,9 @@ class RekamMedisController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete rekammedis: $e',
       );

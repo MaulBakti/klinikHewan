@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Resep/model/resep.dart';
 import 'package:get_storage/get_storage.dart';
@@ -113,6 +114,9 @@ class ResepController extends GetxController {
         final createdResep = Resep.fromJson(responseData['data']);
         resepList.add(createdResep);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Resep created successfully',
         );
@@ -121,6 +125,9 @@ class ResepController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create resep: $e',
       );
@@ -164,6 +171,9 @@ class ResepController extends GetxController {
           resepList[index] = updatedResep; // Memperbarui item di list
         }
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Resep updated successfully',
         );
@@ -172,6 +182,9 @@ class ResepController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update resep: $e',
       );
@@ -206,6 +219,9 @@ class ResepController extends GetxController {
       if (response.statusCode == 200) {
         resepList.removeWhere((element) => element.idResep == idResep);
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Resep deleted successfully',
         );
@@ -214,6 +230,9 @@ class ResepController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete resep: $e',
       );
