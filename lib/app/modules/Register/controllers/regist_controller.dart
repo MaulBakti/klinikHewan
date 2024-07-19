@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
@@ -35,14 +36,19 @@ class RegistController extends GetxController {
         // Registration successful, handle accordingly
         print('Registration successful');
         Get.defaultDialog(
+          backgroundColor: Colors.green,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Register',
           middleText: 'Register successful',
         );
-        Get.toNamed('/login');
       } else {
         // Registration failed, show error message
         print('Registration failed');
         Get.defaultDialog(
+          backgroundColor: Colors.red,
+          titleStyle: TextStyle(color: Colors.white),
+          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Register',
           middleText: 'Register Failed',
         );
@@ -51,6 +57,9 @@ class RegistController extends GetxController {
       // Handle network or other errors
       print('Error: $error');
       Get.defaultDialog(
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Regist',
         middleText: 'Regist error: $error',
       );
