@@ -38,7 +38,7 @@ class rekamMedis {
       diagnosa: json['diagnosa'] ?? '',
       tglPeriksa: json['tgl_periksa'] ?? '',
       namaHewan: json['hewan']['nama_hewan'] ?? '',
-      namaPemilik: json['pemilik']['nama_pemilik'] ?? '',
+      namaPemilik: json['pemilik']['username'] ?? '',
       namaPegawai: json['pegawai']['nama_pegawai'] ?? '',
       namaObat: json['obat']['nama_obat'] ?? '',
     );

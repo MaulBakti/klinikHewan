@@ -237,13 +237,13 @@ class HomeView extends StatelessWidget {
             Get.toNamed('/profile-pemilik');
           },
         ),
-        _buildListTile(
-          title: 'Data Doctor',
-          icon: Icons.medical_services,
-          onTap: () {
-            Get.toNamed('/doctor');
-          },
-        ),
+        // _buildListTile(
+        //   title: 'Data Doctor',
+        //   icon: Icons.medical_services,
+        //   onTap: () {
+        //     Get.toNamed('/doctor');
+        //   },
+        // ),
         _buildListTile(
           title: 'Data Hewan',
           icon: Icons.pets,

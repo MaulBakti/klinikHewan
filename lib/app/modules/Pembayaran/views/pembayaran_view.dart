@@ -7,8 +7,8 @@ import 'package:klinik_hewan/app/modules/Obat/model/obat.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 import 'package:klinik_hewan/app/modules/RekamMedis/model/rekamMedis.dart';
 import 'package:klinik_hewan/app/modules/Resep/model/resep.dart';
-import '../controllers/pembayaran_controller.dart';
-import '../model/pembayaran.dart';
+import '../../Pembayaran/controllers/pembayaran_controller.dart';
+import '../../Pembayaran/model/pembayaran.dart';
 
 class pembayaranView extends StatelessWidget {
   final pembayaranController controller = Get.put(pembayaranController());
