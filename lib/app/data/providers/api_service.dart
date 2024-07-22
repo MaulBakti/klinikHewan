@@ -53,6 +53,32 @@ class ApiService {
     }
   }
 
+  //Forgotpass
+  static Future<http.Response> Forgotpass(
+      String password, String notelp) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/pemilik/forgot/'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'no_telp': notelp,
+          'password': password,
+        }),
+      );
+
+      // Periksa status kode HTTP untuk penanganan error dasar
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception('Failed to register: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Failed to register: $e');
+    }
+  }
+
   //HEWAN
   /* ADMIN */
   // Method GET

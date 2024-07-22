@@ -32,23 +32,34 @@ class pembayaranView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         title: Text('Daftar Pembayaran'),
-        backgroundColor: Color(0xFFFFE4C4),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.errorMessage.value.isNotEmpty) {
-          return Center(child: Text(controller.errorMessage.value));
-        } else if (controller.pembayaranList.isEmpty) {
-          return _buildEmptyState(context);
-        } else {
-          return _buildPembayaranList(context);
-        }
-      }),
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        padding: EdgeInsets.only(top: 20.0),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.errorMessage.value.isNotEmpty) {
+            return Center(child: Text(controller.errorMessage.value));
+          } else if (controller.pembayaranList.isEmpty) {
+            return _buildEmptyState(context);
+          } else {
+            return _buildPembayaranList(context);
+          }
+        }),
+      ),
       floatingActionButton: Obx(() {
         final role = controller.role.value;
         // Define roles that should not have a FloatingActionButton
@@ -91,9 +102,9 @@ class pembayaranView extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Nama Hewan: ${pembayaran.namaHewan ?? ''}'),
-                  Text('Nama Dokter: ${pembayaran.namaDokter ?? ''}'),
-                  Text('Appointment: ${pembayaran.catatan ?? ''}'),
+                  Text("Nama Hewan: ${pembayaran.namaHewan ?? ""}"),
+                  Text('Nama Dokter: ${pembayaran.namaDokter}'),
+                  Text('Appointment: ${pembayaran.catatan}'),
                   Text('Keluhan: ${pembayaran.keluhan ?? ''}'),
                   Text('Nama Obat: ${pembayaran.namaObat ?? ''}'),
                   Text('Jumlah Obat: ${pembayaran.jumlahObat ?? ''}'),

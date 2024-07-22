@@ -18,25 +18,36 @@ class ObatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         title: Text('Daftar Obat'),
-        backgroundColor: Color(0xFFFFE4C4),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.errorMessage.value.isNotEmpty) {
-          return Center(
-            child: Text('Error: ${controller.errorMessage.value}'),
-          );
-        } else if (controller.obatList.isEmpty) {
-          return _buildEmptyState(context);
-        } else {
-          return _buildObatList(context);
-        }
-      }),
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        padding: EdgeInsets.only(top: 20.0),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.errorMessage.value.isNotEmpty) {
+            return Center(
+              child: Text('Error: ${controller.errorMessage.value}'),
+            );
+          } else if (controller.obatList.isEmpty) {
+            return _buildEmptyState(context);
+          } else {
+            return _buildObatList(context);
+          }
+        }),
+      ),
       floatingActionButton: Obx(() {
         final role = controller.role.value;
         // Define roles that should not have a FloatingActionButton
@@ -72,43 +83,45 @@ class ObatView extends StatelessWidget {
       itemCount: controller.obatList.length,
       itemBuilder: (context, index) {
         final obat = controller.obatList[index];
-        return Card(
-          margin: EdgeInsets.all(8.0),
-          child: ListTile(
-              title: Text(obat.namaObat ?? ''),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Keterangan: ${obat.keterangan ?? ''}'),
-                ],
-              ),
-              trailing: Obx(() {
-                final role = controller.role.value;
-                // Define roles that should not have a FloatingActionButton
-                const restrictedRoles = ['pemilik'];
+        return Container(
+          child: Card(
+            margin: EdgeInsets.all(8.0),
+            child: ListTile(
+                title: Text(obat.namaObat ?? ''),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Keterangan: ${obat.keterangan ?? ''}'),
+                  ],
+                ),
+                trailing: Obx(() {
+                  final role = controller.role.value;
+                  // Define roles that should not have a FloatingActionButton
+                  const restrictedRoles = ['pemilik'];
 
-                return Visibility(
-                    visible: !restrictedRoles.contains(role),
-                    child: Wrap(
-                      spacing: 8.0,
-                      children: [
-                        if (role == 'admin' || role == 'pegawai')
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              _editObat(context, obat);
-                            },
-                          ),
-                        if (role == 'admin')
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              _confirmDelete(context, obat.idObat ?? 0);
-                            },
-                          ),
-                      ],
-                    ));
-              })),
+                  return Visibility(
+                      visible: !restrictedRoles.contains(role),
+                      child: Wrap(
+                        spacing: 8.0,
+                        children: [
+                          if (role == 'admin' || role == 'pegawai')
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                _editObat(context, obat);
+                              },
+                            ),
+                          if (role == 'admin')
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _confirmDelete(context, obat.idObat ?? 0);
+                              },
+                            ),
+                        ],
+                      ));
+                })),
+          ),
         );
       },
     );

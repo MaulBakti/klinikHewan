@@ -21,104 +21,120 @@ class ProfilePemilikView extends StatelessWidget {
         title: const Text('Profile'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Obx(() {
-          final pemilik = controller.pemilik.value;
+      body: Container(
+        child: Center(
+          child: Obx(() {
+            final pemilik = controller.pemilik.value;
 
-          if (pemilik == null) {
-            return CircularProgressIndicator(); // Loading state
-          }
+            if (pemilik == null) {
+              return CircularProgressIndicator(); // Loading state
+            }
 
-          // Initialize controllers with existing data
-          usernameController.text = pemilik.namaPemilik;
-          jabatanController.text = pemilik.jabatan;
-          alamatController.text = pemilik.alamat;
-          noTelpController.text = pemilik.noTelp;
+            // Initialize controllers with existing data
+            usernameController.text = pemilik.namaPemilik;
+            jabatanController.text = pemilik.jabatan;
+            alamatController.text = pemilik.alamat;
+            noTelpController.text = pemilik.noTelp;
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      'assets/images/logo.webp',
-                      height: 100,
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        labelText: 'Username',
-                        border: OutlineInputBorder(),
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Card(
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/logo.webp',
+                        height: 100,
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: jabatanController,
-                      decoration: InputDecoration(
-                        labelText: 'Jabatan',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                        obscureText: true,
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: alamatController,
-                      decoration: InputDecoration(
-                        labelText: 'Alamat',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: jabatanController,
+                        decoration: InputDecoration(
+                          labelText: 'Jabatan',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: noTelpController,
-                      decoration: InputDecoration(
-                        labelText: 'No Telp',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: alamatController,
+                        decoration: InputDecoration(
+                          labelText: 'Alamat',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        _validateAndUpdateProfile(context, pemilik);
-                      },
-                      child: const Text('Update Profile'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        minimumSize:
-                            MaterialStateProperty.all<Size>(Size(200, 50)),
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: noTelpController,
+                        decoration: InputDecoration(
+                          labelText: 'No Telp',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          _validateAndUpdateProfile(context, pemilik);
+                        },
+                        child: const Text('Update Profile'),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(200, 50)),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.inbox), label: 'About'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.price_check), label: 'Harga'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person), label: 'Profile'),
+            ],
+            currentIndex: controller.selectedIndex.value,
+            selectedItemColor: Color(0xFFffc26f),
+            unselectedItemColor: Colors.grey,
+            onTap: controller.onItemTapped,
+          )),
     );
   }
 

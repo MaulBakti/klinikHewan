@@ -18,31 +18,36 @@ class PemilikView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daftar Pemilik'),
-        backgroundColor: Color(0xFFFFE4C4),
-        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            Get.back();
           },
         ),
+        title: Text('Daftar Pemilik'),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
+        centerTitle: true,
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.errorMessage.value.isNotEmpty) {
-          return Center(
-            child: Text('Error: ${controller.errorMessage.value}'),
-          );
-        } else if (controller.pemilikList.isEmpty) {
-          return _buildEmptyState(context);
-        } else {
-          return _buildPemilikList(context);
-        }
-      }),
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        padding: EdgeInsets.only(top: 20.0),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.errorMessage.value.isNotEmpty) {
+            return Center(
+              child: Text('Error: ${controller.errorMessage.value}'),
+            );
+          } else if (controller.pemilikList.isEmpty) {
+            return _buildEmptyState(context);
+          } else {
+            return _buildPemilikList(context);
+          }
+        }),
+      ),
       floatingActionButton: Obx(() {
         final role = controller.role.value;
         // Define roles that should not have a FloatingActionButton

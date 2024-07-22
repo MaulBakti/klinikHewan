@@ -10,7 +10,8 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
-        backgroundColor: Color(0xFFFFE4C4),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         actions: [
           // IconButton(
           //   icon: Icon(Icons.search),
@@ -27,26 +28,32 @@ class HomeView extends StatelessWidget {
           //   },
           // ),
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
             onPressed: () => _showLogoutDialog(context),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Obx(() {
-          if (homeController.role.value == 'admin') {
-            return _buildAdminListView();
-          } else if (homeController.role.value == 'pegawai') {
-            return _buildPegawaiListView();
-          } else if (homeController.role.value == 'pemilik') {
-            return _buildPemilikListView();
-          } else {
-            return Center(
-              child: Text('Tidak ada data yang ditampilkan untuk peran ini'),
-            );
-          }
-        }),
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Obx(() {
+            if (homeController.role.value == 'admin') {
+              return _buildAdminListView();
+            } else if (homeController.role.value == 'pegawai') {
+              return _buildPegawaiListView();
+            } else if (homeController.role.value == 'pemilik') {
+              return _buildPemilikListView();
+            } else {
+              return Center(
+                child: Text('Tidak ada data yang ditampilkan untuk peran ini'),
+              );
+            }
+          }),
+        ),
       ),
       // bottomNavigationBar: BottomNavigationBar(
       //     items: const [
@@ -299,6 +306,7 @@ class HomeView extends StatelessWidget {
       elevation: 2,
       margin: EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
+        splashColor: Color.fromRGBO(179, 110, 61, 1),
         leading: Icon(icon),
         title: Text(title),
         trailing: Icon(Icons.arrow_forward),
@@ -312,15 +320,20 @@ class HomeView extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color(0xFFFFE4C4),
           title: const Text("Logout"),
           content: const Text("Apakah Anda yakin ingin logout?"),
           actions: [
             TextButton(
               child: const Text("Batal"),
               style: ButtonStyle(
-                // backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                // foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Color.fromRGBO(179, 110, 61, 1)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -331,12 +344,19 @@ class HomeView extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
+            SizedBox(
+              width: 10,
+            ),
             TextButton(
               child: const Text("Logout"),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Color.fromRGBO(179, 110, 61, 1)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
