@@ -51,7 +51,8 @@ class LoginController extends GetxController {
               } else if (role == 'pegawai') {
                 Get.offAllNamed('/home');
               } else if (role == 'pemilik') {
-                Get.offAllNamed('/home');
+                Get.offAllNamed('/pemilikhome');
+                // Get.offAllNamed('/home');
               }
             });
           } else {

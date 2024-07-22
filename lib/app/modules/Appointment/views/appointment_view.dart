@@ -28,7 +28,7 @@ class AppointmentView extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.toNamed('/home');
+            Get.back();
           },
         ),
         title: Text('Daftar Appointment'),

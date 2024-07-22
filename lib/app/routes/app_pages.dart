@@ -1,55 +1,62 @@
 import 'package:get/get.dart';
 
-// Register
-import '../modules/Register/bindings/regist_binding.dart';
-import '../modules/Register/views/regist_view.dart';
-// Login
-import '../modules/Login/views/login_view.dart';
-// import '../modules/Login/bindings/login_binding.dart';
-// Forgot Pass
-import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
-import '../modules/ForgotPass/views/forgotpass_view.dart';
-// Dashboard
-import '../modules/Dashboard/bindings/dashboard_binding.dart';
-import '../modules/Dashboard/views/dashboard_view.dart';
-// Hewan
-import '../modules/Hewan/bindings/hewan_binding.dart';
-import '../modules/Hewan/views/hewan_view.dart';
-// Home
-import '../modules/Home/bindings/Home_binding.dart';
-import '../modules/Home/views/Home_view.dart';
-// Obat
-import '../modules/Obat/views/obat_view.dart';
-import '../modules/Obat/bindings/obat_binding.dart';
-// Pegawai
-import '../modules/Pegawai/view/pegawai_view.dart';
-import '../modules/Pegawai/bindings/pegawai_binding.dart';
-
-// Pembayaran
-import '../modules/Pembayaran/bindings/pembayaran_binding.dart';
-import '../modules/Pembayaran/views/pembayaran_view.dart';
-// Pemilik
-import '../modules/Pemilik/bindings/pemilik_binding.dart';
-import '../modules/Pemilik/views/pemilik_view.dart';
-import '../modules/Resep/views/resep_view.dart';
-// Rekam Medis
-import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
-import '../modules/RekamMedis/views/rekam_medis_view.dart';
-// Resep
-// import '../modules/Resep/views/resep_view.dart';
-import '../modules/Resep/bindings/resep_binding.dart';
-// Profil Pegawai
-import '../modules/profilePegawai/bindings/profile_pegawai_binding.dart';
-import '../modules/profilePegawai/views/profile_pegawai_view.dart';
-// Profil Pemilik
-import '../modules/profilePemilik/bindings/profile_pemilik_binding.dart';
-import '../modules/profilePemilik/views/profile_pemilik_view.dart';
-// Doctor
-import '../modules/Doctor/bindings/doctor_binding.dart';
-import '../modules/Doctor/views/doctor_view.dart';
-// Appointment
 import '../modules/Appointment/Bindings/appointment_binding.dart';
 import '../modules/Appointment/views/appointment_view.dart';
+import '../modules/Dashboard/bindings/dashboard_binding.dart';
+import '../modules/Dashboard/views/dashboard_view.dart';
+import '../modules/Doctor/bindings/doctor_binding.dart';
+import '../modules/Doctor/views/doctor_view.dart';
+import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
+import '../modules/ForgotPass/views/forgotpass_view.dart';
+import '../modules/Hewan/bindings/hewan_binding.dart';
+import '../modules/Hewan/views/hewan_view.dart';
+import '../modules/Home/bindings/Home_binding.dart';
+import '../modules/Home/views/Home_view.dart';
+import '../modules/Login/views/login_view.dart';
+import '../modules/Obat/bindings/obat_binding.dart';
+import '../modules/Obat/views/obat_view.dart';
+import '../modules/Pegawai/bindings/pegawai_binding.dart';
+import '../modules/Pegawai/view/pegawai_view.dart';
+import '../modules/Pembayaran/bindings/pembayaran_binding.dart';
+import '../modules/Pembayaran/views/pembayaran_view.dart';
+import '../modules/Pemilik/bindings/pemilik_binding.dart';
+import '../modules/Pemilik/views/pemilik_view.dart';
+import '../modules/Register/bindings/regist_binding.dart';
+import '../modules/Register/views/regist_view.dart';
+import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
+import '../modules/RekamMedis/views/rekam_medis_view.dart';
+import '../modules/Resep/bindings/resep_binding.dart';
+import '../modules/Resep/views/resep_view.dart';
+import '../modules/harga/bindings/harga_binding.dart';
+import '../modules/harga/views/harga_view.dart';
+import '../modules/pemilikhome/bindings/pemilikhome_binding.dart';
+import '../modules/pemilikhome/views/pemilikhome_view.dart';
+import '../modules/profilePegawai/bindings/profile_pegawai_binding.dart';
+import '../modules/profilePegawai/views/profile_pegawai_view.dart';
+import '../modules/profilePemilik/bindings/profile_pemilik_binding.dart';
+import '../modules/profilePemilik/views/profile_pemilik_view.dart';
+import '../modules/tentang/bindings/tentang_binding.dart';
+import '../modules/tentang/views/tentang_view.dart';
+
+// Register
+// Login
+// import '../modules/Login/bindings/login_binding.dart';
+// Forgot Pass
+// Dashboard
+// Hewan
+// Home
+// Obat
+// Pegawai
+
+// Pembayaran
+// Pemilik
+// Rekam Medis
+// Resep
+// import '../modules/Resep/views/resep_view.dart';
+// Profil Pegawai
+// Profil Pemilik
+// Doctor
+// Appointment
 
 part 'app_routes.dart';
 
@@ -213,6 +220,21 @@ class AppPages {
       name: _Paths.PROFILE_PEMILIK,
       page: () => ProfilePemilikView(),
       binding: ProfilePemilikBinding(),
+    ),
+    GetPage(
+      name: _Paths.PEMILIKHOME,
+      page: () => const PemilikhomeView(),
+      binding: PemilikhomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.TENTANG,
+      page: () => const TentangView(),
+      binding: TentangBinding(),
+    ),
+    GetPage(
+      name: _Paths.HARGA,
+      page: () => const HargaView(),
+      binding: HargaBinding(),
     ),
   ];
 }

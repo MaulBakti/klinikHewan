@@ -17,7 +17,7 @@ class DashboardView extends GetView<DashboardController> {
             color: Colors.black87,
           ),
         ),
-        backgroundColor: Color(0xFFFFE4C4),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         // actions: [
         //   IconButton(
         //     icon: const Icon(Icons.notifications, color: Colors.black),
@@ -36,6 +36,7 @@ class DashboardView extends GetView<DashboardController> {
         ),
       ),
       body: Container(
+        color: Color(0xFFFFE4C4),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ListView(
@@ -58,6 +59,7 @@ class DashboardView extends GetView<DashboardController> {
                 title: 'Settings',
                 icon: Icons.settings,
                 onTap: () {
+                  Get.toNamed('/home');
                   // Ganti dengan navigasi ke halaman pengaturan
                 },
               ),
@@ -92,6 +94,7 @@ class DashboardView extends GetView<DashboardController> {
       ),
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
+        splashColor: Color.fromRGBO(179, 110, 61, 1),
         title: Text(title),
         leading: Icon(icon),
         trailing: Icon(Icons.arrow_forward),

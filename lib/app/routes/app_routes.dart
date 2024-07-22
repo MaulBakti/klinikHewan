@@ -50,6 +50,9 @@ abstract class Routes {
 
   // Profil Pemilik
   static const PROFILE_PEMILIK = _Paths.PROFILE_PEMILIK;
+  static const PEMILIKHOME = _Paths.PEMILIKHOME;
+  static const TENTANG = _Paths.TENTANG;
+  static const HARGA = _Paths.HARGA;
 }
 
 abstract class _Paths {
@@ -103,4 +106,7 @@ abstract class _Paths {
 
   // Profil Pemilik
   static const PROFILE_PEMILIK = '/profile-pemilik';
+  static const PEMILIKHOME = '/pemilikhome';
+  static const TENTANG = '/tentang';
+  static const HARGA = '/harga';
 }

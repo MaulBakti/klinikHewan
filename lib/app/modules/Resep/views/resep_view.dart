@@ -21,28 +21,33 @@ class ResepView extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.toNamed('/home');
+            Get.back();
           },
         ),
         title: Text('Daftar Resep'),
-        backgroundColor: Color(0xFFFFE4C4),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.errorMessage.value.isNotEmpty) {
-          return Center(
-            child: Text('Error: ${controller.errorMessage.value}'),
-          );
-        } else if (controller.resepList.isEmpty) {
-          return _buildEmptyState(context);
-        } else {
-          return _buildResepList(context);
-        }
-      }),
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        padding: EdgeInsets.only(top: 20.0),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.errorMessage.value.isNotEmpty) {
+            return Center(
+              child: Text('Error: ${controller.errorMessage.value}'),
+            );
+          } else if (controller.resepList.isEmpty) {
+            return _buildEmptyState(context);
+          } else {
+            return _buildResepList(context);
+          }
+        }),
+      ),
       floatingActionButton: Obx(() {
         final role = controller.role.value;
         // Define roles that should not have a FloatingActionButton
