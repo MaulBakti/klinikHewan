@@ -24,17 +24,17 @@ class HargaView extends GetView<HargaController> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            _buildImageCard('assets/images/vaksinasi.jpg'),
-            _buildImageCard('assets/images/sterillisasianjing.jpg'),
-            _buildImageCard('assets/images/sterillisasikucing.jpg'),
-            _buildImageCard('assets/images/periksalab.jpg'),
-            _buildImageCard('assets/images/periksalabimigrasi.jpg'),
-            _buildImageCard('assets/images/rawatinap.jpg'),
-            _buildImageCard('assets/images/rawatinap2.jpg'),
-            _buildImageCard('assets/images/bedahscaling.jpg'),
-            _buildImageCard('assets/images/bedahscaling2.jpg'),
-            _buildImageCard('assets/images/grooming.jpg'),
-            _buildImageCard('assets/images/grooming2.jpg'),
+            _buildImageCard('assets/Katalog/Katalog.jpg'),
+            _buildImageCard('assets/Katalog/Katalog2.jpg'),
+            _buildImageCard('assets/Katalog/Katalog3.jpg'),
+            _buildImageCard('assets/Katalog/Katalog4.jpg'),
+            _buildImageCard('assets/Katalog/Katalog5.jpg'),
+            _buildImageCard('assets/Katalog/Katalog6.jpg'),
+            _buildImageCard('assets/Katalog/Katalog7.jpg'),
+            _buildImageCard('assets/Katalog/Katalog8.jpg'),
+            _buildImageCard('assets/Katalog/Katalog9.jpg'),
+            _buildImageCard('assets/Katalog/Katalog10.jpg'),
+            _buildImageCard('assets/Katalog/Katalog11.jpg'),
           ],
         ),
       ),
@@ -57,14 +57,14 @@ class HargaView extends GetView<HargaController> {
 
   Widget _buildImageCard(String imagePath) {
     return Card(
-      color: Colors.amber,
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
         height: 300,
         width: double.infinity,
-        child: Image.asset(imagePath, fit: BoxFit.cover),
+        child: Image.asset(imagePath, fit: BoxFit.contain),
       ),
     );
   }

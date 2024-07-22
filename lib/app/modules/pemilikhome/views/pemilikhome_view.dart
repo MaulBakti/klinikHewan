@@ -49,7 +49,7 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.asset(
-                          'assets/image$i.jpg', // Pastikan gambar berada di assets dan namanya sesuai
+                          'assets/Slider/Slider$i.jpg', // Pastikan gambar berada di assets dan namanya sesuai
                           fit: BoxFit.cover,
                         ),
                       ),

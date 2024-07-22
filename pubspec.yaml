@@ -26,5 +26,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/images/
-    - assets/images/vaksinasi.jpg
+    - assets/Images/Logo.jpg
+    - assets/Katalog/
+    - assets/Slider/
