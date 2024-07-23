@@ -18,10 +18,13 @@ class ProfilePemilikView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Profile',
+            style: TextStyle(color: Colors.white, fontSize: 24)),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
       body: Container(
+        color: Color(0xFFFFE4C4),
         child: Center(
           child: Obx(() {
             final pemilik = controller.pemilik.value;
@@ -121,20 +124,6 @@ class ProfilePemilikView extends StatelessWidget {
           }),
         ),
       ),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.inbox), label: 'About'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.price_check), label: 'Harga'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Profile'),
-            ],
-            currentIndex: controller.selectedIndex.value,
-            selectedItemColor: Color(0xFFffc26f),
-            unselectedItemColor: Colors.grey,
-            onTap: controller.onItemTapped,
-          )),
     );
   }
 

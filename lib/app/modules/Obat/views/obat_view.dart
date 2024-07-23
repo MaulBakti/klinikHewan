@@ -166,7 +166,9 @@ class ObatView extends StatelessWidget {
                 },
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -179,7 +181,8 @@ class ObatView extends StatelessWidget {
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -260,7 +263,9 @@ class ObatView extends StatelessWidget {
                 },
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -273,7 +278,8 @@ class ObatView extends StatelessWidget {
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -319,7 +325,9 @@ class ObatView extends StatelessWidget {
                 },
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -333,7 +341,8 @@ class ObatView extends StatelessWidget {
                 child: Text('Hapus'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),

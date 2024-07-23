@@ -19,20 +19,6 @@ class TentangView extends GetView<TentangController> {
           style: TextStyle(fontSize: 20),
         ),
       ),
-      bottomNavigationBar: Obx(() => BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.inbox), label: 'About'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.price_check), label: 'Harga'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person), label: 'Profile'),
-            ],
-            currentIndex: controller.selectedIndex.value,
-            selectedItemColor: Color(0xFFffc26f),
-            unselectedItemColor: Colors.grey,
-            onTap: controller.onItemTapped,
-          )),
     );
   }
 }

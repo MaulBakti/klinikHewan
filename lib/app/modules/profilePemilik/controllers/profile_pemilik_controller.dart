@@ -14,25 +14,6 @@ class ProfilePemilikController extends GetxController {
   final box = GetStorage();
   var role = ''.obs; // Menggunakan Rx<String> untuk menyimpan satu role
   var pemilik = Rx<Pemilik?>(null);
-  var selectedIndex = 0.obs;
-
-  void onItemTapped(int index) {
-    selectedIndex.value = index;
-    switch (index) {
-      case 0:
-        Get.offAllNamed('/pemilikhome');
-        break;
-      case 1:
-        Get.offAllNamed('/tentang');
-        break;
-      case 2:
-        Get.offAllNamed('/harga');
-        break;
-      case 3:
-        Get.toNamed('/profile-pemilik');
-        break;
-    }
-  }
 
   @override
   void onInit() async {

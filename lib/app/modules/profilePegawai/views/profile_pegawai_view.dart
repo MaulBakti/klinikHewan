@@ -18,106 +18,111 @@ class ProfilePegawaiView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Profile',
+            style: TextStyle(color: Colors.white, fontSize: 24)),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
-      body: Center(
-        child: Obx(() {
-          final pegawai = controller.pegawai.value;
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        child: Center(
+          child: Obx(() {
+            final pegawai = controller.pegawai.value;
 
-          if (pegawai == null) {
-            return CircularProgressIndicator(); // Loading state
-          }
+            if (pegawai == null) {
+              return CircularProgressIndicator(); // Loading state
+            }
 
-          // Initialize controllers with existing data
-          usernameController.text = pegawai.namaPegawai;
-          jabatanController.text = pegawai.jabatan;
-          alamatController.text = pegawai.alamat;
-          noTelpController.text = pegawai.noTelp;
+            // Initialize controllers with existing data
+            usernameController.text = pegawai.namaPegawai;
+            jabatanController.text = pegawai.jabatan;
+            alamatController.text = pegawai.alamat;
+            noTelpController.text = pegawai.noTelp;
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      'assets/images/logo.webp',
-                      height: 100,
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        labelText: 'Username',
-                        border: OutlineInputBorder(),
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Card(
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/logo.webp',
+                        height: 100,
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: jabatanController,
-                      decoration: InputDecoration(
-                        labelText: 'Jabatan',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                        obscureText: true,
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: alamatController,
-                      decoration: InputDecoration(
-                        labelText: 'Alamat',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: jabatanController,
+                        decoration: InputDecoration(
+                          labelText: 'Jabatan',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    TextField(
-                      controller: noTelpController,
-                      decoration: InputDecoration(
-                        labelText: 'No Telp',
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: alamatController,
+                        decoration: InputDecoration(
+                          labelText: 'Alamat',
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        _validateAndUpdateProfile(context, pegawai);
-                      },
-                      child: const Text('Update Profile'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        minimumSize:
-                            MaterialStateProperty.all<Size>(Size(200, 50)),
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: noTelpController,
+                        decoration: InputDecoration(
+                          labelText: 'No Telp',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          _validateAndUpdateProfile(context, pegawai);
+                        },
+                        child: const Text('Update Profile'),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(200, 50)),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }

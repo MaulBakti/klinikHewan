@@ -9,20 +9,6 @@ class PemilikhomeController extends GetxController {
 
   void onItemTapped(int index) {
     selectedIndex.value = index;
-    switch (index) {
-      case 0:
-        Get.offAllNamed('/pemilikhome');
-        break;
-      case 1:
-        Get.offAllNamed('/tentang');
-        break;
-      case 2:
-        Get.offAllNamed('/harga');
-        break;
-      case 3:
-        Get.toNamed('/profile-pemilik');
-        break;
-    }
   }
 
   Future<String?> getRole() async {

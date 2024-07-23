@@ -31,25 +31,29 @@ class AppointmentView extends StatelessWidget {
             Get.back();
           },
         ),
-        title: Text('Daftar Appointment'),
-        backgroundColor: Color(0xFFFFE4C4),
-        centerTitle: true,
+        title: Text('Daftar Appointment',
+            style: TextStyle(color: Colors.white, fontSize: 24)),
+        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.errorMessage.value.isNotEmpty) {
-          return Center(
-            child: Text('Error: ${controller.errorMessage.value}'),
-          );
-        } else if (controller.appointmentList.isEmpty) {
-          return _buildEmptyState(context);
-        } else {
-          return _buildAppointmentList(context);
-        }
-      }),
+      body: Container(
+        color: Color(0xFFFFE4C4),
+        padding: EdgeInsets.only(top: 20.0),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.errorMessage.value.isNotEmpty) {
+            return Center(
+              child: Text('Error: ${controller.errorMessage.value}'),
+            );
+          } else if (controller.appointmentList.isEmpty) {
+            return _buildEmptyState(context);
+          } else {
+            return _buildAppointmentList(context);
+          }
+        }),
+      ),
       floatingActionButton: role == 'admin' || role == 'pegawai'
           ? FloatingActionButton(
               onPressed: () {
@@ -231,7 +235,9 @@ class AppointmentView extends StatelessWidget {
                 },
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -250,7 +256,8 @@ class AppointmentView extends StatelessWidget {
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -430,7 +437,9 @@ class AppointmentView extends StatelessWidget {
                 },
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -449,7 +458,8 @@ class AppointmentView extends StatelessWidget {
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -508,7 +518,9 @@ class AppointmentView extends StatelessWidget {
                 },
                 child: Text('Batal'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),
@@ -523,7 +535,8 @@ class AppointmentView extends StatelessWidget {
                 child: Text('Hapus'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  overlayColor: Color(0xFFffc26f),
+                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
                 )),

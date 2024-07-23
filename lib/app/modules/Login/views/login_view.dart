@@ -121,6 +121,8 @@ class LoginView extends StatelessWidget {
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Color.fromRGBO(179, 110, 61, 1)),
+                            overlayColor: MaterialStateProperty.all<Color>(
+                                Color(0xFFffc26f)),
                             foregroundColor:
                                 MaterialStateProperty.all<Color>(Colors.white),
                             minimumSize:

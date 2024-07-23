@@ -8,13 +8,13 @@ class TentangController extends GetxController {
     selectedIndex.value = index;
     switch (index) {
       case 0:
-        Get.offAllNamed('/pemilikhome');
+        Get.toNamed('/pemilikhome');
         break;
       case 1:
-        Get.offAllNamed('/tentang');
+        Get.toNamed('/tentang');
         break;
       case 2:
-        Get.offAllNamed('/harga');
+        Get.toNamed('/harga');
         break;
       case 3:
         Get.toNamed('/profile-pemilik');
