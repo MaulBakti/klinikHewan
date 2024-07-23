@@ -52,7 +52,7 @@ class ProfilePegawaiView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        'assets/images/logo.webp',
+                        'assets/Images/Logo.jpg',
                         height: 100,
                       ),
                       SizedBox(height: 15),
@@ -103,12 +103,16 @@ class ProfilePegawaiView extends StatelessWidget {
                         },
                         child: const Text('Update Profile'),
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(179, 110, 61, 1)),
+                          overlayColor: MaterialStateProperty.all<Color>(
+                              Color(0xFFffc26f)),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
-                          minimumSize:
+                          maximumSize:
                               MaterialStateProperty.all<Size>(Size(200, 50)),
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(100, 50)),
                           shape: MaterialStateProperty.all<OutlinedBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),

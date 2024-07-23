@@ -270,7 +270,7 @@ class DoctorView extends StatelessWidget {
                 onPressed: () {
                   _validateAndEditDoctor(
                       context, doctor, namaController, spesialisController);
-                  Get.back();
+                  // Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

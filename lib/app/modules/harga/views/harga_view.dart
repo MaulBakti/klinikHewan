@@ -13,12 +13,6 @@ class HargaView extends GetView<HargaController> {
         title: const Text('Daftar Harga',
             style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout, color: Colors.white),
-            onPressed: () => _showLogoutDialog(context),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -54,46 +48,4 @@ class HargaView extends GetView<HargaController> {
       ),
     );
   }
-}
-
-void _showLogoutDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        backgroundColor: Color(0xFFFFE4C4),
-        title: const Text("Logout"),
-        content: const Text("Apakah Anda yakin ingin logout?"),
-        actions: [
-          TextButton(
-            child: const Text("Batal"),
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Color.fromRGBO(179, 110, 61, 1)),
-              overlayColor: MaterialStateProperty.all(Color(0xFFffc26f)),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              )),
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          SizedBox(width: 10),
-          TextButton(
-            child: const Text("Logout"),
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Color.fromRGBO(179, 110, 61, 1)),
-              overlayColor: MaterialStateProperty.all(Color(0xFFffc26f)),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              )),
-            ),
-            onPressed: () => Get.offAllNamed('/login'),
-          ),
-        ],
-      );
-    },
-  );
 }

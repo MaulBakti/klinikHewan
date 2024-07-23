@@ -50,145 +50,142 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
         title: const Text('Gold Vet',
             style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout, color: Colors.white),
-            onPressed: () => _showLogoutDialog(context),
-          ),
-        ],
       ),
       body: Container(
         color: Color(0xFFFFE4C4),
-        child: Column(
-          children: [
-            SizedBox(height: 30),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                viewportFraction: 0.8,
-              ),
-              items: [1, 2, 3].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/Slider/Slider$i.jpg',
-                          fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              SizedBox(height: 30),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 200.0,
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  aspectRatio: 2.0,
+                  viewportFraction: 0.8,
+                ),
+                items: [1, 2, 3].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            SizedBox(height: 30),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            'assets/Slider/Slider$i.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
-              padding: EdgeInsets.all(20),
-              child: Wrap(
-                spacing: 20,
-                runSpacing: 20,
-                alignment: WrapAlignment.center,
-                children: [
-                  _buildIconButton(
-                    icon: Icons.medical_services,
-                    label: 'Doctor',
-                    onPressed: () {
-                      Get.toNamed('/doctor');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.pets,
-                    label: 'Hewan',
-                    onPressed: () {
-                      Get.toNamed('/hewan');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.local_pharmacy,
-                    label: 'Obat',
-                    onPressed: () {
-                      Get.toNamed('/obat');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.assessment,
-                    label: 'Rekam Medis',
-                    onPressed: () {
-                      Get.toNamed('/rekam-medis');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.payment,
-                    label: 'Appointment',
-                    onPressed: () {
-                      Get.toNamed('/appointment');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.payment,
-                    label: 'Pembayaran',
-                    onPressed: () {
-                      Get.toNamed('/pembayaran');
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30),
-            Container(
-              height: 150,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+              SizedBox(height: 30),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.all(20),
+                child: Wrap(
+                  spacing: 20,
+                  runSpacing: 20,
+                  alignment: WrapAlignment.center,
                   children: [
-                    _buildCustomCard(
-                        title: 'PEMERIKSAAN UMUM',
-                        content:
-                            'Pemeriksaan menyeluruh untuk menjaga kesehatan Anabul kesayangan Anda.'),
-                    _buildCustomCard(
-                        title: 'VAKSINASI',
-                        content:
-                            'Lindungi Anabul Anda dengan vaksin berkualitas.'),
-                    _buildCustomCard(
-                        title: 'STERILISASI',
-                        content:
-                            'Mencegah perkembangbiakan yang tidak dinginkan dan menjaga kesehatan Anabul Anda.'),
-                    _buildCustomCard(
-                        title: 'OPERASI MINOR',
-                        content:
-                            'Solusi cepat untuk masalah kesehatan yang memerlukan intervensi medis.'),
-                    _buildCustomCard(
-                        title: 'OPERASI MAYOR',
-                        content:
-                            'Penanganan komprehensif yang membutuhkan intervensi bedah oleh tim medis berpengalaman.'),
+                    _buildIconButton(
+                      icon: Icons.medical_services,
+                      label: 'Doctor',
+                      onPressed: () {
+                        Get.toNamed('/doctor');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.pets,
+                      label: 'Hewan',
+                      onPressed: () {
+                        Get.toNamed('/hewan');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.local_pharmacy,
+                      label: 'Obat',
+                      onPressed: () {
+                        Get.toNamed('/obat');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.assessment,
+                      label: 'Rekam Medis',
+                      onPressed: () {
+                        Get.toNamed('/rekam-medis');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.payment,
+                      label: 'Appointment',
+                      onPressed: () {
+                        Get.toNamed('/appointment');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.payment,
+                      label: 'Pembayaran',
+                      onPressed: () {
+                        Get.toNamed('/pembayaran');
+                      },
+                    ),
                   ],
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 30),
+              Container(
+                height: 150,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildCustomCard(
+                          title: 'PEMERIKSAAN UMUM',
+                          content:
+                              'Pemeriksaan menyeluruh untuk menjaga kesehatan Anabul kesayangan Anda.'),
+                      _buildCustomCard(
+                          title: 'VAKSINASI',
+                          content:
+                              'Lindungi Anabul Anda dengan vaksin berkualitas.'),
+                      _buildCustomCard(
+                          title: 'STERILISASI',
+                          content:
+                              'Mencegah perkembangbiakan yang tidak dinginkan dan menjaga kesehatan Anabul Anda.'),
+                      _buildCustomCard(
+                          title: 'OPERASI MINOR',
+                          content:
+                              'Solusi cepat untuk masalah kesehatan yang memerlukan intervensi medis.'),
+                      _buildCustomCard(
+                          title: 'OPERASI MAYOR',
+                          content:
+                              'Penanganan komprehensif yang membutuhkan intervensi bedah oleh tim medis berpengalaman.'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -271,64 +268,6 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
           ],
         ),
       ),
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Color(0xFFFFE4C4),
-          title: const Text("Logout"),
-          content: const Text("Apakah Anda yakin ingin logout?"),
-          actions: [
-            TextButton(
-              child: const Text("Batal"),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromRGBO(179, 110, 61, 1)),
-                overlayColor:
-                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
-                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            TextButton(
-              child: const Text("Logout"),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromRGBO(179, 110, 61, 1)),
-                overlayColor:
-                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
-                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-              ),
-              onPressed: () {
-                Get.offAllNamed('/login');
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
