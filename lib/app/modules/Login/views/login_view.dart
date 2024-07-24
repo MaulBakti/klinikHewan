@@ -10,11 +10,6 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login Page'),
-        backgroundColor: Color.fromRGBO(179, 110, 61, 1),
-        centerTitle: true,
-      ),
       body: Container(
         color: Color(0xFFFFE4C4),
         child: Stack(
@@ -154,6 +149,33 @@ class LoginView extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
+                        ),
+                        SizedBox(height: 10),
+                        // Forgot Password Text Button
+                        TextButton.icon(
+                          onPressed: () {
+                            Get.toNamed('/register');
+                          },
+                          label: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                              text: "Don't have an Account?",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " Regist here",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blueAccent,
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                              ),
+                            )
+                          ])),
                         ),
                       ],
                     ),

@@ -22,12 +22,6 @@ class ProfilePemilikView extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout, color: Colors.white),
-            onPressed: () => _showLogoutDialog(context),
-          ),
-        ],
       ),
       body: Container(
         color: Color(0xFFFFE4C4),
@@ -109,12 +103,40 @@ class ProfilePemilikView extends StatelessWidget {
                         },
                         child: const Text('Update Profile'),
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(179, 110, 61, 1)),
+                          overlayColor: MaterialStateProperty.all<Color>(
+                              Color(0xFFffc26f)),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
-                          minimumSize:
+                          maximumSize:
                               MaterialStateProperty.all<Size>(Size(200, 50)),
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(100, 50)),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          _showLogoutDialog(context);
+                        },
+                        child: const Text('Log Out'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(179, 110, 61, 1)),
+                          overlayColor: MaterialStateProperty.all<Color>(
+                              Color(0xFFffc26f)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          maximumSize:
+                              MaterialStateProperty.all<Size>(Size(200, 50)),
+                          minimumSize:
+                              MaterialStateProperty.all<Size>(Size(100, 50)),
                           shape: MaterialStateProperty.all<OutlinedBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
