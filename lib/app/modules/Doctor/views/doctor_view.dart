@@ -24,7 +24,7 @@ class DoctorView extends StatelessWidget {
             Get.back();
           },
         ),
-        title: Text('Daftar Doctor'),
+        title: Text('Daftar Dokter'),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
@@ -72,7 +72,7 @@ class DoctorView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Tidak ada data doctor'),
+          Text('Tidak ada data dokter'),
         ],
       ),
     );
@@ -133,7 +133,7 @@ class DoctorView extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Tambah Doctor'),
+          title: Text('Tambah Dokter'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -141,7 +141,7 @@ class DoctorView extends StatelessWidget {
                 TextField(
                   controller: namaController,
                   decoration: InputDecoration(
-                      labelText: 'Nama Doctor', border: OutlineInputBorder()),
+                      labelText: 'Nama Dokter', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
@@ -211,7 +211,7 @@ class DoctorView extends StatelessWidget {
         // Handle specific errors or show generic error message
         Get.defaultDialog(
           title: 'Error',
-          middleText: 'Failed to create doctor: $error',
+          middleText: 'Failed to create dokter: $error',
         );
       });
     } else {
@@ -232,7 +232,7 @@ class DoctorView extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Doctor'),
+          title: Text('Edit Dokter'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -240,7 +240,7 @@ class DoctorView extends StatelessWidget {
                 TextField(
                   controller: namaController,
                   decoration: InputDecoration(
-                      labelText: 'Nama Doctor', border: OutlineInputBorder()),
+                      labelText: 'Nama Dokter', border: OutlineInputBorder()),
                 ),
                 SizedBox(
                   height: 10,
@@ -314,7 +314,7 @@ class DoctorView extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Konfirmasi Hapus'),
-          content: Text('Apakah Anda yakin ingin menghapus doctor ini?'),
+          content: Text('Apakah Anda yakin ingin menghapus dokter ini?'),
           actions: [
             TextButton(
                 onPressed: () {

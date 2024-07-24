@@ -110,7 +110,7 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
                 children: [
                   _buildIconButton(
                     icon: Icons.medical_services,
-                    label: 'Doctor',
+                    label: 'Dokter',
                     onPressed: () {
                       Get.toNamed('/doctor');
                     },
