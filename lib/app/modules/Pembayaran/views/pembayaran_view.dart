@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Appointment/model/appointment.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import 'package:klinik_hewan/app/modules/Dokter/model/dokter.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 import 'package:klinik_hewan/app/modules/Obat/model/obat.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
@@ -20,7 +20,7 @@ class pembayaranView extends StatelessWidget {
     controller.getRole();
     controller.getDataPemilik(role);
     controller.getDataHewan(role);
-    controller.getDataDoctor(role);
+    controller.getDataDokter(role);
     controller.getDataAppoinment(role);
     controller.getDataRekamMedis(role);
     controller.getDataObat(role);
@@ -151,7 +151,7 @@ class pembayaranView extends StatelessWidget {
   void _addPembayaran(BuildContext context, String token) {
     Pemilik? selectedPemilik;
     Hewan? selectedHewan;
-    Doctor? selectedDoctor;
+    Dokter? selectedDokter;
     Appointment? selectedAppointment;
     rekamMedis? selectedRekamMedis;
     Obat? selectedObat;
@@ -223,20 +223,20 @@ class pembayaranView extends StatelessWidget {
                 Obx(() {
                   if (controller.isLoading.value) {
                     return CircularProgressIndicator();
-                  } else if (controller.doctorList.isEmpty) {
+                  } else if (controller.dokterList.isEmpty) {
                     return Text('Tidak ada data dokter');
                   } else {
-                    return DropdownButtonFormField<Doctor>(
-                      value: selectedDoctor,
+                    return DropdownButtonFormField<Dokter>(
+                      value: selectedDokter,
                       hint: Text('Pilih Dokter'),
                       decoration: InputDecoration(border: OutlineInputBorder()),
-                      onChanged: (Doctor? newValue) {
-                        selectedDoctor = newValue;
+                      onChanged: (Dokter? newValue) {
+                        selectedDokter = newValue;
                       },
-                      items: controller.doctorList.map((Doctor doctor) {
-                        return DropdownMenuItem<Doctor>(
-                          value: doctor,
-                          child: Text(doctor.namaDokter ?? ''),
+                      items: controller.dokterList.map((Dokter dokter) {
+                        return DropdownMenuItem<Dokter>(
+                          value: dokter,
+                          child: Text(dokter.namaDokter ?? ''),
                         );
                       }).toList(),
                     );
@@ -404,7 +404,7 @@ class pembayaranView extends StatelessWidget {
                   token,
                   selectedPemilik,
                   selectedHewan,
-                  selectedDoctor,
+                  selectedDokter,
                   selectedAppointment,
                   selectedRekamMedis,
                   selectedObat,
@@ -428,7 +428,7 @@ class pembayaranView extends StatelessWidget {
     String token,
     Pemilik? selectedPemilik,
     Hewan? selectedHewan,
-    Doctor? selectedDoctor,
+    Dokter? selectedDokter,
     Appointment? selectedAppointment,
     rekamMedis? selectedRekamMedis,
     Obat? selectedObat,
@@ -439,7 +439,7 @@ class pembayaranView extends StatelessWidget {
   ) {
     if (selectedPemilik != null &&
         selectedHewan != null &&
-        selectedDoctor != null &&
+        selectedDokter != null &&
         selectedAppointment != null &&
         selectedRekamMedis != null &&
         selectedObat != null &&
@@ -455,8 +455,8 @@ class pembayaranView extends StatelessWidget {
         namaPemilik: selectedPemilik.namaPemilik ?? '',
         idHewan: selectedHewan.idHewan ?? 0,
         namaHewan: selectedHewan.namaHewan ?? '',
-        idDokter: selectedDoctor.idDokter ?? 0,
-        namaDokter: selectedDoctor.namaDokter ?? '',
+        idDokter: selectedDokter.idDokter ?? 0,
+        namaDokter: selectedDokter.namaDokter ?? '',
         idAppointment: selectedAppointment.idAppointment ?? 0,
         catatan: selectedAppointment.catatan ?? '',
         idObat: selectedObat.idObat ?? 0,
@@ -496,8 +496,8 @@ class pembayaranView extends StatelessWidget {
     Hewan? selectedHewan = controller.hewanList.firstWhere(
       (hewan) => hewan.idHewan == hewan.idHewan,
     );
-    Doctor? selectedDoctor = controller.doctorList.firstWhere(
-      (doctor) => doctor.idDokter == doctor.idDokter,
+    Dokter? selectedDokter = controller.dokterList.firstWhere(
+      (dokter) => dokter.idDokter == dokter.idDokter,
     );
     Appointment? selectedAppointment = controller.appointmentList.firstWhere(
       (Appointment) => Appointment.idAppointment == Appointment.idAppointment,
@@ -578,20 +578,20 @@ class pembayaranView extends StatelessWidget {
                 Obx(() {
                   if (controller.isLoading.value) {
                     return CircularProgressIndicator();
-                  } else if (controller.doctorList.isEmpty) {
+                  } else if (controller.dokterList.isEmpty) {
                     return Text('Tidak ada data dokter');
                   } else {
-                    return DropdownButtonFormField<Doctor>(
-                      value: selectedDoctor,
+                    return DropdownButtonFormField<Dokter>(
+                      value: selectedDokter,
                       hint: Text('Pilih Dokter'),
                       decoration: InputDecoration(border: OutlineInputBorder()),
-                      onChanged: (Doctor? newValue) {
-                        selectedDoctor = newValue;
+                      onChanged: (Dokter? newValue) {
+                        selectedDokter = newValue;
                       },
-                      items: controller.doctorList.map((Doctor doctor) {
-                        return DropdownMenuItem<Doctor>(
-                          value: doctor,
-                          child: Text(doctor.namaDokter ?? ''),
+                      items: controller.dokterList.map((Dokter dokter) {
+                        return DropdownMenuItem<Dokter>(
+                          value: dokter,
+                          child: Text(dokter.namaDokter ?? ''),
                         );
                       }).toList(),
                     );
@@ -759,7 +759,7 @@ class pembayaranView extends StatelessWidget {
                     pembayaran,
                     selectedPemilik,
                     selectedHewan,
-                    selectedDoctor,
+                    selectedDokter,
                     selectedAppointment,
                     selectedRekamMedis,
                     selectedObat,
@@ -789,7 +789,7 @@ class pembayaranView extends StatelessWidget {
     Pembayaran pembayaran,
     Pemilik? selectedPemilik,
     Hewan? selectedHewan,
-    Doctor? selectedDoctor,
+    Dokter? selectedDokter,
     Appointment? selectedAppointment,
     rekamMedis? selectedRekamMedis,
     Obat? selectedObat,
@@ -800,7 +800,7 @@ class pembayaranView extends StatelessWidget {
   ) {
     if (selectedPemilik != null &&
         selectedHewan != null &&
-        selectedDoctor != null &&
+        selectedDokter != null &&
         selectedAppointment != null &&
         selectedRekamMedis != null &&
         selectedObat != null &&
@@ -816,8 +816,8 @@ class pembayaranView extends StatelessWidget {
         namaPemilik: selectedPemilik.namaPemilik ?? '',
         idHewan: selectedHewan.idHewan ?? 0,
         namaHewan: selectedHewan.namaHewan ?? '',
-        idDokter: selectedDoctor.idDokter ?? 0,
-        namaDokter: selectedDoctor.namaDokter ?? '',
+        idDokter: selectedDokter.idDokter ?? 0,
+        namaDokter: selectedDokter.namaDokter ?? '',
         idAppointment: selectedAppointment.idAppointment ?? 0,
         catatan: selectedAppointment.catatan ?? '',
         idObat: selectedObat.idObat ?? 0,

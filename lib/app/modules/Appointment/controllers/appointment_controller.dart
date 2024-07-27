@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import 'package:klinik_hewan/app/modules/Dokter/model/dokter.dart';
 import 'package:klinik_hewan/app/modules/Appointment/model/appointment.dart';
 
 class AppointmentController extends GetxController {
@@ -14,10 +14,10 @@ class AppointmentController extends GetxController {
   var errorMessage = ''.obs;
   var selectedPemilik = ''.obs;
   var selectedHewan = ''.obs;
-  var selectedDoctor = ''.obs;
+  var selectedDokter = ''.obs;
   var pemilikList = <Pemilik>[].obs;
   var hewanList = <Hewan>[].obs;
-  var doctorList = <Doctor>[].obs;
+  var dokterList = <Dokter>[].obs;
   var appointmentList = <Appointment>[].obs;
 
   final box = GetStorage();
@@ -43,10 +43,10 @@ class AppointmentController extends GetxController {
     print('Token removed');
   }
 
-// Data Doctor
-  Future<void> getDataDoctor(String role) async {
+// Data Dokter
+  Future<void> getDataDokter(String role) async {
     role = box.read('role');
-    print('Fetching data doctor for role: $role');
+    print('Fetching data dokter for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -61,23 +61,23 @@ class AppointmentController extends GetxController {
       List<dynamic> responseData;
 
       if (role == 'admin') {
-        responseData = await ApiService.getDoctorAdmin(token);
+        responseData = await ApiService.getDokterAdmin(token);
       } else if (role == 'pegawai') {
-        responseData = await ApiService.getDoctorPegawai(token);
+        responseData = await ApiService.getDokterPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getDoctorPemilik(token);
+        responseData = await ApiService.getDokterPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
-      print('List Doctor: $doctorList');
+      print('List Dokter: $dokterList');
 
-      final List<Doctor> doctors =
-          responseData.map((data) => Doctor.fromJson(data)).toList();
-      doctorList.assignAll(doctors);
-      print('List Doctor: $doctorList');
+      final List<Dokter> dokters =
+          responseData.map((data) => Dokter.fromJson(data)).toList();
+      dokterList.assignAll(dokters);
+      print('List Dokter: $dokterList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data doctor: $e';
-      print('Error fetching data doctor: $e');
+      errorMessage.value = 'Error fetching data dokter: $e';
+      print('Error fetching data dokter: $e');
     } finally {
       isLoading.value = false;
     }

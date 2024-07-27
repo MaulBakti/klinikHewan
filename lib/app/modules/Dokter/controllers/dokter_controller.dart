@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import 'package:klinik_hewan/app/modules/Dokter/model/dokter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class DoctorController extends GetxController {
+class DokterController extends GetxController {
   var isLoading = false.obs;
   var errorMessage = ''.obs;
-  var doctorList = <Doctor>[].obs;
+  var dokterList = <Dokter>[].obs;
   final box = GetStorage();
   var role = 'admin'.obs;
 
@@ -40,7 +40,7 @@ class DoctorController extends GetxController {
     print('Token removed');
   }
 
-  Future<void> getDataDoctor(String role) async {
+  Future<void> getDataDokter(String role) async {
     try {
       isLoading.value = true;
       role = box.read('role'); // Mengambil role dari GetStorage
@@ -58,30 +58,30 @@ class DoctorController extends GetxController {
       List<dynamic> responseData;
 
       if (role == 'admin') {
-        responseData = await ApiService.getDoctorAdmin(token);
+        responseData = await ApiService.getDokterAdmin(token);
       } else if (role == 'pegawai') {
-        responseData = await ApiService.getDoctorPegawai(token);
+        responseData = await ApiService.getDokterPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getDoctorPemilik(token);
+        responseData = await ApiService.getDokterPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
 
-      final List<Doctor> doctors =
-          responseData.map((data) => Doctor.fromJson(data)).toList();
-      doctorList.assignAll(doctors);
-      print('List doctor: $doctorList');
+      final List<Dokter> dokters =
+          responseData.map((data) => Dokter.fromJson(data)).toList();
+      dokterList.assignAll(dokters);
+      print('List Dokter: $dokterList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data doctor: $e';
-      print('Error fetching data doctor: $e');
+      errorMessage.value = 'Error fetching data Dokter: $e';
+      print('Error fetching data Dokter: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> postDataDoctor(Doctor doctor) async {
+  Future<void> postDataDokter(Dokter dokter) async {
     final role = await getRole();
-    print('Posting data doctor for role: $role');
+    print('Posting data Dokter for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
@@ -92,36 +92,36 @@ class DoctorController extends GetxController {
       }
       print('Token: $token');
 
-      final doctorData = doctor.toJson();
-      print('Data Doctor: $doctorData'); // Log data doctor yang akan dikirim
+      final dokterData = dokter.toJson();
+      print('Data Dokter: $dokterData'); // Log data doctor yang akan dikirim
       http.Response response;
 
       if (role == 'admin') {
         // response = await ApiService.postDoctorAdmin(token, 'create', doctor.toJson());
-        response = await ApiService.postDoctorAdmin(token, doctorData);
+        response = await ApiService.postDokterAdmin(token, dokterData);
       } else if (role == 'pegawai') {
         // response = await ApiService.postDoctorPegawai(token, 'create', doctor.toJson());
-        response = await ApiService.postDoctorPegawai(token, doctorData);
+        response = await ApiService.postDokterPegawai(token, dokterData);
       } else {
         throw Exception('Invalid role: $role');
       }
 
-      print('Create Doctor - Response status: ${response.statusCode}');
-      print('Create Doctor - Response body: ${response.body}');
+      print('Create Dokter - Response status: ${response.statusCode}');
+      print('Create Dokter - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final createdDoctor = Doctor.fromJson(responseData['data']);
-        doctorList.add(createdDoctor);
+        final createdDokter = Dokter.fromJson(responseData['data']);
+        dokterList.add(createdDokter);
         Get.defaultDialog(
           backgroundColor: Colors.green,
           titleStyle: TextStyle(color: Colors.white),
           middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
-          middleText: 'Doctor created successfully',
+          middleText: 'Dokter created successfully',
         );
       } else {
-        throw Exception('Failed to create doctor: ${response.statusCode}');
+        throw Exception('Failed to create Dokter: ${response.statusCode}');
       }
     } catch (e) {
       Get.defaultDialog(
@@ -129,16 +129,16 @@ class DoctorController extends GetxController {
         titleStyle: TextStyle(color: Colors.white),
         middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
-        middleText: 'Failed to create doctor: $e',
+        middleText: 'Failed to create Dokter: $e',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> updateDoctor(Doctor doctor) async {
+  Future<void> updateDokter(Dokter dokter) async {
     final role = await getRole();
-    print('Updating data doctor for role: $role');
+    print('Updating data Dokter for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
@@ -148,37 +148,37 @@ class DoctorController extends GetxController {
         return;
       }
       print('Token: $token');
-      final data = doctor.toJson();
+      final data = dokter.toJson();
       http.Response response;
 
       if (role == 'admin') {
-        response = await ApiService.updateDoctorAdmin(token, data);
+        response = await ApiService.updateDokterAdmin(token, data);
       } else if (role == 'pegawai') {
-        response = await ApiService.updateDoctorPegawai(token, data);
+        response = await ApiService.updateDokterPegawai(token, data);
       } else {
         throw Exception('Invalid role: $role');
       }
 
-      print('Update Doctor - Response status: ${response.statusCode}');
-      print('Update Doctor - Response body: ${response.body}');
+      print('Update Dokter - Response status: ${response.statusCode}');
+      print('Update Dokter - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final updatedDoctor = Doctor.fromJson(responseData['data']);
-        int index = doctorList.indexWhere(
-            (element) => element.idDokter == updatedDoctor.idDokter);
+        final updatedDokter = Dokter.fromJson(responseData['data']);
+        int index = dokterList.indexWhere(
+            (element) => element.idDokter == updatedDokter.idDokter);
         if (index != -1) {
-          doctorList[index] = updatedDoctor;
+          dokterList[index] = updatedDokter;
         }
         Get.defaultDialog(
           backgroundColor: Colors.green,
           titleStyle: TextStyle(color: Colors.white),
           middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
-          middleText: 'Doctor updated successfully',
+          middleText: 'Dokter updated successfully',
         );
       } else {
-        throw Exception('Failed to update doctor: ${response.statusCode}');
+        throw Exception('Failed to update Dokter: ${response.statusCode}');
       }
     } catch (e) {
       Get.defaultDialog(
@@ -186,16 +186,16 @@ class DoctorController extends GetxController {
         titleStyle: TextStyle(color: Colors.white),
         middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
-        middleText: 'Failed to update doctor: $e',
+        middleText: 'Failed to update Dokter: $e',
       );
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> deleteDoctor(int idDoctor) async {
+  Future<void> deleteDokter(int idDokter) async {
     final role = await getRole();
-    print('Deleting data doctor for role: $role');
+    print('Deleting data Dokter for role: $role');
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');
@@ -209,24 +209,24 @@ class DoctorController extends GetxController {
       http.Response response;
 
       if (role == 'admin') {
-        response = await ApiService.deleteDoctorAdmin(idDoctor, token);
+        response = await ApiService.deleteDokterAdmin(idDokter, token);
       } else if (role == 'pegawai') {
-        response = await ApiService.deleteDoctorPegawai(idDoctor, token);
+        response = await ApiService.deleteDokterPegawai(idDokter, token);
       } else {
         throw Exception('Invalid role: $role');
       }
 
       if (response.statusCode == 200) {
-        doctorList.removeWhere((element) => element.idDokter == idDoctor);
+        dokterList.removeWhere((element) => element.idDokter == idDokter);
         Get.defaultDialog(
           backgroundColor: Colors.green,
           titleStyle: TextStyle(color: Colors.white),
           middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
-          middleText: 'Doctor deleted successfully',
+          middleText: 'Dokter deleted successfully',
         );
       } else {
-        throw Exception('Failed to delete doctor: ${response.statusCode}');
+        throw Exception('Failed to delete Dokter: ${response.statusCode}');
       }
     } catch (e) {
       Get.defaultDialog(
@@ -234,7 +234,7 @@ class DoctorController extends GetxController {
         titleStyle: TextStyle(color: Colors.white),
         middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
-        middleText: 'Failed to delete doctor: $e',
+        middleText: 'Failed to delete Dokter: $e',
       );
     } finally {
       isLoading.value = false;

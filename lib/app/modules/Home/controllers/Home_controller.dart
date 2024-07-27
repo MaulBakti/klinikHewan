@@ -27,7 +27,7 @@ class HomeController extends GetxController {
   void navigateToDoctorView(String role) {
     final String? token = box.read('token');
     if (token != null) {
-      Get.toNamed(Routes.DOCTOR, parameters: {'role': role, 'token': token});
+      Get.toNamed(Routes.DOKTER, parameters: {'role': role, 'token': token});
     } else {
       // Handle case where token is null, perhaps show an error or redirect to login
       Get.snackbar('Error', 'Token not found');

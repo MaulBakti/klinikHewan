@@ -4,7 +4,7 @@ import 'package:klinik_hewan/app/data/providers/api_service.dart';
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 
-class RegistController extends GetxController {
+class RegisterController extends GetxController {
   //TODO: Implement RegistController
   var isLoading = false.obs;
   var username = ''.obs;

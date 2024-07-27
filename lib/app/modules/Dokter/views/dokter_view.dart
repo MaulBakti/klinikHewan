@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/doctor_controller.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import '../controllers/dokter_controller.dart';
+import 'package:klinik_hewan/app/modules/Dokter/model/dokter.dart';
 
-class DoctorView extends StatelessWidget {
+class DokterView extends StatelessWidget {
   final String role;
   final String token;
-  final DoctorController controller = Get.put(DoctorController());
+  final DokterController controller = Get.put(DokterController());
 
-  DoctorView({required this.role, required this.token}) {
+  DokterView({required this.role, required this.token}) {
     controller.getToken();
     controller.getRole();
-    controller.getDataDoctor(role);
+    controller.getDataDokter(role);
   }
 
   @override
@@ -41,10 +41,10 @@ class DoctorView extends StatelessWidget {
             return Center(
               child: Text('Error: ${controller.errorMessage.value}'),
             );
-          } else if (controller.doctorList.isEmpty) {
+          } else if (controller.dokterList.isEmpty) {
             return _buildEmptyState(context);
           } else {
-            return _buildDoctorList(context);
+            return _buildDokterList(context);
           }
         }),
       ),
@@ -58,7 +58,7 @@ class DoctorView extends StatelessWidget {
           child: FloatingActionButton(
             onPressed: () {
               print(role);
-              _addDoctor(context, token);
+              _addDokter(context, token);
             },
             child: Icon(Icons.add),
           ),
@@ -78,19 +78,19 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  Widget _buildDoctorList(BuildContext context) {
+  Widget _buildDokterList(BuildContext context) {
     return ListView.builder(
-      itemCount: controller.doctorList.length,
+      itemCount: controller.dokterList.length,
       itemBuilder: (context, index) {
-        final doctor = controller.doctorList[index];
+        final dokter = controller.dokterList[index];
         return Card(
           margin: EdgeInsets.all(8.0),
           child: ListTile(
-              title: Text(doctor.namaDokter ?? ''),
+              title: Text(dokter.namaDokter ?? ''),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Spesialisasi: ${doctor.spesialisasi ?? ''}'),
+                  Text('Spesialisasi: ${dokter.spesialisasi ?? ''}'),
                 ],
               ),
               trailing: Obx(() {
@@ -107,14 +107,14 @@ class DoctorView extends StatelessWidget {
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              _editDoctor(context, doctor);
+                              _editDokter(context, dokter);
                             },
                           ),
                         if (role == 'admin')
                           IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              _confirmDelete(context, doctor.idDokter ?? 0);
+                              _confirmDelete(context, dokter.idDokter ?? 0);
                             },
                           ),
                       ],
@@ -125,7 +125,7 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  void _addDoctor(BuildContext context, String token) {
+  void _addDokter(BuildContext context, String token) {
     final TextEditingController namaController = TextEditingController();
     final TextEditingController spesialisController = TextEditingController();
 
@@ -172,7 +172,7 @@ class DoctorView extends StatelessWidget {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  _validateAndSaveDoctor(
+                  _validateAndSaveDokter(
                       context, token, namaController, spesialisController);
                   Get.back();
                 },
@@ -190,18 +190,18 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  void _validateAndSaveDoctor(
+  void _validateAndSaveDokter(
       BuildContext context,
       String token,
       TextEditingController namaController,
       TextEditingController spesialisController) {
     if (namaController.text.isNotEmpty && spesialisController.text.isNotEmpty) {
-      final newDoctor = Doctor(
+      final newDokter = Dokter(
         idDokter: 0,
         namaDokter: namaController.text,
         spesialisasi: spesialisController.text,
       );
-      Get.find<DoctorController>().postDataDoctor(newDoctor).then((_) {
+      Get.find<DokterController>().postDataDokter(newDokter).then((_) {
         // Reset form fields after successful submission
         namaController.clear();
         spesialisController.clear();
@@ -222,11 +222,11 @@ class DoctorView extends StatelessWidget {
     }
   }
 
-  void _editDoctor(BuildContext context, Doctor doctor) {
+  void _editDokter(BuildContext context, Dokter dokter) {
     final TextEditingController namaController =
-        TextEditingController(text: doctor.namaDokter);
+        TextEditingController(text: dokter.namaDokter);
     final TextEditingController spesialisController =
-        TextEditingController(text: doctor.spesialisasi);
+        TextEditingController(text: dokter.spesialisasi);
 
     showDialog(
       context: context,
@@ -268,8 +268,8 @@ class DoctorView extends StatelessWidget {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  _validateAndEditDoctor(
-                      context, doctor, namaController, spesialisController);
+                  _validateAndEditDokter(
+                      context, dokter, namaController, spesialisController);
                   // Get.back();
                 },
                 child: Text('Simpan'),
@@ -286,19 +286,19 @@ class DoctorView extends StatelessWidget {
     );
   }
 
-  void _validateAndEditDoctor(
+  void _validateAndEditDokter(
     BuildContext context,
-    Doctor doctor,
+    Dokter dokter,
     TextEditingController namaController,
     TextEditingController spesialisController,
   ) {
     if (namaController.text.isNotEmpty && spesialisController.text.isNotEmpty) {
-      final updatedDoctor = Doctor(
-        idDokter: doctor.idDokter,
+      final updateDokter = Dokter(
+        idDokter: dokter.idDokter,
         namaDokter: namaController.text,
         spesialisasi: spesialisController.text,
       );
-      Get.find<DoctorController>().updateDoctor(updatedDoctor);
+      Get.find<DokterController>().updateDokter(updateDokter);
       Navigator.of(context).pop();
     } else {
       Get.defaultDialog(
@@ -308,7 +308,7 @@ class DoctorView extends StatelessWidget {
     }
   }
 
-  void _confirmDelete(BuildContext context, int idDoctor) {
+  void _confirmDelete(BuildContext context, int idDokter) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -332,7 +332,7 @@ class DoctorView extends StatelessWidget {
                 onPressed: () {
                   // Call deleteDoctor method from your controller
                   // Example assuming deleteDoctor exists in your DoctorController
-                  Get.find<DoctorController>().deleteDoctor(idDoctor);
+                  Get.find<DokterController>().deleteDokter(idDokter);
                   Navigator.of(context).pop();
                 },
                 child: Text('Hapus'),

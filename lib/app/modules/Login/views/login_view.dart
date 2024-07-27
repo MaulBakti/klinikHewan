@@ -155,6 +155,7 @@ class LoginView extends StatelessWidget {
                         TextButton.icon(
                           onPressed: () {
                             Get.toNamed('/register');
+                            print('Register tapped');
                           },
                           label: RichText(
                               text: TextSpan(children: [

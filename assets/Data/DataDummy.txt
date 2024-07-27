@@ -10,8 +10,14 @@ VALUES
 ('Radja', 'Radja1234', 'Pegawai', 'Tangerang', '0857'),
 ('Aghniya', 'Aghniya1234', 'Pegawai', 'Tangerang', '08953');
 
+--Pemilik
+INSERT INTO `Pemilik` (username, password, jabatan, alamat, no_telp)
+VALUES 
+('Maul', 'Maul1234', 'Pemilik', 'Tangerang', '0812'),
+('Erik', 'Erik1234', 'Pemilik', 'Tangerang', '0857'),
+
 --Doctor
-INSERT INTO `Doctor` (`nama_dokter`, `spesialisasi`) VALUES
+INSERT INTO `Dokter` (`nama_dokter`, `spesialisasi`) VALUES
 ('Dr. Asep Wijaya', 'Exotics'),
 ('Dr. Budi Santoso', 'Small Animals'),
 ('Dr. Chandra Dewi', 'Large Animals'),

@@ -4,8 +4,8 @@ import '../modules/Appointment/Bindings/appointment_binding.dart';
 import '../modules/Appointment/views/appointment_view.dart';
 import '../modules/Dashboard/bindings/dashboard_binding.dart';
 import '../modules/Dashboard/views/dashboard_view.dart';
-import '../modules/Doctor/bindings/doctor_binding.dart';
-import '../modules/Doctor/views/doctor_view.dart';
+import '../modules/Dokter/bindings/dokter_binding.dart';
+import '../modules/Dokter/views/dokter_view.dart';
 import '../modules/ForgotPass/bindings/forgotpass_binding.dart';
 import '../modules/ForgotPass/views/forgotpass_view.dart';
 import '../modules/Hewan/bindings/hewan_binding.dart';
@@ -21,8 +21,8 @@ import '../modules/Pembayaran/bindings/pembayaran_binding.dart';
 import '../modules/Pembayaran/views/pembayaran_view.dart';
 import '../modules/Pemilik/bindings/pemilik_binding.dart';
 import '../modules/Pemilik/views/pemilik_view.dart';
-import '../modules/Register/bindings/regist_binding.dart';
-import '../modules/Register/views/regist_view.dart';
+import '../modules/Register/bindings/register_binding.dart';
+import '../modules/Register/views/register_view.dart';
 import '../modules/RekamMedis/bindings/rekam_medis_binding.dart';
 import '../modules/RekamMedis/views/rekam_medis_view.dart';
 import '../modules/Resep/bindings/resep_binding.dart';
@@ -99,16 +99,16 @@ class AppPages {
       binding: HewanBinding(),
     ),
 
-    /* DOCTOR */
+    /* DOKTER */
     GetPage(
-      name: _Paths.DOCTOR,
+      name: _Paths.DOKTER,
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
         final token = Get.parameters['token'] ?? ''; // default token
-        return DoctorView(
+        return DokterView(
             role: role, token: token); // Pass token to DoctorView constructor
       },
-      binding: DoctorBinding(),
+      binding: DokterBinding(),
     ),
 
     /* PEGAWAI */
@@ -203,9 +203,9 @@ class AppPages {
 
     // Register
     GetPage(
-      name: _Paths.REGIST,
-      page: () => const RegistView(),
-      binding: RegistBinding(),
+      name: _Paths.REGISTER,
+      page: () => const RegisterView(),
+      binding: RegisterBinding(),
     ),
 
     // Profil Pegawai

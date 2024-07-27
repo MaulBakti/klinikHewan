@@ -1,16 +1,16 @@
-class Doctor {
+class Dokter {
   int idDokter;
   String namaDokter;
   String spesialisasi;
 
-  Doctor({
+  Dokter({
     required this.idDokter,
     required this.namaDokter,
     required this.spesialisasi,
   });
 
-  factory Doctor.fromJson(Map<String, dynamic> json) {
-    return Doctor(
+  factory Dokter.fromJson(Map<String, dynamic> json) {
+    return Dokter(
       idDokter: json['id_dokter'] ?? 0,
       namaDokter: json['nama_dokter'] ?? '',
       spesialisasi: json['spesialisasi'] ?? '',

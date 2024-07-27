@@ -4,7 +4,7 @@ import 'package:klinik_hewan/app/modules/Appointment/controllers/appointment_con
 import '../model/appointment.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
-import 'package:klinik_hewan/app/modules/Doctor/model/doctor.dart';
+import 'package:klinik_hewan/app/modules/Dokter/model/dokter.dart';
 import 'package:klinik_hewan/app/modules/Appointment/model/appointment.dart';
 
 class AppointmentView extends StatelessWidget {
@@ -17,7 +17,7 @@ class AppointmentView extends StatelessWidget {
     controller.getRole();
     controller.getDataPemilik(role);
     controller.getDataHewan(role);
-    controller.getDataDoctor(role);
+    controller.getDataDokter(role);
     controller.getDataAppointment(role);
   }
 
@@ -123,7 +123,7 @@ class AppointmentView extends StatelessWidget {
   void _addAppointment(BuildContext context, String token) {
     Pemilik? selectedPemilik;
     Hewan? selectedHewan;
-    Doctor? selectedDoctor;
+    Dokter? selectedDokter;
     final TextEditingController TglController = TextEditingController();
     final TextEditingController CatatanController = TextEditingController();
 
@@ -187,20 +187,20 @@ class AppointmentView extends StatelessWidget {
                 Obx(() {
                   if (controller.isLoading.value) {
                     return CircularProgressIndicator();
-                  } else if (controller.doctorList.isEmpty) {
+                  } else if (controller.dokterList.isEmpty) {
                     return Text('Tidak ada data dokter');
                   } else {
-                    return DropdownButtonFormField<Doctor>(
-                      value: selectedDoctor,
+                    return DropdownButtonFormField<Dokter>(
+                      value: selectedDokter,
                       hint: Text('Pilih Dokter'),
                       decoration: InputDecoration(border: OutlineInputBorder()),
-                      onChanged: (Doctor? newValue) {
-                        selectedDoctor = newValue;
+                      onChanged: (Dokter? newValue) {
+                        selectedDokter = newValue;
                       },
-                      items: controller.doctorList.map((Doctor doctor) {
-                        return DropdownMenuItem<Doctor>(
-                          value: doctor,
-                          child: Text(doctor.namaDokter ?? ''),
+                      items: controller.dokterList.map((Dokter dokter) {
+                        return DropdownMenuItem<Dokter>(
+                          value: dokter,
+                          child: Text(dokter.namaDokter ?? ''),
                         );
                       }).toList(),
                     );
@@ -248,7 +248,7 @@ class AppointmentView extends StatelessWidget {
                       token,
                       selectedPemilik,
                       selectedHewan,
-                      selectedDoctor,
+                      selectedDokter,
                       TglController,
                       CatatanController);
                   Get.back();
@@ -272,12 +272,12 @@ class AppointmentView extends StatelessWidget {
       String token,
       Pemilik? selectedPemilik,
       Hewan? selectedHewan,
-      Doctor? selectedDoctor,
+      Dokter? selectedDokter,
       TextEditingController TglController,
       TextEditingController CatatanController) {
     if (selectedPemilik != null &&
         selectedHewan != null &&
-        selectedDoctor != null &&
+        selectedDokter != null &&
         TglController.text.isNotEmpty &&
         CatatanController.text.isNotEmpty) {
       final newAppointment = Appointment(
@@ -286,8 +286,8 @@ class AppointmentView extends StatelessWidget {
         namaPemilik: selectedPemilik.namaPemilik ?? '',
         idHewan: selectedHewan.idHewan ?? 0,
         namaHewan: selectedHewan.namaHewan ?? '',
-        idDokter: selectedDoctor.idDokter ?? 0,
-        namaDokter: selectedDoctor.namaDokter ?? '',
+        idDokter: selectedDokter.idDokter ?? 0,
+        namaDokter: selectedDokter.namaDokter ?? '',
         tglAppointment: TglController.text,
         catatan: CatatanController.text,
       );
@@ -321,8 +321,8 @@ class AppointmentView extends StatelessWidget {
     Hewan? selectedHewan = controller.hewanList.firstWhere(
       (hewan) => hewan.idHewan == hewan.idHewan,
     );
-    Doctor? selectedDoctor = controller.doctorList.firstWhere(
-      (doctor) => doctor.idDokter == doctor.idDokter,
+    Dokter? selectedDokter = controller.dokterList.firstWhere(
+      (dokter) => dokter.idDokter == dokter.idDokter,
     );
     final TextEditingController TglController =
         TextEditingController(text: appointment.tglAppointment);
@@ -389,20 +389,20 @@ class AppointmentView extends StatelessWidget {
                 Obx(() {
                   if (controller.isLoading.value) {
                     return CircularProgressIndicator();
-                  } else if (controller.doctorList.isEmpty) {
+                  } else if (controller.dokterList.isEmpty) {
                     return Text('Tidak ada data dokter');
                   } else {
-                    return DropdownButtonFormField<Doctor>(
-                      value: selectedDoctor,
+                    return DropdownButtonFormField<Dokter>(
+                      value: selectedDokter,
                       hint: Text('Pilih Dokter'),
                       decoration: InputDecoration(border: OutlineInputBorder()),
-                      onChanged: (Doctor? newValue) {
-                        selectedDoctor = newValue;
+                      onChanged: (Dokter? newValue) {
+                        selectedDokter = newValue;
                       },
-                      items: controller.doctorList.map((Doctor doctor) {
-                        return DropdownMenuItem<Doctor>(
-                          value: doctor,
-                          child: Text(doctor.namaDokter ?? ''),
+                      items: controller.dokterList.map((Dokter dokter) {
+                        return DropdownMenuItem<Dokter>(
+                          value: dokter,
+                          child: Text(dokter.namaDokter ?? ''),
                         );
                       }).toList(),
                     );
@@ -450,7 +450,7 @@ class AppointmentView extends StatelessWidget {
                       appointment,
                       selectedPemilik,
                       selectedHewan,
-                      selectedDoctor,
+                      selectedDokter,
                       TglController,
                       CatatanController);
                   Get.back();
@@ -474,13 +474,13 @@ class AppointmentView extends StatelessWidget {
     Appointment appointment,
     Pemilik? selectedPemilik,
     Hewan? selectedHewan,
-    Doctor? selectedDoctor,
+    Dokter? selectedDokter,
     TextEditingController TglController,
     TextEditingController CatatanController,
   ) {
     if (selectedPemilik != null &&
         selectedHewan != null &&
-        selectedDoctor != null &&
+        selectedDokter != null &&
         TglController.text.isNotEmpty &&
         CatatanController.text.isNotEmpty) {
       final updatedAppointment = Appointment(
@@ -489,8 +489,8 @@ class AppointmentView extends StatelessWidget {
         namaPemilik: selectedPemilik.namaPemilik ?? '',
         idHewan: selectedHewan.idHewan ?? 0,
         namaHewan: selectedHewan.namaHewan ?? '',
-        idDokter: selectedDoctor.idDokter ?? 0,
-        namaDokter: selectedDoctor.namaDokter ?? '',
+        idDokter: selectedDokter.idDokter ?? 0,
+        namaDokter: selectedDokter.namaDokter ?? '',
         tglAppointment: TglController.text,
         catatan: CatatanController.text,
       );

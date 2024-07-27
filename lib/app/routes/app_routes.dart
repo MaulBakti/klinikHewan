@@ -25,7 +25,7 @@ abstract class Routes {
   static const HEWAN = _Paths.HEWAN;
 
   // Doctor
-  static const DOCTOR = _Paths.DOCTOR;
+  static const DOKTER = _Paths.DOKTER;
 
   // Obat
   static const OBAT = _Paths.OBAT;
@@ -43,7 +43,7 @@ abstract class Routes {
   static const FORGOTPASS = _Paths.FORGOTPASS;
 
   // Regis
-  static const REGIST = _Paths.REGIST;
+  static const REGISTER = _Paths.REGISTER;
 
   // Profile Pegawai
   static const PROFILE_PEGAWAI = _Paths.PROFILE_PEGAWAI;
@@ -72,7 +72,7 @@ abstract class _Paths {
   static const PEMILIK = '/pemilik';
 
   // Pemilik
-  static const DOCTOR = '/doctor';
+  static const DOKTER = '/dokter';
 
   // Hewan
   static const HEWAN = '/hewan';
@@ -99,7 +99,7 @@ abstract class _Paths {
   static const FORGOTPASS = '/forgotpass';
 
   // Register
-  static const REGIST = '/regist';
+  static const REGISTER = '/register';
 
   // Profil Pegawai
   static const PROFILE_PEGAWAI = '/profile-pegawai';

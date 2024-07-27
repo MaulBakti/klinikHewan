@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/forgotpass_controller.dart';
@@ -20,16 +21,6 @@ class ForgotpassView extends GetView<ForgotpassController> {
         color: Color(0xFFFFE4C4),
         child: Stack(
           children: [
-            // Uncomment the following lines if you have a background image
-            // Container(
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage(
-            //           'assets/images/background.jpg'), // Update with your background image path
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -45,13 +36,15 @@ class ForgotpassView extends GetView<ForgotpassController> {
                       children: [
                         // Logo
                         Image.asset(
-                          'assets/Images/Logo.jpg', // Ganti dengan path gambar logo
+                          'assets/Images/Logo.jpg',
                           height: 100,
                         ),
                         SizedBox(height: 20),
+                        // Username/Telephone TextField
                         TextField(
-                          onChanged: (value) =>
-                              controller.usernameOrTelp.value = value,
+                          onChanged: (value) {
+                            controller.keywords.value = value;
+                          },
                           decoration: InputDecoration(
                             labelText: 'Username/Telephone',
                             border: OutlineInputBorder(
@@ -121,6 +114,12 @@ class ForgotpassView extends GetView<ForgotpassController> {
                         // Submit Button
                         ElevatedButton(
                           onPressed: () {
+                            // Validasi jika salah satu dari username atau no_telp kosong
+                            if (controller.keywords.value.isEmpty) {
+                              Get.snackbar(
+                                  'Error', 'Username or Telephone is required');
+                              return;
+                            }
                             controller.resetPassword();
                           },
                           child: Text('Reset'),
