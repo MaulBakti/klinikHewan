@@ -91,7 +91,7 @@ class RekamMedisController extends GetxController {
     }
   }
 
-  Future<void> getDataHewan(String role) async {
+  Future<void> getDataHewan(String role, String idPemilik) async {
     role = box.read('role');
     print('Fetching data hewan for role: $role');
     try {
@@ -112,7 +112,7 @@ class RekamMedisController extends GetxController {
       } else if (role == 'pegawai') {
         responseData = await ApiService.getHewanPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getHewanPemilik(token);
+        responseData = await ApiService.getHewanPemilik(token, idPemilik);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -236,8 +236,8 @@ class RekamMedisController extends GetxController {
       rekammedisList.assignAll(rekammediss);
       print('List rekammedis: $rekammedisList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data rekammedis: $e';
-      print('Error fetching data rekammedis: $e');
+      errorMessage.value = 'Error fetching data rekammedis $role: $e';
+      print('Error fetching data rekammedis $role: $e');
     } finally {
       isLoading.value = false;
     }

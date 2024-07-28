@@ -83,8 +83,6 @@ class pembayaranController extends GetxController {
         responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getPemilikPegawai(token);
-        // } else if (role == 'pemilik') {
-        //   responseData = await ApiService.getPemilikPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -104,7 +102,7 @@ class pembayaranController extends GetxController {
   }
 
   // Data Hewan
-  Future<void> getDataHewan(String role) async {
+  Future<void> getDataHewan(String role, String idPemilik) async {
     role = box.read('role');
     print('Fetching data hewan for role: $role');
     try {
@@ -125,7 +123,7 @@ class pembayaranController extends GetxController {
       } else if (role == 'pegawai') {
         responseData = await ApiService.getHewanPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getHewanPemilik(token);
+        responseData = await ApiService.getHewanPemilik(token, idPemilik);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -352,6 +350,7 @@ class pembayaranController extends GetxController {
         errorMessage.value = 'Token not found';
         return;
       }
+
       final response = await ApiService.getPembayaran(role, token);
 
       if (response.statusCode == 200) {

@@ -14,6 +14,7 @@ class HewanController extends GetxController {
   var hewanList = <Hewan>[].obs;
   var pemilikList = <Pemilik>[].obs;
   var role = 'admin'.obs;
+  late String idPemilik;
 
   @override
   void onInit() {
@@ -82,7 +83,7 @@ class HewanController extends GetxController {
     }
   }
 
-  Future<void> getDataHewan(String role) async {
+  Future<void> getDataHewan(String role, String idPemilik) async {
     role = box.read('role');
     print('Fetching data hewan for role: $role');
     try {
@@ -103,7 +104,7 @@ class HewanController extends GetxController {
       } else if (role == 'pegawai') {
         responseData = await ApiService.getHewanPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getHewanPemilik(token);
+        responseData = await ApiService.getHewanPemilik(token, idPemilik);
       } else {
         throw Exception('Invalid role: $role');
       }

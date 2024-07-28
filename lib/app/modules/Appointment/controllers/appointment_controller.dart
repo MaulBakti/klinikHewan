@@ -84,7 +84,7 @@ class AppointmentController extends GetxController {
   }
 
 // Data Hewan
-  Future<void> getDataHewan(String role) async {
+  Future<void> getDataHewan(String role, String idPemilik) async {
     role = box.read('role');
     print('Fetching data hewan for role: $role');
     try {
@@ -105,7 +105,7 @@ class AppointmentController extends GetxController {
       } else if (role == 'pegawai') {
         responseData = await ApiService.getHewanPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getHewanPemilik(token);
+        responseData = await ApiService.getHewanPemilik(token, idPemilik);
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -165,8 +165,9 @@ class AppointmentController extends GetxController {
   }
 
   Future<void> getDataAppointment(String role) async {
-    role = box.read('role');
+    final String? role = box.read('role');
     print('Fetching data appointment for role: $role');
+
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -180,14 +181,18 @@ class AppointmentController extends GetxController {
       print('Using token: $token');
       List<dynamic> responseData;
 
-      if (role == 'admin') {
-        responseData = await ApiService.getAppointmentAdmin(token);
-      } else if (role == 'pegawai') {
-        responseData = await ApiService.getAppointmentPegawai(token);
-      } else if (role == 'pemilik') {
-        responseData = await ApiService.getAppointmentPemilik(token);
-      } else {
-        throw Exception('Invalid role: $role');
+      try {
+        if (role == 'admin') {
+          responseData = await ApiService.getAppointmentAdmin(token);
+        } else if (role == 'pegawai') {
+          responseData = await ApiService.getAppointmentPegawai(token);
+        } else if (role == 'pemilik') {
+          responseData = await ApiService.getAppointmentPemilik(token);
+        } else {
+          throw Exception('Invalid role: $role');
+        }
+      } catch (apiError) {
+        throw Exception('API request failed: $apiError');
       }
 
       final List<Appointment> appointments =

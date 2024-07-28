@@ -41,7 +41,7 @@ class LoginController extends GetxController {
               titleStyle: TextStyle(color: Colors.white),
               middleTextStyle: TextStyle(color: Colors.white),
               title: 'Login',
-              middleText: 'Login successful',
+              middleText: 'Login $role successful',
             );
             print('Using token: $token');
 

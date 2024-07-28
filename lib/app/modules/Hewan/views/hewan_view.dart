@@ -6,14 +6,16 @@ import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 
 class HewanView extends StatelessWidget {
+  final HewanController controller = Get.put(HewanController());
   final String role;
   final String token;
-  final HewanController controller = Get.put(HewanController());
+  final String idPemilik;
 
-  HewanView({required this.role, required this.token}) {
+  HewanView(
+      {required this.role, required this.token, required this.idPemilik}) {
     controller.getToken();
     controller.getRole();
-    controller.getDataHewan(role);
+    controller.getDataHewan(role, idPemilik);
     controller.getDataPemilik(role);
   }
 

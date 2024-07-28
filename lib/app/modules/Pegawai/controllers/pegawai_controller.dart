@@ -201,7 +201,7 @@ class PegawaiController extends GetxController {
       http.Response response;
 
       if (role == 'admin') {
-        response = await ApiService.deletePegawaiAdmin(token, id);
+        response = await ApiService.deletePegawaiAdmin(id, token);
       } else {
         throw Exception('Invalid role: $role');
       }

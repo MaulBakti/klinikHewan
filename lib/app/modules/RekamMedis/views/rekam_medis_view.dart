@@ -8,15 +8,17 @@ import 'package:klinik_hewan/app/modules/Pegawai/models/pegawai.dart';
 import 'package:klinik_hewan/app/modules/Obat/model/obat.dart';
 
 class RekamMedisView extends StatelessWidget {
+  final RekamMedisController controller = Get.put(RekamMedisController());
   final String role;
   final String token;
-  final RekamMedisController controller = Get.put(RekamMedisController());
+  final String idPemilik;
 
-  RekamMedisView({required this.role, required this.token}) {
+  RekamMedisView(
+      {required this.role, required this.token, required this.idPemilik}) {
     controller.getToken();
     controller.getRole();
     controller.getDataPemilik(role);
-    controller.getDataHewan(role);
+    controller.getDataHewan(role, idPemilik);
     controller.getDataPegawai(role);
     controller.getDataObat(role);
     controller.getDataRekamMedis(role);
@@ -124,7 +126,7 @@ class RekamMedisView extends StatelessWidget {
                               _editrekammedis(context, rekammedis);
                             },
                           ),
-                        if (role == 'admin')
+                        if (role == 'admin' || role == 'pegawai')
                           IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {

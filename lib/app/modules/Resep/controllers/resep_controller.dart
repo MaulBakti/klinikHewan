@@ -72,8 +72,8 @@ class ResepController extends GetxController {
       resepList.assignAll(reseps);
       print('List resep: $resepList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data resep: $e';
-      print('Error fetching data resep: $e');
+      errorMessage.value = 'Error fetching data resep $role: $e';
+      print('Error fetching data resep $role: $e');
     } finally {
       isLoading.value = false;
     }

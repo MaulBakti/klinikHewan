@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:klinik_hewan/app/modules/Appointment/controllers/appointment_controller.dart';
-import '../model/appointment.dart';
 import 'package:klinik_hewan/app/modules/Pemilik/models/pemilik.dart';
 import 'package:klinik_hewan/app/modules/Hewan/models/hewan.dart';
 import 'package:klinik_hewan/app/modules/Dokter/model/dokter.dart';
@@ -11,12 +10,14 @@ class AppointmentView extends StatelessWidget {
   final AppointmentController controller = Get.put(AppointmentController());
   final String role;
   final String token;
+  final String idPemilik;
 
-  AppointmentView({required this.role, required this.token}) {
+  AppointmentView(
+      {required this.role, required this.token, required this.idPemilik}) {
     controller.getToken();
     controller.getRole();
     controller.getDataPemilik(role);
-    controller.getDataHewan(role);
+    controller.getDataHewan(role, idPemilik);
     controller.getDataDokter(role);
     controller.getDataAppointment(role);
   }

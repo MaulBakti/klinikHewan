@@ -1,7 +1,7 @@
 class Pemilik {
   int idPemilik;
   String namaPemilik;
-  String? password;
+  String password;
   String jabatan;
   String alamat;
   String noTelp;
@@ -9,7 +9,7 @@ class Pemilik {
   Pemilik({
     required this.idPemilik,
     required this.namaPemilik,
-    this.password,
+    required this.password,
     required this.jabatan,
     required this.alamat,
     required this.noTelp,

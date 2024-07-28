@@ -34,7 +34,7 @@ class Appointment {
       // Exclude
       namaPemilik: json['pemilik']['username'] ?? '',
       namaHewan: json['hewan']['nama_hewan'] ?? '',
-      namaDokter: json['doctor']['nama_dokter'] ?? '',
+      namaDokter: json['dokter']['nama_dokter'] ?? '',
     );
   }
 

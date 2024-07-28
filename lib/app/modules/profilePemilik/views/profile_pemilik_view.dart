@@ -166,7 +166,7 @@ class ProfilePemilikView extends StatelessWidget {
       return;
     }
 
-    String? password = passwordController.text;
+    String password = passwordController.text;
     if (password.isNotEmpty && password.length < 6) {
       Get.defaultDialog(
         title: 'Error',
@@ -178,8 +178,7 @@ class ProfilePemilikView extends StatelessWidget {
     Pemilik updatePemilik = Pemilik(
       idPemilik: pemilik.idPemilik,
       namaPemilik: usernameController.text,
-      password:
-          password.isNotEmpty ? password : null, // Include password if provided
+      password: password.isNotEmpty ? password : pemilik.password ?? '',
       jabatan: jabatanController.text,
       alamat: alamatController.text,
       noTelp: noTelpController.text,
@@ -201,60 +200,62 @@ class ProfilePemilikView extends StatelessWidget {
       );
     });
   }
-}
 
-void _showLogoutDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Color(0xFFFFE4C4),
-        title: const Text("Logout"),
-        content: const Text("Apakah Anda yakin ingin logout?"),
-        actions: [
-          TextButton(
-            child: const Text("Batal"),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromRGBO(179, 110, 61, 1)),
-              overlayColor: MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
-              minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFFFFE4C4),
+          title: const Text("Logout"),
+          content: const Text("Apakah Anda yakin ingin logout?"),
+          actions: [
+            TextButton(
+              child: const Text("Batal"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Color.fromRGBO(179, 110, 61, 1)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                 ),
               ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          TextButton(
-            child: const Text("Logout"),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromRGBO(179, 110, 61, 1)),
-              overlayColor: MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
-              minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+            SizedBox(
+              width: 10,
+            ),
+            TextButton(
+              child: const Text("Logout"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Color.fromRGBO(179, 110, 61, 1)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                 ),
               ),
+              onPressed: () {
+                Get.offAllNamed('/login');
+              },
             ),
-            onPressed: () {
-              Get.offAllNamed('/login');
-            },
-          ),
-        ],
-      );
-    },
-  );
+          ],
+        );
+      },
+    );
+  }
 }

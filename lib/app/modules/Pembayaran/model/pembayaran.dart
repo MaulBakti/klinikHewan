@@ -52,14 +52,12 @@ class Pembayaran {
       idAppointment: json['id_appointment'],
       idObat: json['id_obat'],
       idResep: json['id_resep'],
-      tanggalPembayaran: json['tgl_pembayaran'], // Tetap string dari JSON
-      jumlahPembayaran:
-          json['jumlah_pembayaran'].toString(), // Konversi ke string
+      tanggalPembayaran: json['tgl_pembayaran'],
+      jumlahPembayaran: json['jumlah_pembayaran'].toString(),
       buktiPembayaran: json['bukti_pembayaran'],
-      // Exclude
       namaPemilik: json['pemilik'] != null ? json['pemilik']['username'] : '',
       namaHewan: json['hewan'] != null ? json['hewan']['nama_hewan'] : '',
-      namaDokter: json['doctor'] != null ? json['doctor']['nama_dokter'] : '',
+      namaDokter: json['dokter'] != null ? json['dokter']['nama_dokter'] : '',
       catatan:
           json['appointment'] != null ? json['appointment']['catatan'] : '',
       keluhan: json['rekammedis'] != null ? json['rekammedis']['keluhan'] : '',
@@ -85,7 +83,7 @@ class Pembayaran {
       // Exclude
       'pemilik': {'username': namaPemilik},
       'hewan': {'nama_hewan': namaHewan},
-      'doctor': {'nama_dokter': namaDokter},
+      'dokter': {'nama_dokter': namaDokter},
       'appointment': {'catatan': catatan},
       'rekammedis': {'keluhan': keluhan},
       'obat': {'nama_obat': namaObat},

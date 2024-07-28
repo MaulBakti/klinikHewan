@@ -73,7 +73,7 @@ class ProfilePegawaiController extends GetxController {
       }
     } catch (e) {
       errorMessage.value = 'Error fetching data pegawai: $e';
-      print('Error fetching data pegawai: $e');
+      print('Error get data pegawai from pegawai: $e');
     } finally {
       isLoading.value = false;
     }

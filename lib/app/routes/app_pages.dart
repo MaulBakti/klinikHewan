@@ -92,9 +92,12 @@ class AppPages {
       name: _Paths.HEWAN,
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
-        final token = Get.parameters['token'] ?? ''; // default token
+        final token = Get.parameters['token'] ?? '';
+        final idPemilik = Get.parameters['id_pemilik'] ?? ''; // default token
         return HewanView(
-            role: role, token: token); // Pass token to HewanView constructor
+            role: role,
+            token: token,
+            idPemilik: idPemilik); // Pass token to HewanView constructor
       },
       binding: HewanBinding(),
     ),
@@ -152,9 +155,12 @@ class AppPages {
       name: _Paths.APPOINTMENT,
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
-        final token = Get.parameters['token'] ?? ''; // default token
+        final token = Get.parameters['token'] ?? '';
+        final idPemilik = Get.parameters['id_pemilik'] ?? ''; // default token
         return AppointmentView(
-            role: role, token: token); // Pass token to DoctorView constructor
+            role: role,
+            token: token,
+            idPemilik: idPemilik); // Pass token to DoctorView constructor
       },
       binding: AppointmentBinding(),
     ),
@@ -164,9 +170,13 @@ class AppPages {
       name: _Paths.REKAM_MEDIS,
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
-        final token = Get.parameters['token'] ?? ''; // default token
+        final token = Get.parameters['token'] ?? '';
+        final idPemilik = Get.parameters['id_pemilik'] ?? ''; // default token
+        // default token
         return RekamMedisView(
-            role: role, token: token); // Pass token to DoctorView constructor
+            role: role,
+            token: token,
+            idPemilik: idPemilik); // Pass token to DoctorView constructor
       },
       binding: RekamMedisBinding(),
     ),
@@ -177,8 +187,11 @@ class AppPages {
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
         final token = Get.parameters['token'] ?? ''; // default token
+        final idPemilik = Get.parameters['id_pemilik'] ?? ''; // default token
         return pembayaranView(
-            role: role, token: token); // Pass token to DoctorView constructor
+            role: role,
+            token: token,
+            idPemilik: idPemilik); // Pass token to DoctorView constructor
       },
       binding: pembayaranBinding(),
     ),

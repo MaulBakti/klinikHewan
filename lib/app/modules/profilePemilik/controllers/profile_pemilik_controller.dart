@@ -7,23 +7,21 @@ import 'package:get_storage/get_storage.dart';
 import '../../../data/providers/api_service.dart';
 
 class ProfilePemilikController extends GetxController {
-  //TODO: Implement
   var isLoading = false.obs;
-  var pemilikList = <Pemilik>[].obs;
+  var pemilik = Rx<Pemilik?>(null);
   var errorMessage = ''.obs;
   final box = GetStorage();
-  var role = ''.obs; // Menggunakan Rx<String> untuk menyimpan satu role
-  var pemilik = Rx<Pemilik?>(null);
+  var role = ''.obs;
 
   @override
   void onInit() async {
     super.onInit();
-    print('Initializing profileController');
+    print('Initializing ProfilePemilikController');
     role.value = await getRole() ?? '';
 
-    // Misalnya, ambil ID pegawai dari penyimpanan atau parameter
-    int pemilikUd = 1; // Ganti dengan ID yang sesuai
-    await getPemilikById(pemilikUd); // Ambil data pegawai
+    // Assuming pemilikId is obtained from GetStorage or passed as a parameter
+    int pemilikId = 1; // Replace with actual ID
+    await getPemilikById(pemilikId);
   }
 
   Future<String?> getToken() async {
@@ -43,8 +41,7 @@ class ProfilePemilikController extends GetxController {
   }
 
   Future<void> getPemilikById(int id) async {
-    final currentRole = role.value;
-    print('Fetching data pemilik for role: $currentRole');
+    print('Fetching data pemilik for ID: $id');
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -55,22 +52,21 @@ class ProfilePemilikController extends GetxController {
       }
 
       print('Using token: $token');
-
       http.Response response =
           await ApiService.getPemilikPemilikById(token, id);
+
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         if (responseData['data'] is List) {
-          // Jika data adalah array, ambil elemen pertama
-          final pemilik = Pemilik.fromJson(responseData['data'][0]);
-          this.pemilik.value = pemilik; // Simpan data pegawai
+          final pemilikData = Pemilik.fromJson(responseData['data'][0]);
+          pemilik.value = pemilikData;
         } else {
-          final pemilik = Pemilik.fromJson(responseData['data']);
-          this.pemilik.value = pemilik; // Simpan data pegawai
+          final pemilikData = Pemilik.fromJson(responseData['data']);
+          pemilik.value = pemilikData;
         }
       } else {
-        errorMessage.value = 'pemilik not found';
-        print('Error: pemilik not found, Status code: ${response.statusCode}');
+        errorMessage.value = 'Pemilik not found';
+        print('Error: Pemilik not found, Status code: ${response.statusCode}');
       }
     } catch (e) {
       errorMessage.value = 'Error fetching data pemilik: $e';
@@ -81,6 +77,7 @@ class ProfilePemilikController extends GetxController {
   }
 
   Future<void> updatePemilik(Pemilik updatedPemilik) async {
+    print('Updating data pemilik');
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -89,17 +86,20 @@ class ProfilePemilikController extends GetxController {
         return;
       }
 
-      final data =
-          updatedPemilik.toJson(); // Assuming you have a toJson() method
+      final data = updatedPemilik.toJson();
       http.Response response =
           await ApiService.updatePemilikPemilik(token, data);
+
       if (response.statusCode == 200) {
+        final updatedData = Pemilik.fromJson(jsonDecode(response.body)['data']);
+        pemilik.value = updatedData;
+
         Get.defaultDialog(
           backgroundColor: Colors.green,
           titleStyle: TextStyle(color: Colors.white),
           middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
-          middleText: 'pemilik updated successfully',
+          middleText: 'Pemilik updated successfully',
         );
       } else {
         Get.defaultDialog(

@@ -14,12 +14,14 @@ class pembayaranView extends StatelessWidget {
   final pembayaranController controller = Get.put(pembayaranController());
   final String role;
   final String token;
+  final String idPemilik;
 
-  pembayaranView({required this.role, required this.token}) {
+  pembayaranView(
+      {required this.role, required this.token, required this.idPemilik}) {
     controller.getToken();
     controller.getRole();
     controller.getDataPemilik(role);
-    controller.getDataHewan(role);
+    controller.getDataHewan(role, idPemilik);
     controller.getDataDokter(role);
     controller.getDataAppoinment(role);
     controller.getDataRekamMedis(role);
@@ -94,13 +96,18 @@ class pembayaranView extends StatelessWidget {
   }
 
   Widget _buildPembayaranList(BuildContext context) {
-    return ListView.builder(
-      itemCount: controller.pembayaranList.length,
-      itemBuilder: (context, index) {
-        final pembayaran = controller.pembayaranList[index];
-        return Card(
-          margin: EdgeInsets.all(8.0),
-          child: ListTile(
+    return Obx(() {
+      if (controller.pembayaranList.isEmpty) {
+        return Center(child: Text('Tidak ada data'));
+      }
+
+      return ListView.builder(
+        itemCount: controller.pembayaranList.length,
+        itemBuilder: (context, index) {
+          final pembayaran = controller.pembayaranList[index];
+          return Card(
+            margin: EdgeInsets.all(8.0),
+            child: ListTile(
               title: Text("Nama Pemilik: ${pembayaran.namaPemilik}"),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,31 +131,34 @@ class pembayaranView extends StatelessWidget {
                 const restrictedRoles = ['pemilik'];
 
                 return Visibility(
-                    visible: !restrictedRoles.contains(role),
-                    child: Wrap(
-                      spacing: 8.0,
-                      children: [
-                        if (role == 'admin' || role == 'pegawai')
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              _editPembayaran(context, pembayaran);
-                            },
-                          ),
-                        if (role == 'admin')
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              _confirmDelete(
-                                  context, pembayaran.idPembayaran ?? 0);
-                            },
-                          ),
-                      ],
-                    ));
-              })),
-        );
-      },
-    );
+                  visible: !restrictedRoles.contains(role),
+                  child: Wrap(
+                    spacing: 8.0,
+                    children: [
+                      if (role == 'admin' || role == 'pegawai')
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            _editPembayaran(context, pembayaran);
+                          },
+                        ),
+                      if (role == 'admin')
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            _confirmDelete(
+                                context, pembayaran.idPembayaran ?? 0);
+                          },
+                        ),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          );
+        },
+      );
+    });
   }
 
   void _addPembayaran(BuildContext context, String token) {
