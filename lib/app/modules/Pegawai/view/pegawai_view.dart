@@ -216,9 +216,9 @@ class PegawaiView extends StatelessWidget {
       BuildContext context,
       String token,
       TextEditingController namaController,
+      TextEditingController passwordContriller,
       TextEditingController alamatController,
-      TextEditingController noTelpController,
-      TextEditingController passwordContriller) {
+      TextEditingController noTelpController) {
     if (namaController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
         passwordContriller.text.isNotEmpty &&
@@ -231,6 +231,7 @@ class PegawaiView extends StatelessWidget {
         alamat: alamatController.text,
         noTelp: noTelpController.text,
       );
+
       Get.find<PegawaiController>().postDataPegawai(newPegawai).then((_) {
         // Reset form fields after successful submission
         namaController.clear();
@@ -347,22 +348,23 @@ class PegawaiView extends StatelessWidget {
     BuildContext context,
     Pegawai pegawai,
     TextEditingController namaController,
+    TextEditingController passwordController,
     TextEditingController alamatController,
     TextEditingController noTelpController,
-    TextEditingController passwordContriller,
   ) {
     if (namaController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
-        passwordContriller.text.isNotEmpty &&
         noTelpController.text.isNotEmpty) {
       final updatedPegawai = Pegawai(
         idPegawai: pegawai.idPegawai,
         namaPegawai: namaController.text,
         jabatan: 'pegawai',
-        password: passwordContriller.text,
+        password: passwordController.text,
         alamat: alamatController.text,
         noTelp: noTelpController.text,
       );
+
       Get.find<PegawaiController>().updatePegawai(updatedPegawai);
       Navigator.of(context).pop();
     } else {

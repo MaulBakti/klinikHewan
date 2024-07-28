@@ -143,25 +143,19 @@ class PemilikView extends StatelessWidget {
                   decoration: InputDecoration(
                       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 TextField(
                   controller: passwordController,
                   decoration: InputDecoration(
                       labelText: 'Password', border: OutlineInputBorder()),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 TextField(
                   controller: alamatController,
                   decoration: InputDecoration(
                       labelText: 'Alamat', border: OutlineInputBorder()),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 TextField(
                   controller: noTelpController,
                   decoration: InputDecoration(
@@ -172,31 +166,33 @@ class PemilikView extends StatelessWidget {
           ),
           actions: [
             TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Batal'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  overlayColor: Color(0xFFffc26f),
-                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                )),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Batal'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                overlayColor: Color(0xFFffc26f),
+                backgroundColor: Color.fromRGBO(179, 110, 61, 1),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+              ),
+            ),
             ElevatedButton(
-                onPressed: () {
-                  _validateAndSavePemilik(context, token, namaController,
-                      alamatController, noTelpController, passwordController);
-                  Get.back();
-                },
-                child: Text('Simpan'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  overlayColor: Color(0xFFffc26f),
-                  backgroundColor: Color.fromRGBO(179, 110, 61, 1),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                )),
+              onPressed: () {
+                _validateAndSavePemilik(context, token, namaController,
+                    alamatController, noTelpController, passwordController);
+                Get.back();
+              },
+              child: Text('Simpan'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                overlayColor: Color(0xFFffc26f),
+                backgroundColor: Color.fromRGBO(179, 110, 61, 1),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+              ),
+            ),
           ],
         );
       },
@@ -208,8 +204,8 @@ class PemilikView extends StatelessWidget {
     String token,
     TextEditingController namaController,
     TextEditingController alamatController,
-    TextEditingController passwordController,
     TextEditingController noTelpController,
+    TextEditingController passwordController,
   ) {
     if (namaController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
@@ -228,10 +224,7 @@ class PemilikView extends StatelessWidget {
         namaController.clear();
         alamatController.clear();
         passwordController.clear();
-        passwordController.clear();
         noTelpController.clear();
-
-        // Get.back(); // Close dialog after successful submission
       }).catchError((error) {
         // Handle specific errors or show generic error message
         Get.defaultDialog(
@@ -335,12 +328,13 @@ class PemilikView extends StatelessWidget {
     Pemilik pemilik,
     TextEditingController namaController,
     TextEditingController alamatController,
-    TextEditingController passwordController,
     TextEditingController noTelpController,
+    TextEditingController passwordController,
   ) {
     if (namaController.text.isNotEmpty &&
         alamatController.text.isNotEmpty &&
-        noTelpController.text.isNotEmpty) {
+        noTelpController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty) {
       final updatedPemilik = Pemilik(
         idPemilik: pemilik.idPemilik,
         namaPemilik: namaController.text,

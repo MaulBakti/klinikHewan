@@ -213,10 +213,30 @@ class AppointmentView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: TglController,
-                  decoration: InputDecoration(
-                      labelText: 'Tanggal', border: OutlineInputBorder()),
+                GestureDetector(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                      TglController.text = formattedDate;
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: TglController,
+                      decoration: InputDecoration(
+                        labelText: 'Tgl Periksa',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.datetime,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -415,10 +435,30 @@ class AppointmentView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: TglController,
-                  decoration: InputDecoration(
-                      labelText: 'Tanggal', border: OutlineInputBorder()),
+                GestureDetector(
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                      TglController.text = formattedDate;
+                    }
+                  },
+                  child: AbsorbPointer(
+                    child: TextField(
+                      controller: TglController,
+                      decoration: InputDecoration(
+                        labelText: 'Tgl Periksa',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.datetime,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 10,
