@@ -394,6 +394,11 @@ class ApiService {
   static Future<List<dynamic>> getHewanPemilik(
       String token, String idPemilik) async {
     print('Token available: $token');
+    print('ID Pemilik: $idPemilik'); // Tambahkan log ini
+
+    if (idPemilik.isEmpty) {
+      throw Exception('ID pemilik tidak boleh kosong');
+    }
     try {
       final Uri uri = Uri.parse('$baseUrl/pemilik/hewan');
       print('Using token: $token');
@@ -411,6 +416,11 @@ class ApiService {
         }),
       );
 
+      print('Read Hewan by pemilik - Request body: ${json.encode({
+            "role": "pemilik",
+            "action": "read",
+            "data": {"id_pemilik": idPemilik},
+          })}');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 

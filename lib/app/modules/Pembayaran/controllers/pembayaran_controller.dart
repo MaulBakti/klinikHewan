@@ -345,7 +345,8 @@ class pembayaranController extends GetxController {
 
   // Method untuk mengambil semua pembayaran
   Future<void> getDataPembayaran(String role, String token) async {
-    print('Fetching data pembayaran for role: $role');
+    role = box.read('role');
+    print('Fetching data hewan for role: $role');
     try {
       isLoading.value = true;
       final String? token = await getToken();

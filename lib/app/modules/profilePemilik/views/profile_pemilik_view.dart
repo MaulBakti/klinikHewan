@@ -52,7 +52,7 @@ class ProfilePemilikView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        'assets/images/logo.webp',
+                        'assets/images/Logo.png',
                         height: 100,
                       ),
                       SizedBox(height: 15),
