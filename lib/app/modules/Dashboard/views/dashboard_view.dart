@@ -14,7 +14,7 @@ class DashboardView extends StatelessWidget {
         color: Color(0xFFFFE4C4),
         child: Center(
           child: Image.asset(
-            'assets/Images/Logo.jpg',
+            'assets/Images/Logo.png',
             height: 200,
           ),
         ),

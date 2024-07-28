@@ -248,9 +248,12 @@ class pembayaranController extends GetxController {
         throw Exception('Invalid role: $role');
       }
 
-      final List<rekamMedis> rekammedisList =
-          responseData.map((data) => rekamMedis.fromJson(data)).toList();
-      rekammedisList.assignAll(rekammedisList);
+      // Memetakan data ke dalam List<RekamMedis>
+      final List<rekamMedis> rekamMedisList = responseData.map((data) {
+        print('Data item: $data'); // Menampilkan setiap item data
+        return rekamMedis.fromJson(data);
+      }).toList();
+      rekammedisList.assignAll(rekamMedisList);
       print('List Rekam Medis: $rekammedisList');
     } catch (e) {
       errorMessage.value = 'Error fetching data rekam medis: $e';
@@ -355,20 +358,35 @@ class pembayaranController extends GetxController {
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        if (jsonResponse['success']) {
-          final List<Pembayaran> pembayarans =
-              (jsonResponse['data'] as List<dynamic>)
-                  .map((data) => Pembayaran.fromJson(data))
-                  .toList();
-          pembayaranList.assignAll(pembayarans);
+
+        // Logging untuk memeriksa respons JSON
+        print('JSON Response: $jsonResponse');
+
+        // Memeriksa apakah 'success' adalah string dan bernilai 'read'
+        if (jsonResponse['success'] == 'read') {
+          // Cek apakah ada data yang diterima
+          if (jsonResponse.containsKey('data') &&
+              jsonResponse['data'] is List &&
+              jsonResponse['data'].isNotEmpty) {
+            final List<Pembayaran> pembayarans =
+                (jsonResponse['data'] as List<dynamic>).map((data) {
+              print('Data item: $data'); // Menampilkan setiap item data
+              return Pembayaran.fromJson(data);
+            }).toList();
+            pembayaranList.assignAll(pembayarans);
+          } else {
+            errorMessage.value = 'No data available';
+            print('No data available in response');
+          }
         } else {
-          errorMessage.value = jsonResponse['message'];
+          print('No data available in response');
         }
       } else {
         errorMessage.value = 'Error fetching data: ${response.statusCode}';
       }
     } catch (e) {
       errorMessage.value = 'Error fetching data pembayaran: $e';
+      print('Error fetching data pembayaran: $e');
     } finally {
       isLoading.value = false;
     }
@@ -408,8 +426,16 @@ class pembayaranController extends GetxController {
   Future<void> updatePembayaran(
       String role, String token, Pembayaran pembayaran) async {
     try {
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        return;
+      }
       final response =
           await ApiService.updatePembayaran(role, token, pembayaran.toJson());
+      print(
+          'Token: $token'); // Tambahkan ini untuk melihat token yang digunakan
+
       if (response.statusCode == 200) {
         // Update pembayaran dalam data jika berhasil
         int index = pembayaranList
@@ -439,9 +465,17 @@ class pembayaranController extends GetxController {
   }
 
   // Method untuk menghapus pembayaran
-  Future<void> deletePembayaran(String role, int id, String token) async {
+  Future<void> deletePembayaran(String token, String role, int id) async {
+    role = box.read('role');
+    print('Fetching data hewan for role: $role');
     try {
-      final response = await ApiService.deletePembayaran(role, id, token);
+      final String? token = await getToken();
+      if (token == null || token.isEmpty) {
+        errorMessage.value = 'Token not found';
+        return;
+      }
+
+      final response = await ApiService.deletePembayaran(token, role, id);
       if (response.statusCode == 200) {
         // Hapus pembayaran dari list jika berhasil
         pembayaranList

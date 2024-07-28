@@ -61,7 +61,7 @@ class ProfilePegawaiView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        'assets/Images/Logo.jpg',
+                        'assets/Images/Logo.png',
                         height: 100,
                       ),
                       SizedBox(height: 15),

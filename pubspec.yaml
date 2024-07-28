@@ -26,6 +26,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/Images/Logo.jpg
+    - assets/Images/
     - assets/Katalog/
     - assets/Slider/

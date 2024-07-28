@@ -60,7 +60,10 @@ class Pembayaran {
       namaDokter: json['dokter'] != null ? json['dokter']['nama_dokter'] : '',
       catatan:
           json['appointment'] != null ? json['appointment']['catatan'] : '',
-      keluhan: json['rekammedis'] != null ? json['rekammedis']['keluhan'] : '',
+      keluhan: (json['rekam_medis'] != null &&
+              json['rekam_medis']['keluhan'] != null)
+          ? json['rekam_medis']['keluhan']
+          : 'Tidak ada keluhan',
       namaObat: json['obat'] != null ? json['obat']['nama_obat'] : '',
       jumlahObat: json['resep'] != null ? json['resep']['jumlah_obat'] : 0,
     );

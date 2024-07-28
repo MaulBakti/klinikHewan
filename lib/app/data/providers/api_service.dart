@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -2552,7 +2553,7 @@ class ApiService {
     try {
       final Uri uri =
           Uri.parse('$baseUrl/admin/appointment/${data['id_appointment']}');
-
+      print('Updating appointment with ID: ${data['id_appointment']}');
       final response = await http.put(
         uri,
         headers: {
@@ -2566,6 +2567,11 @@ class ApiService {
         }),
       );
 
+      print('Update Appointment Admin - Request body: ${json.encode({
+            'role': 'admin',
+            'action': 'update',
+            'data': data,
+          })}');
       print(
           'Update Appointment Admin - Response status: ${response.statusCode}');
       print('Update Appointment Admin - Response body: ${response.body}');
@@ -2590,6 +2596,8 @@ class ApiService {
   static Future<http.Response> deleteAppointmentAdmin(
       int id, String token) async {
     try {
+      print('Deleting appointment with ID: $id'); // Log the ID being passed
+
       final response = await http.post(
         Uri.parse('$baseUrl/admin/appointment'),
         headers: {
@@ -2603,6 +2611,11 @@ class ApiService {
         }),
       );
 
+      print('Delete Appointment - Request body: ${json.encode({
+            "role": "admin",
+            "action": "delete",
+            "data": {"id_appointment": id},
+          })}');
       print('Delete Appointment - Response status: ${response.statusCode}');
       print('Delete Appointment - Response body: ${response.body}');
 
@@ -2907,9 +2920,15 @@ class ApiService {
   // Method PUT
   static Future<http.Response> updatePembayaran(
       String role, String token, Map<String, dynamic> data) async {
+    if (token.isEmpty) {
+      throw Exception(
+          'Token tidak tersedia. Pastikan pengguna terautentikasi.');
+    }
     try {
       final Uri uri =
           Uri.parse('$baseUrl/$role/pembayaran/${data['id_pembayaran']}');
+
+      print('Authorization Header: Bearer $token');
 
       final response = await http.put(
         uri,
@@ -2920,13 +2939,19 @@ class ApiService {
         body: json.encode({
           'role': role,
           'action': 'update',
-          'data': data, // Sesuaikan dengan data yang diperlukan jika ada
+          'data': data,
         }),
       );
 
+      print('Update Pembayaran by ${role} - Request body: ${json.encode({
+            "role": role,
+            "action": "update",
+            "data": data,
+          })}');
       print(
           'Update Pembayaran by ${role} - Response status: ${response.statusCode}');
       print('Update Pembayaran by ${role} - Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['success'] == true) {
@@ -2936,19 +2961,23 @@ class ApiService {
               'Failed to update data pembayaran from ${role}: ${responseData['message']}');
         }
       } else {
+        print('Error response body: ${response.body}');
         throw Exception(
             'Failed to update data pembayaran from ${role}: ${response.statusCode}');
       }
     } catch (e) {
+      print('Error updating data pembayaran from ${role}: $e');
       throw Exception('Error updating data pembayaran from ${role}: $e');
     }
   }
 
   // Method Delete
   static Future<http.Response> deletePembayaran(
-      String role, int id, String token) async {
+      String token, String role, int id) async {
+    print('Token available: $token');
     try {
-      final response = await http.post(
+      final response = await http.delete(
+        // Ganti dari http.post ke http.delete
         Uri.parse('$baseUrl/$role/pembayaran'),
         headers: {
           'Content-Type': 'application/json',
@@ -2961,6 +2990,11 @@ class ApiService {
         }),
       );
 
+      print('Delete Pembayaran by ${role} - Request body: ${json.encode({
+            "role": "admin",
+            "action": "delete",
+            "data": {"id_pembayaran": id},
+          })}');
       print(
           'Delete Pembayaran by ${role} - Response status: ${response.statusCode}');
       print('Delete Pembayaran by ${role} - Response body: ${response.body}');
@@ -2969,6 +3003,7 @@ class ApiService {
         final Map<String, dynamic> responseData = json.decode(response.body);
         return response;
       } else {
+        print('Error response body: ${response.body}'); // Tambahkan log ini
         throw Exception(
             'Failed to delete data pembayaran from ${role} : ${response.statusCode}');
       }

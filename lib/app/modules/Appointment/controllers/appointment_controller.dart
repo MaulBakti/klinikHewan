@@ -327,6 +327,8 @@ class AppointmentController extends GetxController {
   Future<void> deleteAppointment(int idAppointment) async {
     final role = await getRole();
     print('Deleting data appointment for role: $role');
+    print(
+        'ID Appointment to delete: $idAppointment'); // Log the ID being passed
     try {
       isLoading.value = true;
       final String? token = GetStorage().read('token');

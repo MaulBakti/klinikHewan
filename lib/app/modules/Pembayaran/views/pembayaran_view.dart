@@ -97,6 +97,9 @@ class pembayaranView extends StatelessWidget {
 
   Widget _buildPembayaranList(BuildContext context) {
     return Obx(() {
+      // Logging untuk mengecek jumlah data pembayaran
+      print('Total Pembayaran: ${controller.pembayaranList.length}');
+
       if (controller.pembayaranList.isEmpty) {
         return Center(child: Text('Tidak ada data'));
       }
@@ -105,6 +108,10 @@ class pembayaranView extends StatelessWidget {
         itemCount: controller.pembayaranList.length,
         itemBuilder: (context, index) {
           final pembayaran = controller.pembayaranList[index];
+
+          // Logging untuk debugging
+          debugPrint('Pembayaran: ${pembayaran.toJson()}');
+
           return Card(
             margin: EdgeInsets.all(8.0),
             child: ListTile(
@@ -112,9 +119,9 @@ class pembayaranView extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Nama Hewan: ${pembayaran.namaHewan ?? ""}"),
-                  Text('Nama Dokter: ${pembayaran.namaDokter}'),
-                  Text('Appointment: ${pembayaran.catatan}'),
+                  Text('Nama Hewan: ${pembayaran.namaHewan ?? ''}'),
+                  Text('Nama Dokter: ${pembayaran.namaDokter ?? ''}'),
+                  Text('Appointment: ${pembayaran.catatan ?? ''}'),
                   Text('Keluhan: ${pembayaran.keluhan ?? ''}'),
                   Text('Nama Obat: ${pembayaran.namaObat ?? ''}'),
                   Text('Jumlah Obat: ${pembayaran.jumlahObat ?? ''}'),
@@ -127,32 +134,44 @@ class pembayaranView extends StatelessWidget {
               ),
               trailing: Obx(() {
                 final role = controller.role.value;
-                // Define roles that should not have a FloatingActionButton
-                const restrictedRoles = ['pemilik'];
 
-                return Visibility(
-                  visible: !restrictedRoles.contains(role),
-                  child: Wrap(
-                    spacing: 8.0,
-                    children: [
-                      if (role == 'admin' || role == 'pegawai')
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            _editPembayaran(context, pembayaran);
-                          },
-                        ),
-                      if (role == 'admin')
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _confirmDelete(
-                                context, pembayaran.idPembayaran ?? 0);
-                          },
-                        ),
-                    ],
-                  ),
-                );
+                // Logging untuk mengecek nilai role
+                debugPrint('Role: $role');
+                debugPrint('Role Type: ${role.runtimeType}');
+
+                // Pastikan role adalah string dan bukan null
+                if (role is String) {
+                  const restrictedRoles = ['pemilik'];
+                  final isVisible = !restrictedRoles.contains(role);
+                  print('Is Visible: $isVisible'); // Logging untuk debug
+
+                  return Visibility(
+                    visible: isVisible,
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: [
+                        if (role == 'admin' || role == 'pegawai')
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _editPembayaran(context, pembayaran);
+                            },
+                          ),
+                        if (role == 'admin')
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _confirmDelete(
+                                  context, pembayaran.idPembayaran ?? 0);
+                            },
+                          ),
+                      ],
+                    ),
+                  );
+                } else {
+                  print('Error: Role is not a String');
+                  return Container(); // Return an empty widget if role is not valid
+                }
               }),
             ),
           );
@@ -333,11 +352,11 @@ class pembayaranView extends StatelessWidget {
                   if (controller.isLoading.value) {
                     return CircularProgressIndicator();
                   } else if (controller.resepList.isEmpty) {
-                    return Text('Tidak ada data resep');
+                    return Text('Tidak ada data jumlah obat');
                   } else {
                     return DropdownButtonFormField<Resep>(
                       value: selectedResep,
-                      hint: Text('Pilih Resep'),
+                      hint: Text('Pilih Jumlah Obat'),
                       decoration: InputDecoration(border: OutlineInputBorder()),
                       onChanged: (Resep? newValue) {
                         selectedResep = newValue;
@@ -345,7 +364,8 @@ class pembayaranView extends StatelessWidget {
                       items: controller.resepList.map((Resep resep) {
                         return DropdownMenuItem<Resep>(
                           value: resep,
-                          child: Text('Resep ${resep.idResep}'),
+                          child: Text(resep.jumlahObat?.toString() ??
+                              '0'), // Ubah ke string
                         );
                       }).toList(),
                     );
@@ -882,7 +902,7 @@ class pembayaranView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   Get.find<pembayaranController>()
-                      .deletePembayaran(role, idPembayaran, token)
+                      .deletePembayaran(token, role, idPembayaran)
                       .then((_) {
                     Navigator.of(context).pop();
                   }).catchError((error) {

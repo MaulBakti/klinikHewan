@@ -39,7 +39,7 @@ class LoginView extends StatelessWidget {
                       children: [
                         // Logo
                         Image.asset(
-                          'assets/Images/Logo.jpg', // Ganti dengan path gambar logo
+                          'assets/Images/Logo.png', // Ganti dengan path gambar logo
                           height: 100,
                         ),
                         SizedBox(height: 20),
