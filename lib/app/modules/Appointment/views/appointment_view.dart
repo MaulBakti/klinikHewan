@@ -26,7 +26,10 @@ class AppointmentView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -453,7 +456,6 @@ class AppointmentView extends StatelessWidget {
                       selectedDokter,
                       TglController,
                       CatatanController);
-                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

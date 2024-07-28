@@ -27,7 +27,10 @@ class RekamMedisView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -600,7 +603,6 @@ class RekamMedisView extends StatelessWidget {
                       // namaPegawaiController,
                       // namaObatController
                       );
-                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

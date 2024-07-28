@@ -14,6 +14,7 @@ class ForgotpassView extends GetView<ForgotpassController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Forgot Password'),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
@@ -46,7 +47,7 @@ class ForgotpassView extends GetView<ForgotpassController> {
                             controller.keywords.value = value;
                           },
                           decoration: InputDecoration(
-                            labelText: 'Username/Telephone',
+                            labelText: 'Username',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

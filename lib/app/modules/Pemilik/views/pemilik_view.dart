@@ -19,7 +19,10 @@ class PemilikView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -312,7 +315,6 @@ class PemilikView extends StatelessWidget {
                 onPressed: () {
                   _validateAndEditPemilik(context, pemilik, namaController,
                       alamatController, noTelpController, passwordController);
-                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

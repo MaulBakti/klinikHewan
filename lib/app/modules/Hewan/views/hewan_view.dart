@@ -22,7 +22,10 @@ class HewanView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -140,6 +143,7 @@ class HewanView extends StatelessWidget {
     final TextEditingController jenisKelaminController =
         TextEditingController();
     Pemilik? selectedPemilik;
+    String? selectedJenisKelamin;
 
     showDialog(
       context: context,
@@ -216,10 +220,19 @@ class HewanView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: jenisKelaminController,
-                  decoration: InputDecoration(
-                      labelText: 'Jenis Kelamin', border: OutlineInputBorder()),
+                DropdownButtonFormField<String>(
+                  value: selectedJenisKelamin,
+                  hint: Text('Pilih Jenis Kelamin'),
+                  decoration: InputDecoration(border: OutlineInputBorder()),
+                  onChanged: (String? newValue) {
+                    selectedJenisKelamin = newValue;
+                  },
+                  items: ['Jantan', 'Betina'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -248,7 +261,7 @@ class HewanView extends StatelessWidget {
                       jenisController,
                       umurController,
                       beratController,
-                      jenisKelaminController);
+                      selectedJenisKelamin);
                   Get.back();
                 },
                 child: Text('Simpan'),
@@ -274,24 +287,23 @@ class HewanView extends StatelessWidget {
       TextEditingController jenisController,
       TextEditingController umurController,
       TextEditingController beratController,
-      TextEditingController jenisKelaminController) {
+      String? selectedJenisKelamin) {
     if (selectedPemilik != null &&
         // idPemilikController.text.isNotEmpty &&
         namaController.text.isNotEmpty &&
         jenisController.text.isNotEmpty &&
         umurController.text.isNotEmpty &&
         beratController.text.isNotEmpty &&
-        jenisKelaminController.text.isNotEmpty) {
+        selectedJenisKelamin != null) {
       final newHewan = Hewan(
-        idHewan: 0,
-        idPemilik: selectedPemilik.idPemilik,
-        // int.tryParse(idPemilikController.text) ?? 0,
-        namaHewan: namaController.text,
-        jenisHewan: jenisController.text,
-        umur: int.tryParse(umurController.text) ?? 0,
-        berat: double.tryParse(beratController.text) ?? 0.0,
-        jenisKelamin: jenisKelaminController.text,
-      );
+          idHewan: 0,
+          idPemilik: selectedPemilik.idPemilik,
+          // int.tryParse(idPemilikController.text) ?? 0,
+          namaHewan: namaController.text,
+          jenisHewan: jenisController.text,
+          umur: int.tryParse(umurController.text) ?? 0,
+          berat: double.tryParse(beratController.text) ?? 0.0,
+          jenisKelamin: selectedJenisKelamin);
       Get.find<HewanController>().postDataHewan(newHewan).then((_) {
         // Reset form fields after successful submission
         // idPemilikController.clear();
@@ -299,7 +311,6 @@ class HewanView extends StatelessWidget {
         jenisController.clear();
         umurController.clear();
         beratController.clear();
-        jenisKelaminController.clear();
 
         // Get.back(); // Close dialog after successful submission
       }).catchError((error) {
@@ -326,8 +337,7 @@ class HewanView extends StatelessWidget {
         TextEditingController(text: hewan.umur.toString());
     final TextEditingController beratController =
         TextEditingController(text: hewan.berat.toString());
-    final TextEditingController jenisKelaminController =
-        TextEditingController(text: hewan.jenisKelamin);
+    String? selectedJenisKelamin = hewan.jenisKelamin;
 
     showDialog(
       context: context,
@@ -372,10 +382,19 @@ class HewanView extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
-                  controller: jenisKelaminController,
-                  decoration: InputDecoration(
-                      labelText: 'Jenis Kelamin', border: OutlineInputBorder()),
+                DropdownButtonFormField<String>(
+                  value: selectedJenisKelamin,
+                  hint: Text('Pilih Jenis Kelamin'),
+                  decoration: InputDecoration(border: OutlineInputBorder()),
+                  onChanged: (String? newValue) {
+                    selectedJenisKelamin = newValue;
+                  },
+                  items: ['Jantan', 'Betina'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -402,8 +421,7 @@ class HewanView extends StatelessWidget {
                       jenisController,
                       umurController,
                       beratController,
-                      jenisKelaminController);
-                  Get.back();
+                      selectedJenisKelamin);
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(
@@ -426,22 +444,22 @@ class HewanView extends StatelessWidget {
       TextEditingController jenisController,
       TextEditingController umurController,
       TextEditingController beratController,
-      TextEditingController jenisKelaminController) {
+      // TextEditingController jenisKelaminController,
+      String? selectedJenisKelamin) {
     if (namaController.text.isNotEmpty &&
         jenisController.text.isNotEmpty &&
         umurController.text.isNotEmpty &&
         beratController.text.isNotEmpty &&
-        jenisKelaminController.text.isNotEmpty) {
+        selectedJenisKelamin != null) {
       final updatedHewan = Hewan(
-        idHewan: hewan.idHewan,
-        idPemilik: hewan
-            .idPemilik, // Akan ditangani oleh backend, tidak diperlukan di frontend
-        namaHewan: namaController.text,
-        jenisHewan: jenisController.text,
-        umur: int.tryParse(umurController.text) ?? 0,
-        berat: double.tryParse(beratController.text) ?? 0.0,
-        jenisKelamin: jenisKelaminController.text,
-      );
+          idHewan: hewan.idHewan,
+          idPemilik: hewan
+              .idPemilik, // Akan ditangani oleh backend, tidak diperlukan di frontend
+          namaHewan: namaController.text,
+          jenisHewan: jenisController.text,
+          umur: int.tryParse(umurController.text) ?? 0,
+          berat: double.tryParse(beratController.text) ?? 0.0,
+          jenisKelamin: selectedJenisKelamin);
       Get.find<HewanController>().updateHewan(updatedHewan);
       Navigator.of(context).pop();
     } else {

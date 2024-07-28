@@ -115,7 +115,7 @@ class HomeView extends StatelessWidget {
           title: 'Data Dokter',
           icon: Icons.medical_services,
           onTap: () {
-            Get.toNamed('/doctor');
+            Get.toNamed('/dokter');
           },
         ),
         _buildListTile(
@@ -185,7 +185,7 @@ class HomeView extends StatelessWidget {
           title: 'Data Dokter',
           icon: Icons.medical_services,
           onTap: () {
-            Get.toNamed('/doctor');
+            Get.toNamed('/dokter');
           },
         ),
         _buildListTile(

@@ -18,6 +18,15 @@ class ProfilePegawaiView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         title: const Text('Profile',
             style: TextStyle(color: Colors.white, fontSize: 24)),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),

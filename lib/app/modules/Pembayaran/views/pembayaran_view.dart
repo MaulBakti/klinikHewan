@@ -33,7 +33,10 @@ class pembayaranView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -768,7 +771,6 @@ class pembayaranView extends StatelessWidget {
                     jumlahPembayaranController,
                     buktiPembayaranController,
                   );
-                  Get.back();
                 },
                 child: Text('Simpan'),
                 style: ElevatedButton.styleFrom(

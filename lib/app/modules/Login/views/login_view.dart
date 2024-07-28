@@ -133,7 +133,7 @@ class LoginView extends StatelessWidget {
                         // Forgot Password Text Button
                         TextButton.icon(
                           onPressed: () {
-                            Get.toNamed('/forgotpass');
+                            Get.offAllNamed('/forgotpass');
                             print('Forgot Password tapped');
                           },
                           icon: Icon(
@@ -154,7 +154,7 @@ class LoginView extends StatelessWidget {
                         // Forgot Password Text Button
                         TextButton.icon(
                           onPressed: () {
-                            Get.toNamed('/register');
+                            Get.offAllNamed('/register');
                             print('Register tapped');
                           },
                           label: RichText(

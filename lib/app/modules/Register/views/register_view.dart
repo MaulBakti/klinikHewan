@@ -13,6 +13,7 @@ class RegisterView extends GetView<RegisterController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register'),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
         centerTitle: true,
       ),
