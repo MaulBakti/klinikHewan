@@ -147,6 +147,9 @@ class ProfilePegawaiView extends StatelessWidget {
       Get.defaultDialog(
         title: 'Error',
         middleText: 'Semua field harus diisi',
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
       );
       return;
     }
@@ -156,6 +159,9 @@ class ProfilePegawaiView extends StatelessWidget {
       Get.defaultDialog(
         title: 'Error',
         middleText: 'Password harus minimal 6 karakter.',
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
       );
       return;
     }
@@ -171,11 +177,11 @@ class ProfilePegawaiView extends StatelessWidget {
     );
 
     controller.updatePegawai(updatedPegawai).then((_) {
-      Get.snackbar(
-        'Success',
-        'Profile updated successfully!',
-        snackPosition: SnackPosition.BOTTOM,
-        colorText: Colors.white,
+      Get.defaultDialog(
+        title: 'Success',
+        middleText: 'Profile updated successfully!',
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
         backgroundColor: Colors.green,
       );
       Navigator.of(context).pop(); // Close the dialog or screen
@@ -183,6 +189,9 @@ class ProfilePegawaiView extends StatelessWidget {
       Get.defaultDialog(
         title: 'Error',
         middleText: 'Failed to update profile: $error',
+        backgroundColor: Colors.red,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
       );
     });
   }

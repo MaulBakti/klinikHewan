@@ -241,9 +241,10 @@ class AppointmentController extends GetxController {
       print('Create Appointment - Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final createdAppointment = Appointment.fromJson(responseData['data']);
-        appointmentList.add(createdAppointment);
+        // final responseData = jsonDecode(response.body);
+        // final createdAppointment = Appointment.fromJson(responseData['data']);
+        // appointmentList.add(createdAppointment);
+        getDataAppointment(token);
         Get.defaultDialog(
           backgroundColor: Colors.green,
           titleStyle: TextStyle(color: Colors.white),
