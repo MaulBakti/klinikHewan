@@ -1005,6 +1005,45 @@ class ApiService {
     }
   }
 
+  //GET Pegawai Pemilik
+  static Future<List<dynamic>> getPegawaiPemilik(String token) async {
+    print('Token available: $token');
+    try {
+      final Uri uri = Uri.parse('$baseUrl/pemilik/pegawai');
+      print('Using token: $token');
+
+      final response = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'role': 'pemilik',
+          'action': 'read',
+          'data': {} // Sesuaikan dengan data yang diperlukan jika ada
+        }),
+      );
+      print('GET Pegawai Pemilik - Response status: ${response.statusCode}');
+      print('GET Pegawai Pemilik - Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          return responseData['data'];
+        } else {
+          throw Exception(
+              'Failed to get data pegawai from Pemilik: ${responseData['message']}');
+        }
+      } else {
+        throw Exception(
+            'Failed to get pegawai from Pemilik: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error get data pegawai from Pemilik: $e');
+    }
+  }
+
   /*
   Data Pemilik (Admin)
   */

@@ -36,6 +36,12 @@ class ProfilePegawaiController extends GetxController {
     return role;
   }
 
+  Future<int?> getIdPegawai() async {
+    final idPegawai = box.read('id');
+    print('ID Pegawai retrieved: $idPegawai');
+    return idPegawai;
+  }
+
   void clearToken() {
     box.remove('token');
     print('Token removed');

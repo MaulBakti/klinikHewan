@@ -148,6 +148,10 @@ class RekamMedisController extends GetxController {
 
       if (role == 'admin') {
         responseData = await ApiService.getPegawaiAdmin(token);
+        // } else if (role == 'pegawai') {
+        //   responseData = await ApiService.getPegawaiPegawaiById(token, );
+      } else if (role == 'pemilik') {
+        responseData = await ApiService.getPegawaiPemilik(token);
       } else {
         throw Exception('Invalid role: $role');
       }
