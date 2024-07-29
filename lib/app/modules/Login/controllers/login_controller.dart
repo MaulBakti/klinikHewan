@@ -15,14 +15,14 @@ class LoginController extends GetxController {
     String role = selectedRole.value;
     box.write('role', role);
     print('Attempting to login with role: $role, username: ${username.value}');
+
     if (username.value.isNotEmpty && password.value.isNotEmpty) {
       isLoading.value = true;
-      print(
-          'Attempting to login with role: $role, username: ${username.value}, password: ${password.value}');
+      print('Attempting to login...');
+
       try {
         final response =
             await ApiService.login(role, username.value, password.value);
-
         print('Login response status: ${response.statusCode}');
         print('Login response body: ${response.body}');
 
@@ -30,11 +30,15 @@ class LoginController extends GetxController {
           final data = jsonDecode(response.body);
           if (data['success']) {
             final token = data['data']['token'];
+            final idPemilik =
+                data['data']['id_pemilik']; // Ambil ID pemilik dari respons
             print('Token received: $token');
 
-            // Menyimpan token ke storage
+            // Menyimpan token dan ID pemilik ke storage
             box.write('token', token);
+            box.write('id', idPemilik); // Simpan ID pemilik
             print('Token saved: ${box.read('token')}');
+            print('ID pemilik saved: ${box.read('id')}');
 
             Get.defaultDialog(
               backgroundColor: Colors.green,
@@ -43,7 +47,6 @@ class LoginController extends GetxController {
               title: 'Login',
               middleText: 'Login $role successful',
             );
-            print('Using token: $token');
 
             Future.delayed(Duration(seconds: 2), () {
               if (role == 'admin') {
@@ -52,7 +55,6 @@ class LoginController extends GetxController {
                 Get.offAllNamed('/home');
               } else if (role == 'pemilik') {
                 Get.offAllNamed('/pemilikhome');
-                // Get.offAllNamed('/home');
               }
             });
           } else {
@@ -81,6 +83,7 @@ class LoginController extends GetxController {
         );
       } finally {
         isLoading.value = false;
+        print('Loading state set to false');
       }
     } else {
       Get.defaultDialog(
@@ -95,8 +98,8 @@ class LoginController extends GetxController {
 
   void logout() {
     box.remove('token');
-    print('Token removed on logout');
-    // Lainnya seperti membersihkan username, password, dan role jika diperlukan
+    box.remove('id'); // Hapus ID pemilik saat logout
+    print('Token and ID removed on logout');
   }
 
   Future<String?> getToken() async {
@@ -107,6 +110,7 @@ class LoginController extends GetxController {
 
   Future<String?> getRole() async {
     final role = box.read('role');
+    print('Role retrieved: $role');
     return role;
   }
 

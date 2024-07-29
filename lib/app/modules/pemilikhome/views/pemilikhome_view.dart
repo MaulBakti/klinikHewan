@@ -56,101 +56,107 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
         child: ListView(
           children: [
             SizedBox(height: 30),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                viewportFraction: 0.8,
-              ),
-              items: [1, 2, 3].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/Slider/Slider$i.jpg',
-                          fit: BoxFit.cover,
+            Center(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: 200.0,
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  aspectRatio: 2.0,
+                  viewportFraction: 0.8,
+                ),
+                items: [1, 2, 3].map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            'assets/Slider/Slider$i.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
             ),
             SizedBox(height: 30),
-            Container(
-              margin: EdgeInsets.only(right: 10.0, left: 10.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.all(20),
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 3, // Number of icons per row
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                children: [
-                  _buildIconButton(
-                    icon: Icons.medical_services,
-                    label: 'Dokter',
-                    onPressed: () {
-                      Get.toNamed('/dokter');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.pets,
-                    label: 'Hewan',
-                    onPressed: () {
-                      Get.toNamed('/hewan');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.local_pharmacy,
-                    label: 'Obat',
-                    onPressed: () {
-                      Get.toNamed('/obat');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.assessment,
-                    label: 'Rekam Medis',
-                    onPressed: () {
-                      Get.toNamed('/rekam-medis');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.payment,
-                    label: 'Appointment',
-                    onPressed: () {
-                      Get.toNamed('/appointment');
-                    },
-                  ),
-                  _buildIconButton(
-                    icon: Icons.payment,
-                    label: 'Pembayaran',
-                    onPressed: () {
-                      Get.toNamed('/pembayaran');
-                    },
-                  ),
-                ],
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.all(20),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 3, // Number of icons per row
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  physics:
+                      NeverScrollableScrollPhysics(), // Disable scrolling for GridView
+                  children: [
+                    _buildIconButton(
+                      icon: Icons.medical_services,
+                      label: 'Dokter',
+                      onPressed: () {
+                        Get.toNamed('/dokter');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.pets,
+                      label: 'Hewan',
+                      onPressed: () {
+                        Get.toNamed('/hewan');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.local_pharmacy,
+                      label: 'Obat',
+                      onPressed: () {
+                        Get.toNamed('/obat');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.assessment,
+                      label: 'Rekam Medis',
+                      onPressed: () {
+                        Get.toNamed('/rekam-medis');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.payment,
+                      label: 'Appointment',
+                      onPressed: () {
+                        Get.toNamed('/appointment');
+                      },
+                    ),
+                    _buildIconButton(
+                      icon: Icons.payment,
+                      label: 'Pembayaran',
+                      onPressed: () {
+                        Get.toNamed('/pembayaran');
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -173,6 +179,8 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // Rata tengah di Row
                   children: [
                     _buildCustomCard(
                         title: 'PEMERIKSAAN UMUM',
@@ -201,10 +209,10 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
             SizedBox(
               height: 30,
             ),
-
-            SizedBox(
+            Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Rata tengah kolom
                 children: [
                   Text(
                     'Jl. Taman Surya Utama No.A1, RT.1/RW.15, Pegadungan,',
@@ -223,80 +231,7 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
             ),
             SizedBox(
               height: 20,
-            )
-            // Forgot Password Text Button
-            // Column(
-            //   children: [
-            //     TextButton.icon(
-            //       onPressed: () {
-            //         // Aksi saat tombol ditekan
-            //       },
-            //       icon: FaIcon(
-            //         FontAwesomeIcons.instagram,
-            //       ),
-            //       label: Text(
-            //         'Instagram',
-            //         style: TextStyle(
-            //           fontWeight: FontWeight.bold,
-            //           decoration: TextDecoration.underline,
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //     ),
-            //     TextButton.icon(
-            //       onPressed: () {
-            //         // Aksi saat tombol ditekan
-            //       },
-            //       icon: FaIcon(
-            //         FontAwesomeIcons.youtube,
-            //       ),
-            //       label: Text(
-            //         'YouTube',
-            //         style: TextStyle(
-            //           fontWeight: FontWeight.bold,
-            //           decoration: TextDecoration.underline,
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //     ),
-            //     TextButton.icon(
-            //       onPressed: () {
-            //         // Aksi saat tombol ditekan
-            //       },
-            //       icon: FaIcon(
-            //         FontAwesomeIcons.tiktok,
-            //         color: Colors.black,
-            //       ),
-            //       label: Text(
-            //         'TikTok',
-            //         style: TextStyle(
-            //           color: Colors.black,
-            //           fontWeight: FontWeight.bold,
-            //           decoration: TextDecoration.underline,
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //     ),
-            //     TextButton.icon(
-            //       onPressed: () {
-            //         // Aksi saat tombol ditekan
-            //       },
-            //       icon: FaIcon(
-            //         FontAwesomeIcons.whatsapp,
-            //         color: Colors.green,
-            //       ),
-            //       label: Text(
-            //         'WhatsApp',
-            //         style: TextStyle(
-            //           color: Colors.green,
-            //           fontWeight: FontWeight.bold,
-            //           decoration: TextDecoration.underline,
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // )
+            ),
           ],
         ),
       ),

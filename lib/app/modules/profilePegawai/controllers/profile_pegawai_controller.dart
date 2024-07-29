@@ -21,7 +21,7 @@ class ProfilePegawaiController extends GetxController {
     role.value = await getRole() ?? '';
 
     // Misalnya, ambil ID pegawai dari penyimpanan atau parameter
-    int pegawaiId = 1; // Ganti dengan ID yang sesuai
+    int pegawaiId = 0; // Ganti dengan ID yang sesuai
     await getPegawaiById(pegawaiId); // Ambil data pegawai
   }
 

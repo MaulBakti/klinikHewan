@@ -93,11 +93,15 @@ class AppPages {
       page: () {
         final role = Get.parameters['role'] ?? 'admin'; // default role
         final token = Get.parameters['token'] ?? '';
-        final idPemilik = Get.parameters['id_pemilik'] ?? ''; // default token
+        final idPemilik = Get.parameters['id_pemilik'] ?? '';
+        final id = int.tryParse(Get.parameters['id_pemilik'] ?? '0') ?? 0;
+        // default token
         return HewanView(
             role: role,
             token: token,
-            idPemilik: idPemilik); // Pass token to HewanView constructor
+            idPemilik: idPemilik,
+            id: id // Pass token to HewanView constructor
+            ); // Pass token to HewanView constructor
       },
       binding: HewanBinding(),
     ),

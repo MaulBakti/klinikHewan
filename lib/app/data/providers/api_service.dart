@@ -207,7 +207,7 @@ class ApiService {
   }
 
   // Method Delete
-  static Future<http.Response> deleteHewanAdmin(int id, String token) async {
+  static Future<http.Response> deleteHewanAdmin(String token, int id) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/admin/hewan'),
@@ -359,7 +359,7 @@ class ApiService {
   }
 
   // Method Delete
-  static Future<http.Response> deleteHewanPegawai(int id, String token) async {
+  static Future<http.Response> deleteHewanPegawai(String token, int id) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/pegawai/hewan'),
@@ -399,6 +399,7 @@ class ApiService {
     if (idPemilik.isEmpty) {
       throw Exception('ID pemilik tidak boleh kosong');
     }
+
     try {
       final Uri uri = Uri.parse('$baseUrl/pemilik/hewan');
       print('Using token: $token');
@@ -1375,6 +1376,9 @@ class ApiService {
                   'id_pemilik': id
                 }, // Sesuaikan dengan data yang diperlukan jika ada
               }));
+      if (response.statusCode == 401) {
+        throw Exception('Unauthorized access');
+      }
       if (response.statusCode != 200) {
         throw Exception('Failed to get pemilik: ${response.statusCode}');
       }
