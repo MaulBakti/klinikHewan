@@ -176,11 +176,16 @@ class AppPages {
         final role = Get.parameters['role'] ?? 'admin'; // default role
         final token = Get.parameters['token'] ?? '';
         final idPemilik = Get.parameters['id_pemilik'] ?? ''; // default token
+        final id =
+            int.tryParse(Get.parameters['id'] ?? '0') ?? 0; // convert id to int
+
         // default token
         return RekamMedisView(
-            role: role,
-            token: token,
-            idPemilik: idPemilik); // Pass token to DoctorView constructor
+          role: role,
+          token: token,
+          idPemilik: idPemilik,
+          id: id,
+        ); // Pass token to DoctorView constructor
       },
       binding: RekamMedisBinding(),
     ),

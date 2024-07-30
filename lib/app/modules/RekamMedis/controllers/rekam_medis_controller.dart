@@ -51,9 +51,10 @@ class RekamMedisController extends GetxController {
     print('Token removed');
   }
 
-  Future<void> getDataPemilik(String role) async {
+  Future<void> getDataPemilik(String role, int id) async {
     role = box.read('role');
     print('Fetching data pemilik for role: $role');
+    print('ID pemilik yang akan dikirim: $id'); // Tambahkan log ini
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -71,8 +72,9 @@ class RekamMedisController extends GetxController {
         responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getPemilikPegawai(token);
-        // } else if (role == 'pemilik') {
-        //   responseData = await ApiService.getPemilikPemilik(token);
+      } else if (role == 'pemilik') {
+        final response = await ApiService.getPemilikPemilikById(token, id);
+        responseData = json.decode(response.body)['data'] as List<dynamic>;
       } else {
         throw Exception('Invalid role: $role');
       }
@@ -84,8 +86,8 @@ class RekamMedisController extends GetxController {
       pemilikList.assignAll(pemiliks);
       print('List pemilik: $pemilikList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data pemilik: $e';
-      print('Error fetching data pemilik: $e');
+      errorMessage.value = 'Error fetching data pemilik from $role: $e';
+      print('Error fetching data pemilik from $role: $e');
     } finally {
       isLoading.value = false;
     }
@@ -116,6 +118,7 @@ class RekamMedisController extends GetxController {
       } else {
         throw Exception('Invalid role: $role');
       }
+
       print('List hewan: $hewanList');
 
       final List<Hewan> hewans =
@@ -123,8 +126,8 @@ class RekamMedisController extends GetxController {
       hewanList.assignAll(hewans);
       print('List hewan: $hewanList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data hewan: $e';
-      print('Error fetching data hewan: $e');
+      errorMessage.value = 'Error fetching data hewan from $role: $e';
+      print('Error fetching data hewan from $role: $e');
     } finally {
       isLoading.value = false;
     }

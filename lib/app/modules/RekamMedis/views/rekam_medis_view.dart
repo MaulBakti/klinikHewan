@@ -12,12 +12,16 @@ class RekamMedisView extends StatelessWidget {
   final String role;
   final String token;
   final String idPemilik;
+  final int id;
 
   RekamMedisView(
-      {required this.role, required this.token, required this.idPemilik}) {
+      {required this.role,
+      required this.token,
+      required this.idPemilik,
+      required this.id}) {
     controller.getToken();
     controller.getRole();
-    controller.getDataPemilik(role);
+    controller.getDataPemilik(role, id);
     controller.getDataHewan(role, idPemilik);
     controller.getDataPegawai(role);
     controller.getDataObat(role);

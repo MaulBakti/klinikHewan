@@ -394,7 +394,7 @@ class ApiService {
   static Future<List<dynamic>> getHewanPemilik(
       String token, String idPemilik) async {
     print('Token available: $token');
-    print('ID Pemilik: $idPemilik'); // Tambahkan log ini
+    print('ID Pemilik: $idPemilik');
 
     if (idPemilik.isEmpty) {
       throw Exception('ID pemilik tidak boleh kosong');
@@ -411,17 +411,13 @@ class ApiService {
           'Authorization': 'Bearer $token',
         },
         body: json.encode({
-          'role': 'pemilik',
           'action': 'read',
-          'data': {"id_pemilik": idPemilik},
+          'data': {
+            'id_pemilik': idPemilik,
+          },
         }),
       );
 
-      print('Read Hewan by pemilik - Request body: ${json.encode({
-            "role": "pemilik",
-            "action": "read",
-            "data": {"id_pemilik": idPemilik},
-          })}');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
@@ -430,18 +426,15 @@ class ApiService {
         if (responseData['success'] == true) {
           return responseData['data'];
         } else {
-          throw Exception(
-              'Failed to fetch hewan from Pemilik: ${responseData['message']}');
+          throw Exception('Failed to fetch hewan: ${responseData['message']}');
         }
       } else {
-        throw Exception(
-            'Failed to fetch hewan from Pemilik: ${response.statusCode}');
+        throw Exception('Failed to fetch hewan: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching hewan from Pemilik: $e');
+      throw Exception('Error fetching hewan: $e');
     }
   }
-  //HEWAN CLOSE
 
   /*
   Dokter Admin
@@ -1362,6 +1355,9 @@ class ApiService {
   // Method GET BY ID
   static Future<http.Response> getPemilikPemilikById(
       String token, int id) async {
+    if (id == 0) {
+      throw Exception('ID pemilik tidak boleh kosong');
+    }
     try {
       final response =
           await http.post(Uri.parse('$baseUrl/pemilik/pemilik/$id'),
@@ -1376,6 +1372,11 @@ class ApiService {
                   'id_pemilik': id
                 }, // Sesuaikan dengan data yang diperlukan jika ada
               }));
+
+      print('Request to fetch pemilik - ID: $id');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 401) {
         throw Exception('Unauthorized access');
       }

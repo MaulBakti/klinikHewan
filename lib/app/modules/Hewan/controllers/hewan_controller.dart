@@ -60,6 +60,13 @@ class HewanController extends GetxController {
   }
 
   Future<void> getDataPemilik(String role, int id) async {
+    final pemilikId = box.read('id');
+    if (pemilikId == null || pemilikId <= 0) {
+      errorMessage.value = 'ID pemilik tidak valid';
+      print('Error: ID pemilik tidak valid');
+      return;
+    }
+
     print('Fetching data pemilik for role: $role');
     try {
       isLoading.value = true;
@@ -115,10 +122,11 @@ class HewanController extends GetxController {
   }
 
   Future<void> getDataHewan(String role, String idPemilik) async {
-    // Validasi idPemilik sebelum melanjutkan
     if (idPemilik.isEmpty) {
+      // Perubahan
       errorMessage.value = 'ID pemilik tidak boleh kosong';
-      print('Error Fetching Data Hewan: ID pemilik tidak boleh kosong');
+      print(
+          'Error Fetching Data Hewan from $role : ID pemilik tidak boleh kosong');
       return;
     }
 
@@ -129,7 +137,6 @@ class HewanController extends GetxController {
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false; // Reset loading state
         print('Error: Token not found');
         return;
       }
@@ -152,8 +159,8 @@ class HewanController extends GetxController {
       hewanList.assignAll(hewans);
       print('List hewan: $hewanList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data hewan: $e';
-      print('Error fetching data hewan: $e');
+      errorMessage.value = 'Error fetching data hewan from $role: $e';
+      print('Error fetching data hewan from $role: $e');
     } finally {
       isLoading.value = false;
     }

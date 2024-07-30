@@ -30,33 +30,43 @@ class LoginController extends GetxController {
           final data = jsonDecode(response.body);
           if (data['success']) {
             final token = data['data']['token'];
-            final idPemilik =
-                data['data']['id_pemilik']; // Ambil ID pemilik dari respons
-            print('Token received: $token');
+            final idPemilik = data['data']['id_pemilik'];
 
-            // Menyimpan token dan ID pemilik ke storage
-            box.write('token', token);
-            box.write('id', idPemilik); // Simpan ID pemilik
-            print('Token saved: ${box.read('token')}');
-            print('ID pemilik saved: ${box.read('id')}');
+            if (idPemilik != null && idPemilik > 0) {
+              print('Token received: $token');
+              // Menyimpan token dan ID pemilik ke storage
+              box.write('token', token);
+              box.write('id', idPemilik); // Simpan ID pemilik
+              print('Token saved: ${box.read('token')}');
+              print('ID pemilik saved: ${box.read('id')}');
 
-            Get.defaultDialog(
-              backgroundColor: Colors.green,
-              titleStyle: TextStyle(color: Colors.white),
-              middleTextStyle: TextStyle(color: Colors.white),
-              title: 'Login',
-              middleText: 'Login $role successful',
-            );
+              Get.defaultDialog(
+                backgroundColor: Colors.green,
+                titleStyle: TextStyle(color: Colors.white),
+                middleTextStyle: TextStyle(color: Colors.white),
+                title: 'Login',
+                middleText: 'Login $role successful',
+              );
 
-            Future.delayed(Duration(seconds: 2), () {
-              if (role == 'admin') {
-                Get.offAllNamed('/home');
-              } else if (role == 'pegawai') {
-                Get.offAllNamed('/home');
-              } else if (role == 'pemilik') {
-                Get.offAllNamed('/pemilikhome');
-              }
-            });
+              Future.delayed(Duration(seconds: 2), () {
+                if (role == 'admin') {
+                  Get.offAllNamed('/home');
+                } else if (role == 'pegawai') {
+                  Get.offAllNamed('/home');
+                } else if (role == 'pemilik') {
+                  Get.offAllNamed('/pemilikhome');
+                }
+              });
+            } else {
+              print('Error: ID pemilik tidak valid dari respons login');
+              Get.defaultDialog(
+                backgroundColor: Colors.red,
+                titleStyle: TextStyle(color: Colors.white),
+                middleTextStyle: TextStyle(color: Colors.white),
+                title: 'Error',
+                middleText: 'ID pemilik tidak valid',
+              );
+            }
           } else {
             Get.defaultDialog(
               title: 'Error',
