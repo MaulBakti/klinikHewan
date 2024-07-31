@@ -9,6 +9,7 @@ class LoginController extends GetxController {
   var password = ''.obs;
   var selectedRole = 'admin'.obs;
   var isLoading = false.obs;
+
   final box = GetStorage();
 
   void login() async {
@@ -30,43 +31,27 @@ class LoginController extends GetxController {
           final data = jsonDecode(response.body);
           if (data['success']) {
             final token = data['data']['token'];
-            final idPemilik = data['data']['id_pemilik'];
+            print('Token received: $token');
+            box.write('token', token); // Simpan token
+            print('Token saved: ${box.read('token')}');
 
-            if (idPemilik != null && idPemilik > 0) {
-              print('Token received: $token');
-              // Menyimpan token dan ID pemilik ke storage
-              box.write('token', token);
-              box.write('id', idPemilik); // Simpan ID pemilik
-              print('Token saved: ${box.read('token')}');
-              print('ID pemilik saved: ${box.read('id')}');
+            Get.defaultDialog(
+              backgroundColor: Colors.green,
+              titleStyle: TextStyle(color: Colors.white),
+              middleTextStyle: TextStyle(color: Colors.white),
+              title: 'Login',
+              middleText: 'Login $role successful',
+            );
 
-              Get.defaultDialog(
-                backgroundColor: Colors.green,
-                titleStyle: TextStyle(color: Colors.white),
-                middleTextStyle: TextStyle(color: Colors.white),
-                title: 'Login',
-                middleText: 'Login $role successful',
-              );
-
-              Future.delayed(Duration(seconds: 2), () {
-                if (role == 'admin') {
-                  Get.offAllNamed('/home');
-                } else if (role == 'pegawai') {
-                  Get.offAllNamed('/home');
-                } else if (role == 'pemilik') {
-                  Get.offAllNamed('/pemilikhome');
-                }
-              });
-            } else {
-              print('Error: ID pemilik tidak valid dari respons login');
-              Get.defaultDialog(
-                backgroundColor: Colors.red,
-                titleStyle: TextStyle(color: Colors.white),
-                middleTextStyle: TextStyle(color: Colors.white),
-                title: 'Error',
-                middleText: 'ID pemilik tidak valid',
-              );
-            }
+            Future.delayed(Duration(seconds: 2), () {
+              if (role == 'pemilik') {
+                Get.offAllNamed('/pemilikhome');
+              } else if (role == 'admin') {
+                Get.offAllNamed('/home');
+              } else if (role == 'pegawai') {
+                Get.offAllNamed('/home');
+              }
+            });
           } else {
             Get.defaultDialog(
               title: 'Error',
@@ -104,46 +89,5 @@ class LoginController extends GetxController {
         middleText: 'Please enter username and password',
       );
     }
-  }
-
-  void logout() {
-    box.remove('token');
-    box.remove('id'); // Hapus ID pemilik saat logout
-    print('Token and ID removed on logout');
-  }
-
-  Future<String?> getToken() async {
-    final token = box.read('token');
-    print('Token retrieved: $token');
-    return token;
-  }
-
-  Future<String?> getRole() async {
-    final role = box.read('role');
-    print('Role retrieved: $role');
-    return role;
-  }
-
-  void clearToken() {
-    box.remove('token');
-    print('Token removed');
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    print('LoginController initialized');
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    print('LoginController is ready');
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    print('LoginController closed');
   }
 }

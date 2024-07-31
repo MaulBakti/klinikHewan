@@ -46,9 +46,20 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
   Widget _homeView(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gold Vet',
-            style: TextStyle(color: Colors.white, fontSize: 24)),
+        title: const Text(
+          'Gold Vet',
+          style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+            onPressed: () => _showLogoutDialog(context),
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
@@ -316,5 +327,70 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
         ),
       ),
     );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFFFFE4C4),
+          title: const Text("Logout"),
+          content: const Text("Apakah Anda yakin ingin logout?"),
+          actions: [
+            TextButton(
+              child: const Text("Batal"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Color.fromRGBO(179, 110, 61, 1)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            TextButton(
+              child: const Text("Logout"),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Color.fromRGBO(179, 110, 61, 1)),
+                overlayColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFffc26f)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                maximumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 50)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _logout();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _logout() {
+    // homeController
+    //     .changeRole('admin'); // Ganti dengan peran default setelah logout
+    Get.offAllNamed('/dashboard');
   }
 }

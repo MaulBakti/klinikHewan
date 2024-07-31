@@ -16,20 +16,21 @@ class HewanController extends GetxController {
   var role = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     print('Initializing Hewan Controller');
     getRole().then((value) {
       role.value = value ?? '';
-      final pemilikId = box.read('id');
-      print('Get ID Pemilik: $pemilikId');
 
-      if (pemilikId != null && pemilikId > 0) {
-        getDataPemilik(role.value, pemilikId);
-      } else {
-        errorMessage.value = 'ID pemilik tidak valid';
-        print('Error: ID pemilik tidak valid');
-      }
+      getIdPemilik().then((pemilikId) {
+        print('Get ID Pemilik: $pemilikId'); // Cek ID di sini
+        if (pemilikId != null && pemilikId > 0) {
+          getDataPemilik(role.value, pemilikId);
+        } else {
+          errorMessage.value = 'ID pemilik tidak valid';
+          print('Error: ID pemilik tidak valid');
+        }
+      });
     });
   }
 
@@ -41,22 +42,26 @@ class HewanController extends GetxController {
 
   Future<String?> getRole() async {
     final role = box.read('role');
+    print('Fetching Data Hewan for role: $role');
     return role;
+  }
+
+  Future<int?> getIdPemilik() async {
+    final dynamic idPemilik = box.read('id');
+    if (idPemilik is String) {
+      return int.tryParse(idPemilik); // Coba konversi jika berupa String
+    }
+    if (idPemilik == null || idPemilik <= 0) {
+      print('ID pemilik tidak valid');
+      return null; // Kembalikan null jika tidak valid
+    }
+    print('ID Pemilik retrieved for Data Hewan: $idPemilik');
+    return idPemilik; // Pastikan ini adalah int
   }
 
   void clearToken() {
     box.remove('token');
     print('Token removed');
-  }
-
-  Future<int?> getIdPemilik() async {
-    final idPemilik = box.read('id');
-    if (idPemilik == null || idPemilik <= 0) {
-      print('ID pemilik tidak valid');
-      return null; // Kembalikan null jika tidak valid
-    }
-    print('ID Pemilik retrieved: $idPemilik');
-    return idPemilik;
   }
 
   Future<void> getDataPemilik(String role, int id) async {
@@ -122,16 +127,9 @@ class HewanController extends GetxController {
   }
 
   Future<void> getDataHewan(String role, String idPemilik) async {
-    if (idPemilik.isEmpty) {
-      // Perubahan
-      errorMessage.value = 'ID pemilik tidak boleh kosong';
-      print(
-          'Error Fetching Data Hewan from $role : ID pemilik tidak boleh kosong');
-      return;
-    }
-
-    role = box.read('role');
-    print('Fetching data hewan for role: $role');
+    final idPemilik = await getIdPemilik();
+    final role = await getRole();
+    print('GET Data Hewan for role: $role & id: $idPemilik');
     try {
       isLoading.value = true;
       final String? token = await getToken();
@@ -149,7 +147,14 @@ class HewanController extends GetxController {
       } else if (role == 'pegawai') {
         responseData = await ApiService.getHewanPegawai(token);
       } else if (role == 'pemilik') {
-        responseData = await ApiService.getHewanPemilik(token, idPemilik);
+        String idPemilikString =
+            idPemilik?.toString() ?? ''; // Konversi ke String
+        if (idPemilikString.isEmpty) {
+          errorMessage.value = 'ID pemilik tidak boleh kosong';
+          print('Error: ID pemilik tidak boleh kosong');
+          return;
+        }
+        responseData = await ApiService.getHewanPemilik(token, idPemilikString);
       } else {
         throw Exception('Invalid role: $role');
       }
