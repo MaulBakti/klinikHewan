@@ -19,7 +19,7 @@ class HewanView extends StatelessWidget {
       required this.id}) {
     controller.getToken();
     controller.getRole();
-    controller.getDataHewan(role, idPemilik);
+    // controller.getDataHewan(role, idPemilik);
     controller.getDataPemilik(role, id);
   }
 

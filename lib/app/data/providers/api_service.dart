@@ -1355,9 +1355,6 @@ class ApiService {
   // Method GET BY ID
   static Future<http.Response> getPemilikPemilikById(
       String token, int id) async {
-    if (id == 0) {
-      throw Exception('ID pemilik tidak boleh kosong');
-    }
     try {
       final response =
           await http.post(Uri.parse('$baseUrl/pemilik/pemilik/$id'),
@@ -1368,14 +1365,12 @@ class ApiService {
               body: json.encode({
                 'role': 'pemilik',
                 'action': 'read',
-                'data': {
-                  'id_pemilik': id
-                }, // Sesuaikan dengan data yang diperlukan jika ada
+                'data': id,
               }));
 
-      print('Request to fetch pemilik - ID: $id');
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Request to fetch pemilik - ID: $id');
+      // print('Response status: ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 401) {
         throw Exception('Unauthorized access');

@@ -9,6 +9,7 @@ import '../../../data/providers/api_service.dart';
 class ProfilePemilikController extends GetxController {
   var isLoading = false.obs;
   var pemilik = Rx<Pemilik?>(null);
+  var pemilikList = <Pemilik>[].obs;
   var errorMessage = ''.obs;
   final box = GetStorage();
   var role = ''.obs;
@@ -19,9 +20,9 @@ class ProfilePemilikController extends GetxController {
     print('Initializing ProfilePemilikController');
     role.value = await getRole() ?? '';
 
-    // Assuming pemilikId is obtained from GetStorage or passed as a parameter
-    int pemilikId = 1; // Replace with actual ID
+    int pemilikId = 0; // Replace with the actual ID you want to fetch
     await getPemilikById(pemilikId);
+    print(pemilikId);
   }
 
   Future<String?> getToken() async {
@@ -41,7 +42,8 @@ class ProfilePemilikController extends GetxController {
   }
 
   Future<void> getPemilikById(int id) async {
-    print('Fetching data pemilik for ID: $id');
+    final currentRole = role.value;
+    print('Fetching data pemilik for ID: $currentRole');
     try {
       isLoading.value = true;
       final String? token = await getToken();

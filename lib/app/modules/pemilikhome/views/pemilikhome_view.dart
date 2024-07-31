@@ -51,15 +51,6 @@ class PemilikhomeView extends GetView<PemilikhomeController> {
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
         backgroundColor: Color.fromRGBO(179, 110, 61, 1),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            onPressed: () => _showLogoutDialog(context),
-          ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
