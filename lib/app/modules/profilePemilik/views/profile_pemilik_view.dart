@@ -62,6 +62,7 @@ class ProfilePemilikView extends StatelessWidget {
                           labelText: 'Username',
                           border: OutlineInputBorder(),
                         ),
+                        keyboardType: TextInputType.text,
                       ),
                       SizedBox(height: 15),
                       TextField(
@@ -79,6 +80,7 @@ class ProfilePemilikView extends StatelessWidget {
                           labelText: 'Jabatan',
                           border: OutlineInputBorder(),
                         ),
+                        readOnly: true,
                       ),
                       SizedBox(height: 15),
                       TextField(
@@ -95,6 +97,7 @@ class ProfilePemilikView extends StatelessWidget {
                           labelText: 'No Telp',
                           border: OutlineInputBorder(),
                         ),
+                        keyboardType: TextInputType.number,
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(

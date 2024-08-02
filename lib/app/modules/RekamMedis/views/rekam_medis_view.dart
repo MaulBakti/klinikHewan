@@ -268,6 +268,7 @@ class RekamMedisView extends StatelessWidget {
                   controller: keluhanController,
                   decoration: InputDecoration(
                       labelText: 'Keluhan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -276,6 +277,7 @@ class RekamMedisView extends StatelessWidget {
                   controller: diagnosaController,
                   decoration: InputDecoration(
                       labelText: 'Diagnosa', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -536,6 +538,7 @@ class RekamMedisView extends StatelessWidget {
                   controller: keluhanController,
                   decoration: InputDecoration(
                       labelText: 'Keluhan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -544,6 +547,7 @@ class RekamMedisView extends StatelessWidget {
                   controller: diagnosaController,
                   decoration: InputDecoration(
                       labelText: 'Diagnosa', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,

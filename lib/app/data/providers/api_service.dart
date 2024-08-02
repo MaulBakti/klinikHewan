@@ -396,9 +396,9 @@ class ApiService {
     print('Token available: $token');
     print('ID Pemilik: $idPemilik');
 
-    if (idPemilik.isEmpty) {
-      throw Exception('ID pemilik tidak boleh kosong');
-    }
+    // if (idPemilik.isEmpty) {
+    //   throw Exception('ID pemilik tidak boleh kosong');
+    // }
 
     try {
       final Uri uri = Uri.parse('$baseUrl/pemilik/hewan');

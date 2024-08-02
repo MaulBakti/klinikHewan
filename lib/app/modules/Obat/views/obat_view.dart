@@ -147,6 +147,7 @@ class ObatView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Obat', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -155,6 +156,7 @@ class ObatView extends StatelessWidget {
                   controller: keteranganController,
                   decoration: InputDecoration(
                       labelText: 'Keterangan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -247,6 +249,7 @@ class ObatView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Obat', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -255,6 +258,7 @@ class ObatView extends StatelessWidget {
                   controller: keteranganController,
                   decoration: InputDecoration(
                       labelText: 'Keterangan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
               ],
             ),

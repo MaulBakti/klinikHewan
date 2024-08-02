@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:klinik_hewan/app/data/providers/api_service.dart';
@@ -13,54 +12,17 @@ class HewanController extends GetxController {
   final box = GetStorage();
   var hewanList = <Hewan>[].obs;
   var pemilikList = <Pemilik>[].obs;
-  var role = ''.obs;
-  var pemilik = Rx<Pemilik?>(null);
+  var role = 'admin'.obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    print('Initializing Hewan Controller');
-    role.value = await getRole() ?? '';
-
-    int pemilikId = 0;
-    await getPemilikById(pemilikId);
-  }
-
-  Future<void> getPemilikById(int id) async {
-    final currentRole = role.value;
-    print('Fetching data pemilik for ID: $currentRole');
-    try {
-      isLoading.value = true;
-      final String? token = await getToken();
-      if (token == null || token.isEmpty) {
-        errorMessage.value = 'Token not found';
-        print('Error: Token not found');
-        return;
+    print('Initializing HewanController');
+    getRole().then((value) {
+      if (value != null) {
+        role.value = value;
       }
-
-      print('Using token: $token');
-      http.Response response =
-          await ApiService.getPemilikPemilikById(token, id);
-
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        if (responseData['data'] is List) {
-          final pemilikData = Pemilik.fromJson(responseData['data'][0]);
-          pemilik.value = pemilikData;
-        } else {
-          final pemilikData = Pemilik.fromJson(responseData['data']);
-          pemilik.value = pemilikData;
-        }
-      } else {
-        errorMessage.value = 'Pemilik not found';
-        print('Error: Pemilik not found, Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      errorMessage.value = 'Error fetching data pemilik: $e';
-      print('Error fetching data pemilik: $e');
-    } finally {
-      isLoading.value = false;
-    }
+    });
   }
 
   Future<String?> getToken() async {
@@ -71,22 +33,20 @@ class HewanController extends GetxController {
 
   Future<String?> getRole() async {
     final role = box.read('role');
-    print('Fetching Data Hewan for role: $role');
     return role;
   }
 
-  Future<void> getDataPemilik(String role, int id) async {
-    final pemilikId = box.read('id');
-    if (pemilikId == null || pemilikId <= 0) {
-      errorMessage.value = 'ID pemilik tidak valid';
-      print('Error: ID pemilik tidak valid');
-      return;
-    }
+  void clearToken() {
+    box.remove('token');
+    print('Token removed');
+  }
 
+  Future<void> getDataPemilik(String role) async {
+    role = box.read('role');
     print('Fetching data pemilik for role: $role');
+    int id = 0;
     try {
       isLoading.value = true;
-
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
@@ -95,12 +55,6 @@ class HewanController extends GetxController {
         return;
       }
 
-      // if (id <= 0) {
-      //   errorMessage.value = 'ID pemilik tidak boleh kosong';
-      //   print('Error: ID pemilik tidak boleh kosong');
-      //   return;
-      // }
-
       print('Using token: $token');
       List<dynamic> responseData;
 
@@ -108,23 +62,14 @@ class HewanController extends GetxController {
         responseData = await ApiService.getPemilikAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getPemilikPegawai(token);
-      } else if (role == 'pemilik') {
-        final response = await ApiService.getPemilikPemilikById(token, id);
-        if (response.statusCode == 200) {
-          var jsonData = json.decode(response.body);
-          if (jsonData['data'] is Map) {
-            responseData = [jsonData['data']]; // Buat list dari objek
-          } else {
-            throw Exception('Response data is not a valid format');
-          }
-        } else {
-          throw Exception('Failed to fetch pemilik: ${response.statusCode}');
-        }
+        // } else if (role == 'pemilik') {
+        //   responseData = await ApiService.getPemilikPemilikById(token, id);
       } else {
         throw Exception('Invalid role: $role');
       }
 
       print('Response data: $responseData');
+
       final List<Pemilik> pemiliks =
           responseData.map((data) => Pemilik.fromJson(data)).toList();
       pemilikList.assignAll(pemiliks);
@@ -137,41 +82,41 @@ class HewanController extends GetxController {
     }
   }
 
-  Future<void> getDataHewan(String role, int idPemilik) async {
-    final idpemilik = getPemilikById(idPemilik);
-    final role = getRole();
-    print('GET Data Hewan for role: $role & id: $idPemilik');
+  Future<void> getDataHewan(String role) async {
+    role = box.read('role');
+    print('Fetching data hewan for role: $role');
+    int id = 0;
     try {
       isLoading.value = true;
       final String? token = await getToken();
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
+        isLoading.value = false; // Reset loading state
         print('Error: Token not found');
         return;
       }
 
       print('Using token: $token');
       List<dynamic> responseData;
-
+      String idPemilik = id.toString();
       if (role == 'admin') {
         responseData = await ApiService.getHewanAdmin(token);
       } else if (role == 'pegawai') {
         responseData = await ApiService.getHewanPegawai(token);
       } else if (role == 'pemilik') {
-        String idPemilikString =
-            idPemilik?.toString() ?? ''; // Konversi ke String
-        responseData = await ApiService.getHewanPemilik(token, idPemilikString);
+        responseData = await ApiService.getHewanPemilik(token, idPemilik);
       } else {
         throw Exception('Invalid role: $role');
       }
+      print('List hewan: $hewanList');
 
       final List<Hewan> hewans =
           responseData.map((data) => Hewan.fromJson(data)).toList();
       hewanList.assignAll(hewans);
       print('List hewan: $hewanList');
     } catch (e) {
-      errorMessage.value = 'Error fetching data hewan from $role: $e';
-      print('Error fetching data hewan from $role: $e');
+      errorMessage.value = 'Error fetching data hewan: $e';
+      print('Error fetching data hewan: $e');
     } finally {
       isLoading.value = false;
     }
@@ -195,8 +140,10 @@ class HewanController extends GetxController {
       http.Response response;
 
       if (role == 'admin') {
+        // response = await ApiService.postHewanAdmin(token, 'create', hewan.toJson());
         response = await ApiService.postHewanAdmin(token, hewanData);
       } else if (role == 'pegawai') {
+        // response = await ApiService.postHewanPegawai(token, 'create', hewan.toJson());
         response = await ApiService.postHewanPegawai(token, hewanData);
       } else {
         throw Exception('Invalid role: $role');
@@ -210,9 +157,6 @@ class HewanController extends GetxController {
         final createdHewan = Hewan.fromJson(responseData['data']);
         hewanList.add(createdHewan);
         Get.defaultDialog(
-          backgroundColor: Colors.green,
-          titleStyle: TextStyle(color: Colors.white),
-          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Hewan created successfully',
         );
@@ -221,9 +165,6 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
-        backgroundColor: Colors.red,
-        titleStyle: TextStyle(color: Colors.white),
-        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to create hewan: $e',
       );
@@ -267,9 +208,6 @@ class HewanController extends GetxController {
           hewanList[index] = updatedHewan;
         }
         Get.defaultDialog(
-          backgroundColor: Colors.green,
-          titleStyle: TextStyle(color: Colors.white),
-          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Hewan updated successfully',
         );
@@ -278,9 +216,6 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
-        backgroundColor: Colors.red,
-        titleStyle: TextStyle(color: Colors.white),
-        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to update hewan: $e',
       );
@@ -297,7 +232,7 @@ class HewanController extends GetxController {
       final String? token = GetStorage().read('token');
       if (token == null || token.isEmpty) {
         errorMessage.value = 'Token not found';
-        isLoading.value = false; // Reset loading state
+        isLoading.value = false;
         return;
       }
       print('Token: $token');
@@ -312,15 +247,9 @@ class HewanController extends GetxController {
         throw Exception('Invalid role: $role');
       }
 
-      print('Delete Hewan - Response status: ${response.statusCode}');
-      print('Delete Hewan - Response body: ${response.body}');
-
       if (response.statusCode == 200) {
-        hewanList.removeWhere((hewan) => hewan.idHewan == idHewan);
+        hewanList.removeWhere((element) => element.idHewan == idHewan);
         Get.defaultDialog(
-          backgroundColor: Colors.green,
-          titleStyle: TextStyle(color: Colors.white),
-          middleTextStyle: TextStyle(color: Colors.white),
           title: 'Success',
           middleText: 'Hewan deleted successfully',
         );
@@ -329,9 +258,6 @@ class HewanController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
-        backgroundColor: Colors.red,
-        titleStyle: TextStyle(color: Colors.white),
-        middleTextStyle: TextStyle(color: Colors.white),
         title: 'Error',
         middleText: 'Failed to delete hewan: $e',
       );
@@ -339,4 +265,17 @@ class HewanController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  // Future<String> getNamaPemilik(int idPemilik) async {
+  //   try {
+  //     isLoading.value = true;
+  //     var pemilik = await ApiService.fetchPemilik(idPemilik, token);
+  //     return pemilik['username'] ?? '';
+  //   } catch (e) {
+  //     print('Error fetching pemilik: $e');
+  //     return '';
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 }

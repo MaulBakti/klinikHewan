@@ -142,6 +142,7 @@ class PemilikView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(height: 10),
                 TextField(
@@ -160,6 +161,7 @@ class PemilikView extends StatelessWidget {
                   controller: noTelpController,
                   decoration: InputDecoration(
                       labelText: 'No Telp', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.number,
                 ),
               ],
             ),
@@ -263,6 +265,7 @@ class PemilikView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pemilik', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -287,6 +290,7 @@ class PemilikView extends StatelessWidget {
                   controller: noTelpController,
                   decoration: InputDecoration(
                       labelText: 'No Telp', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.number,
                 ),
               ],
             ),

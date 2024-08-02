@@ -245,6 +245,7 @@ class AppointmentView extends StatelessWidget {
                   controller: CatatanController,
                   decoration: InputDecoration(
                       labelText: 'Catatan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -467,6 +468,7 @@ class AppointmentView extends StatelessWidget {
                   controller: CatatanController,
                   decoration: InputDecoration(
                       labelText: 'Catatan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,

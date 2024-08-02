@@ -47,6 +47,7 @@ class RegisterView extends GetView<RegisterController> {
                             labelText: 'Username',
                             border: OutlineInputBorder(),
                           ),
+                          keyboardType: TextInputType.text,
                         ),
                         SizedBox(height: 15),
                         Obx(() {
@@ -87,6 +88,7 @@ class RegisterView extends GetView<RegisterController> {
                             labelText: 'No Telp',
                             border: OutlineInputBorder(),
                           ),
+                          keyboardType: TextInputType.number,
                         ),
                         SizedBox(height: 15),
                         ElevatedButton(

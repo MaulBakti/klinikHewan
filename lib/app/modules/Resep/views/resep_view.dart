@@ -158,6 +158,7 @@ class ResepView extends StatelessWidget {
                   controller: jumlahObatController,
                   decoration: InputDecoration(
                       labelText: 'Jumlah Obat', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -278,6 +279,7 @@ class ResepView extends StatelessWidget {
                   controller: jumlahObatController,
                   decoration: InputDecoration(
                       labelText: 'Jumlah Obat', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(
                   height: 10,

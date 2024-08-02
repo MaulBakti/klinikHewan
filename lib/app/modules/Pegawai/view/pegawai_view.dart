@@ -145,6 +145,7 @@ class PegawaiView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pegawai', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -161,6 +162,7 @@ class PegawaiView extends StatelessWidget {
                   controller: alamatController,
                   decoration: InputDecoration(
                       labelText: 'Alamat', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.streetAddress,
                 ),
                 SizedBox(
                   height: 10,
@@ -169,6 +171,7 @@ class PegawaiView extends StatelessWidget {
                   controller: noTelpController,
                   decoration: InputDecoration(
                       labelText: 'No Telp', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.number,
                 ),
               ],
             ),
@@ -278,6 +281,7 @@ class PegawaiView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Pegawai', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -302,6 +306,7 @@ class PegawaiView extends StatelessWidget {
                   controller: noTelpController,
                   decoration: InputDecoration(
                       labelText: 'No Telp', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.number,
                 ),
               ],
             ),

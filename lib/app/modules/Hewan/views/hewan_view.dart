@@ -19,8 +19,8 @@ class HewanView extends StatelessWidget {
       required this.id}) {
     controller.getToken();
     controller.getRole();
-    // controller.getDataHewan(role, idPemilik);
-    controller.getDataPemilik(role, id);
+    controller.getDataHewan(role);
+    controller.getDataPemilik(role);
   }
 
   @override
@@ -146,8 +146,6 @@ class HewanView extends StatelessWidget {
     final TextEditingController jenisController = TextEditingController();
     final TextEditingController umurController = TextEditingController();
     final TextEditingController beratController = TextEditingController();
-    final TextEditingController jenisKelaminController =
-        TextEditingController();
     Pemilik? selectedPemilik;
     String? selectedJenisKelamin;
 
@@ -196,6 +194,7 @@ class HewanView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Hewan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -204,6 +203,7 @@ class HewanView extends StatelessWidget {
                   controller: jenisController,
                   decoration: InputDecoration(
                       labelText: 'Jenis Hewan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -358,6 +358,7 @@ class HewanView extends StatelessWidget {
                   controller: namaController,
                   decoration: InputDecoration(
                       labelText: 'Nama Hewan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
@@ -366,6 +367,7 @@ class HewanView extends StatelessWidget {
                   controller: jenisController,
                   decoration: InputDecoration(
                       labelText: 'Jenis Hewan', border: OutlineInputBorder()),
+                  keyboardType: TextInputType.text,
                 ),
                 SizedBox(
                   height: 10,
